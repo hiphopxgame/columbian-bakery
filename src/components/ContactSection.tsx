@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { Instagram, TikTok, Pinterest } from 'lucide-react';
+import { Instagram, Video, Image } from 'lucide-react';
 
 const ContactSection = () => {
   const [contactForm, setContactForm] = useState({
@@ -196,7 +196,7 @@ const ContactSection = () => {
                       size="lg" 
                       className="flex-1 border-bread-brown text-bread-brown hover:bg-bread-brown hover:text-coconut-white"
                     >
-                      <TikTok className="w-5 h-5 mr-2" />
+                      <Video className="w-5 h-5 mr-2" />
                       TikTok
                     </Button>
                     <Button 
@@ -204,7 +204,7 @@ const ContactSection = () => {
                       size="lg" 
                       className="flex-1 border-dulce-caramel text-dulce-caramel hover:bg-dulce-caramel hover:text-coconut-white"
                     >
-                      <Pinterest className="w-5 h-5 mr-2" />
+                      <Image className="w-5 h-5 mr-2" />
                       Pinterest
                     </Button>
                   </div>
