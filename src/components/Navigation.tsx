@@ -16,13 +16,13 @@ const Navigation = () => {
   }, []);
 
   const navItems = [
-    { label: 'Home', href: '#home' },
-    { label: 'About', href: '#about' },
-    { label: 'Retail Orders', href: '#retail' },
-    { label: 'Wholesale', href: '#wholesale' },
-    { label: 'Catalog', href: '#catalog' },
-    { label: 'Catering', href: '#catering' },
-    { label: 'Contact', href: '#contact' }
+    { label: 'Home', href: '#home', emoji: '🏠' },
+    { label: 'About', href: '#about', emoji: '📖' },
+    { label: 'Retail', href: '#retail', emoji: '🛍️' },
+    { label: 'Wholesale', href: '#wholesale', emoji: '🏢' },
+    { label: 'Catalog', href: '#catalog', emoji: '📋' },
+    { label: 'Catering', href: '#catering', emoji: '🎉' },
+    { label: 'Contact', href: '#contact', emoji: '💬' }
   ];
 
   const scrollToSection = (href: string) => {
@@ -34,54 +34,60 @@ const Navigation = () => {
   };
 
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-      isScrolled ? 'bg-coconut-white/95 backdrop-blur-sm shadow-lg' : 'bg-transparent'
+    <nav className={`mobile-sticky top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      isScrolled 
+        ? 'bg-coconut-white/95 backdrop-blur-sm shadow-lg border-b-2 border-guava-pink/20' 
+        : 'bg-yuca-beige/80 backdrop-blur-sm'
     }`}>
       <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between h-16">
-          {/* Logo */}
+        <div className="flex items-center justify-between h-16 md:h-20">
+          {/* Enhanced Logo */}
           <div className="flex items-center">
-            <h1 className="text-xl font-serif font-bold text-bread-brown">
-              Colombian Bakery PDX
+            <h1 className="text-xl md:text-2xl font-serif font-bold text-cacao-brown hover:text-guava-pink transition-colors cursor-pointer">
+              <span className="animate-joyful-bounce inline-block">🥮</span>
+              {' '}Colombian Bakery PDX
             </h1>
           </div>
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8">
+          {/* Desktop Navigation with enhanced styling */}
+          <div className="hidden md:flex items-center space-x-6">
             {navItems.map((item) => (
               <button
                 key={item.label}
                 onClick={() => scrollToSection(item.href)}
-                className="text-foreground hover:text-bread-brown transition-colors duration-200 font-medium"
+                className="group flex items-center space-x-1 text-cacao-brown hover:text-guava-pink transition-all duration-300 font-medium hover:scale-105"
               >
-                {item.label}
+                <span className="group-hover:animate-joyful-bounce">{item.emoji}</span>
+                <span>{item.label}</span>
               </button>
             ))}
           </div>
 
-          {/* Mobile Menu Button */}
+          {/* Mobile Menu Button with enhanced styling */}
           <div className="md:hidden">
             <Button
               variant="ghost"
               size="sm"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
+              className="text-cacao-brown hover:text-guava-pink hover:bg-guava-pink/10 quick-tap"
             >
               {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
             </Button>
           </div>
         </div>
 
-        {/* Mobile Navigation */}
+        {/* Enhanced Mobile Navigation */}
         {isMenuOpen && (
-          <div className="md:hidden bg-coconut-white border-t border-border">
-            <div className="px-2 pt-2 pb-3 space-y-1">
+          <div className="md:hidden bg-coconut-white/95 backdrop-blur-sm border-t border-guava-pink/20 rounded-b-lg shadow-lg">
+            <div className="px-2 pt-2 pb-4 space-y-2">
               {navItems.map((item) => (
                 <button
                   key={item.label}
                   onClick={() => scrollToSection(item.href)}
-                  className="block w-full text-left px-3 py-2 text-foreground hover:text-bread-brown hover:bg-yuca-cream transition-colors duration-200"
+                  className="flex items-center space-x-3 w-full text-left px-4 py-3 text-cacao-brown hover:text-guava-pink hover:bg-yuca-beige/50 transition-all duration-300 rounded-lg quick-tap font-medium"
                 >
-                  {item.label}
+                  <span className="text-lg">{item.emoji}</span>
+                  <span>{item.label}</span>
                 </button>
               ))}
             </div>

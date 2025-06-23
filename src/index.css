@@ -3,46 +3,49 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Colombian Bakery Design System */
+/* Colombian Bakery Design System - Updated Style Guide */
 
 @layer base {
   :root {
-    --background: 50 20% 98%;
-    --foreground: 25 25% 15%;
+    --background: 45 15% 96%;
+    --foreground: 30 25% 15%;
 
-    --card: 45 25% 96%;
-    --card-foreground: 25 25% 15%;
+    --card: 42 20% 94%;
+    --card-foreground: 30 25% 15%;
 
-    --popover: 45 25% 96%;
-    --popover-foreground: 25 25% 15%;
+    --popover: 42 20% 94%;
+    --popover-foreground: 30 25% 15%;
 
-    --primary: 25 85% 35%;
-    --primary-foreground: 45 25% 96%;
+    --primary: 30 60% 25%;
+    --primary-foreground: 42 20% 94%;
 
-    --secondary: 35 40% 88%;
-    --secondary-foreground: 25 25% 15%;
+    --secondary: 40 30% 88%;
+    --secondary-foreground: 30 25% 15%;
 
-    --muted: 35 30% 92%;
-    --muted-foreground: 25 15% 45%;
+    --muted: 40 25% 90%;
+    --muted-foreground: 30 20% 45%;
 
-    --accent: 350 65% 75%;
-    --accent-foreground: 25 25% 15%;
+    --accent: 345 70% 75%;
+    --accent-foreground: 30 25% 15%;
 
     --destructive: 0 84% 60%;
-    --destructive-foreground: 45 25% 96%;
+    --destructive-foreground: 42 20% 94%;
 
-    --border: 35 25% 85%;
-    --input: 35 25% 85%;
-    --ring: 25 85% 35%;
+    --border: 40 20% 85%;
+    --input: 40 20% 85%;
+    --ring: 30 60% 25%;
 
     --radius: 0.75rem;
 
-    /* Colombian color palette */
-    --guava-pink: 350 65% 75%;
-    --coconut-white: 45 25% 96%;
-    --bread-brown: 25 85% 35%;
+    /* Updated Colombian color palette */
+    --guava-pink: 345 70% 75%;
+    --yuca-beige: 42 35% 85%;
+    --cacao-brown: 30 60% 25%;
+    --tropic-green: 145 60% 45%;
+    --coconut-white: 42 20% 94%;
     --dulce-caramel: 35 70% 65%;
-    --yuca-cream: 45 30% 90%;
+    --bread-brown: 30 60% 25%;
+    --yuca-cream: 42 30% 90%;
     --colombian-yellow: 48 100% 67%;
     --colombian-blue: 220 100% 50%;
     --colombian-red: 0 100% 50%;
@@ -56,11 +59,23 @@
 
   body {
     @apply bg-background text-foreground font-sans;
+    background-image: 
+      radial-gradient(circle at 20% 80%, rgba(222, 184, 135, 0.1) 0%, transparent 50%),
+      radial-gradient(circle at 80% 20%, rgba(240, 128, 128, 0.05) 0%, transparent 50%);
   }
 
-  /* Typography */
+  /* Typography - Enhanced with elegant serif for titles */
   h1, h2, h3, h4, h5, h6 {
-    @apply font-serif;
+    @apply font-serif text-cacao-brown;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  }
+
+  h1 {
+    @apply text-4xl md:text-6xl font-bold;
+  }
+
+  h2 {
+    @apply text-3xl md:text-5xl font-bold;
   }
 
   /* Smooth scrolling */
@@ -68,11 +83,11 @@
     scroll-behavior: smooth;
   }
 
-  /* Custom animations */
+  /* Enhanced animations with joyful bounce */
   @keyframes fadeInUp {
     from {
       opacity: 0;
-      transform: translateY(30px);
+      transform: translateY(40px);
     }
     to {
       opacity: 1;
@@ -83,12 +98,22 @@
   @keyframes slideInRight {
     from {
       opacity: 0;
-      transform: translateX(30px);
+      transform: translateX(40px);
     }
     to {
       opacity: 1;
       transform: translateX(0);
     }
+  }
+
+  @keyframes joyfulBounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+  }
+
+  @keyframes textureFloat {
+    0%, 100% { transform: rotate(0deg) translateY(0px); }
+    50% { transform: rotate(2deg) translateY(-4px); }
   }
 
   .animate-fade-in-up {
@@ -99,13 +124,81 @@
     animation: slideInRight 0.8s ease-out forwards;
   }
 
-  /* Colombian accent border */
+  .animate-joyful-bounce {
+    animation: joyfulBounce 2s ease-in-out infinite;
+  }
+
+  .animate-texture-float {
+    animation: textureFloat 4s ease-in-out infinite;
+  }
+
+  /* Texture overlays */
+  .texture-woven::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+      repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 2px,
+        rgba(222, 184, 135, 0.1) 2px,
+        rgba(222, 184, 135, 0.1) 4px
+      );
+    pointer-events: none;
+  }
+
+  .texture-flour::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+      radial-gradient(circle at 25% 25%, rgba(255, 255, 255, 0.3) 2px, transparent 3px),
+      radial-gradient(circle at 75% 75%, rgba(255, 255, 255, 0.2) 1px, transparent 2px),
+      radial-gradient(circle at 50% 90%, rgba(255, 255, 255, 0.15) 1px, transparent 2px);
+    pointer-events: none;
+  }
+
+  .texture-wood {
+    background-image: 
+      linear-gradient(90deg, rgba(139, 69, 19, 0.1) 0%, transparent 50%, rgba(139, 69, 19, 0.1) 100%);
+  }
+
+  /* Colombian accent border - more vibrant */
   .colombian-accent {
     border-image: linear-gradient(
       90deg,
       hsl(var(--colombian-yellow)),
-      hsl(var(--colombian-blue)),
-      hsl(var(--colombian-red))
+      hsl(var(--tropic-green)),
+      hsl(var(--guava-pink)),
+      hsl(var(--colombian-blue))
     ) 1;
+  }
+
+  /* Enhanced button styles */
+  .btn-joyful {
+    @apply transform transition-all duration-300 hover:scale-105 hover:shadow-lg;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  }
+
+  .btn-joyful:hover {
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  }
+
+  /* Mobile-first enhancements */
+  @media (max-width: 768px) {
+    .mobile-sticky {
+      @apply sticky top-0 z-50;
+    }
+    
+    .quick-tap {
+      @apply min-h-12 text-lg;
+    }
   }
 }
