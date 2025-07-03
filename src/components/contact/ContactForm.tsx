@@ -4,11 +4,13 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
 const ContactForm = () => {
   const [contactForm, setContactForm] = useState({
     name: '',
     email: '',
+    inquiryType: '',
     message: ''
   });
 
@@ -16,7 +18,7 @@ const ContactForm = () => {
     e.preventDefault();
     console.log('Contact form submitted:', contactForm);
     // Handle contact form submission
-    setContactForm({ name: '', email: '', message: '' });
+    setContactForm({ name: '', email: '', inquiryType: '', message: '' });
   };
 
   return (
@@ -55,6 +57,26 @@ const ContactForm = () => {
               placeholder="your.email@example.com"
               required
             />
+          </div>
+          
+          <div>
+            <label className="block text-sm font-medium text-foreground mb-2">
+              Inquiry Type *
+            </label>
+            <Select 
+              value={contactForm.inquiryType} 
+              onValueChange={(value) => setContactForm(prev => ({ ...prev, inquiryType: value }))}
+              required
+            >
+              <SelectTrigger>
+                <SelectValue placeholder="Select inquiry type" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="general">General Inquiries</SelectItem>
+                <SelectItem value="wholesale">Wholesale Requests</SelectItem>
+                <SelectItem value="catering">Catering Requests</SelectItem>
+              </SelectContent>
+            </Select>
           </div>
           
           <div>
