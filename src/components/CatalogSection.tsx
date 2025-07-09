@@ -16,7 +16,8 @@ const CatalogSection = () => {
       name: "Vegan Bombshell",
       description: "Plant-based yuca pastry with dairy-free guava and cashew-based cream. Just as decadent as our classic version.",
       tags: ["Retail", "Wholesale", "Vegan", "Gluten-Free"],
-      color: "from-yuca-cream to-guava-pink/20"
+      color: "from-yuca-cream to-guava-pink/20",
+      image: "/lovable-uploads/c831cef9-238a-4a72-b80b-03e9497ef8b2.png"
     }
   ];
 
