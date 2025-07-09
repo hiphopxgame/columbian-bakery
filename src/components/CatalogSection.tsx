@@ -9,49 +9,57 @@ const CatalogSection = () => {
       name: "Classic Guava Bombshell",
       description: "Traditional yuca pastry filled with sweet guava cream",
       tags: ["Retail", "Wholesale", "Gluten-Free"],
-      color: "from-guava-pink/20 to-dulce-caramel/20"
+      color: "from-guava-pink/20 to-dulce-caramel/20",
+      image: "/lovable-uploads/d19d4938-15fa-41fc-a515-47093ac4239a.png"
     },
     {
       name: "Dulce de Leche Bombshell",
       description: "Rich caramel-filled pastry with authentic Colombian dulce de leche",
       tags: ["Retail", "Wholesale", "Gluten-Free"],
-      color: "from-dulce-caramel/20 to-bread-brown/20"
+      color: "from-dulce-caramel/20 to-bread-brown/20",
+      image: "/lovable-uploads/871ce97d-7c8b-45c1-bc72-42a33c3e2956.png"
     },
     {
       name: "Coconut Cream Bombshell",
       description: "Light and tropical with creamy coconut filling",
       tags: ["Retail", "Wholesale", "Gluten-Free"],
-      color: "from-coconut-white to-yuca-cream"
+      color: "from-coconut-white to-yuca-cream",
+      image: "/lovable-uploads/a2ef11b1-af95-4824-b397-ccc6e2e537ab.png"
     },
     {
       name: "Vegan Bombshell",
       description: "Plant-based yuca pastry with dairy-free fillings",
       tags: ["Retail", "Wholesale", "Vegan", "Coming Soon"],
-      color: "from-yuca-cream to-guava-pink/20"
+      color: "from-yuca-cream to-guava-pink/20",
+      image: "/lovable-uploads/c03fd8e2-7379-427a-aace-4c30e2e41f14.png"
     },
     {
       name: "Pandebono",
       description: "Traditional Colombian cheese bread, crispy outside and chewy inside",
       tags: ["Retail", "Seasonal"],
-      color: "from-bread-brown/20 to-dulce-caramel/20"
+      color: "from-bread-brown/20 to-dulce-caramel/20",
+      image: "/lovable-uploads/3bac3804-1983-4829-82b1-3db97a1856d2.png"
     },
     {
       name: "Almojábana",
       description: "Sweet and salty Colombian bread with fresh cheese",
       tags: ["Retail", "Seasonal"],
-      color: "from-coconut-white to-yuca-cream"
+      color: "from-coconut-white to-yuca-cream",
+      image: "/lovable-uploads/a9d2895e-7072-49a0-8e6a-407e9c11b741.png"
     },
     {
       name: "Roscones",
       description: "Ring-shaped sweet bread, perfect for special occasions",
       tags: ["Catering", "Seasonal"],
-      color: "from-guava-pink/20 to-bread-brown/20"
+      color: "from-guava-pink/20 to-bread-brown/20",
+      image: "/lovable-uploads/b6885ed7-b5a7-4f96-b04a-74819abd3824.png"
     },
     {
       name: "Raw Dough Portions",
       description: "Uncooked yuca dough for wholesale customers to bake fresh",
       tags: ["Wholesale", "Raw"],
-      color: "from-yuca-cream to-coconut-white"
+      color: "from-yuca-cream to-coconut-white",
+      image: "/lovable-uploads/3158bddf-4527-4a8b-940c-5b0ef15c6d57.png"
     }
   ];
 
@@ -91,8 +99,12 @@ const CatalogSection = () => {
                 key={index} 
                 className="group hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border-border/50 overflow-hidden"
               >
-                <div className={`h-32 bg-gradient-to-br ${product.color} flex items-center justify-center`}>
-                  <div className="text-4xl opacity-60">🥮</div>
+                <div className="h-48 overflow-hidden bg-gradient-to-br from-yuca-beige to-coconut-white">
+                  <img 
+                    src={product.image} 
+                    alt={product.name}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  />
                 </div>
                 <CardContent className="p-6">
                   <h3 className="text-lg font-serif font-semibold text-bread-brown mb-2 group-hover:text-dulce-caramel transition-colors">
