@@ -1,19 +1,28 @@
-
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { ArrowLeft } from 'lucide-react';
+import { useToast } from '@/hooks/use-toast';
 
-const CateringSection = () => {
+const CustomQuotePage = () => {
+  const navigate = useNavigate();
+  const { toast } = useToast();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
+    phone: '',
+    company: '',
     eventType: '',
     guestCount: '',
     eventDate: '',
     flavors: '',
+    budget: '',
+    deliveryLocation: '',
+    setupRequired: '',
     message: ''
   });
 
@@ -23,8 +32,12 @@ const CateringSection = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Catering inquiry submitted:', formData);
-    // Handle form submission
+    // Here you would typically send the quote request to your backend
+    toast({
+      title: "Quote Request Submitted!",
+      description: "We'll get back to you within 24 hours with a custom quote.",
+    });
+    console.log('Quote request submitted:', formData);
   };
 
   const cateringOptions = [
@@ -55,22 +68,29 @@ const CateringSection = () => {
   ];
 
   return (
-    <section id="catering" className="py-20 bg-gradient-to-b from-coconut-white to-yuca-cream">
+    <div className="min-h-screen bg-gradient-to-b from-coconut-white to-yuca-cream py-8">
       <div className="container mx-auto px-4">
         <div className="max-w-6xl mx-auto">
-          {/* Section Header */}
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-serif font-bold text-bread-brown mb-6">
-              Catering & Special Orders
-            </h2>
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              Bring the authentic taste of Colombia to your special events, 
-              corporate gatherings, and celebrations
+          {/* Header */}
+          <div className="mb-8">
+            <Button 
+              variant="ghost" 
+              onClick={() => navigate('/')}
+              className="mb-4"
+            >
+              <ArrowLeft className="mr-2 h-4 w-4" />
+              Back to Home
+            </Button>
+            <h1 className="text-4xl font-serif font-bold text-bread-brown mb-2">
+              Custom Quote Request
+            </h1>
+            <p className="text-muted-foreground">
+              Let us create the perfect Colombian experience for your special event
             </p>
           </div>
 
-          {/* Catering Options */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+          {/* Catering Options Overview */}
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
             {cateringOptions.map((option, index) => (
               <Card key={index} className="text-center hover:shadow-lg transition-shadow duration-300 bg-card/50">
                 <CardContent className="p-6">
@@ -94,22 +114,23 @@ const CateringSection = () => {
             ))}
           </div>
 
-          {/* Contact Form */}
+          {/* Quote Request Form */}
           <Card className="max-w-4xl mx-auto">
             <CardHeader>
               <CardTitle className="text-2xl font-serif text-bread-brown text-center">
-                Request a Custom Quote
+                Request Your Custom Quote
               </CardTitle>
               <p className="text-muted-foreground text-center">
-                Tell us about your event and we'll create the perfect Colombian experience
+                Provide details about your event and we'll create a personalized quote
               </p>
             </CardHeader>
             <CardContent>
               <form onSubmit={handleSubmit} className="space-y-6">
+                {/* Contact Information */}
                 <div className="grid md:grid-cols-2 gap-6">
                   <div>
                     <label className="block text-sm font-medium text-foreground mb-2">
-                      Name *
+                      Full Name *
                     </label>
                     <Input
                       value={formData.name}
@@ -135,13 +156,38 @@ const CateringSection = () => {
                 <div className="grid md:grid-cols-2 gap-6">
                   <div>
                     <label className="block text-sm font-medium text-foreground mb-2">
+                      Phone Number
+                    </label>
+                    <Input
+                      type="tel"
+                      value={formData.phone}
+                      onChange={(e) => handleInputChange('phone', e.target.value)}
+                      placeholder="(503) 555-0123"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-foreground mb-2">
+                      Company/Organization
+                    </label>
+                    <Input
+                      value={formData.company}
+                      onChange={(e) => handleInputChange('company', e.target.value)}
+                      placeholder="Company name (if applicable)"
+                    />
+                  </div>
+                </div>
+
+                {/* Event Details */}
+                <div className="grid md:grid-cols-2 gap-6">
+                  <div>
+                    <label className="block text-sm font-medium text-foreground mb-2">
                       Event Type *
                     </label>
                     <Select value={formData.eventType} onValueChange={(value) => handleInputChange('eventType', value)}>
                       <SelectTrigger>
                         <SelectValue placeholder="Select event type" />
                       </SelectTrigger>
-                      <SelectContent className="bg-coconut-white">
+                      <SelectContent>
                         <SelectItem value="wedding">Wedding</SelectItem>
                         <SelectItem value="corporate">Corporate Event</SelectItem>
                         <SelectItem value="private">Private Party</SelectItem>
@@ -152,12 +198,13 @@ const CateringSection = () => {
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-foreground mb-2">
-                      Number of Guests
+                      Number of Guests *
                     </label>
                     <Input
                       value={formData.guestCount}
                       onChange={(e) => handleInputChange('guestCount', e.target.value)}
                       placeholder="Approximate guest count"
+                      required
                     />
                   </div>
                 </div>
@@ -175,53 +222,103 @@ const CateringSection = () => {
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-foreground mb-2">
-                      Preferred Flavors
+                      Estimated Budget Range
                     </label>
-                    <Input
-                      value={formData.flavors}
-                      onChange={(e) => handleInputChange('flavors', e.target.value)}
-                      placeholder="Guava, Dulce de Leche, Coconut..."
-                    />
+                    <Select value={formData.budget} onValueChange={(value) => handleInputChange('budget', value)}>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select budget range" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="under-500">Under $500</SelectItem>
+                        <SelectItem value="500-1000">$500 - $1,000</SelectItem>
+                        <SelectItem value="1000-2500">$1,000 - $2,500</SelectItem>
+                        <SelectItem value="2500-5000">$2,500 - $5,000</SelectItem>
+                        <SelectItem value="over-5000">Over $5,000</SelectItem>
+                        <SelectItem value="flexible">Flexible</SelectItem>
+                      </SelectContent>
+                    </Select>
                   </div>
                 </div>
 
                 <div>
                   <label className="block text-sm font-medium text-foreground mb-2">
-                    Additional Details
+                    Preferred Flavors
+                  </label>
+                  <Input
+                    value={formData.flavors}
+                    onChange={(e) => handleInputChange('flavors', e.target.value)}
+                    placeholder="Guava, Dulce de Leche, Coconut, or let us suggest..."
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-foreground mb-2">
+                    Delivery Location
+                  </label>
+                  <Input
+                    value={formData.deliveryLocation}
+                    onChange={(e) => handleInputChange('deliveryLocation', e.target.value)}
+                    placeholder="Event venue address or delivery location"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-foreground mb-2">
+                    Setup & Service Requirements
+                  </label>
+                  <Select value={formData.setupRequired} onValueChange={(value) => handleInputChange('setupRequired', value)}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Do you need setup assistance?" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="delivery-only">Delivery Only</SelectItem>
+                      <SelectItem value="setup-included">Setup & Display Included</SelectItem>
+                      <SelectItem value="full-service">Full Service (Setup, Serving, Cleanup)</SelectItem>
+                      <SelectItem value="discuss">Let's Discuss</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-foreground mb-2">
+                    Additional Details & Special Requests
                   </label>
                   <Textarea
                     value={formData.message}
                     onChange={(e) => handleInputChange('message', e.target.value)}
-                    placeholder="Tell us more about your event, special dietary requirements, or any specific requests..."
-                    rows={4}
+                    placeholder="Tell us more about your event, special dietary requirements, presentation preferences, or any specific requests..."
+                    rows={5}
                   />
                 </div>
 
+                {/* Submit Button */}
                 <Button 
-                  type="button"
+                  type="submit"
                   size="lg" 
                   className="w-full bg-bread-brown hover:bg-bread-brown/90 text-coconut-white text-lg font-semibold py-4"
-                  onClick={() => window.location.href = '/custom-quote'}
+                  disabled={!formData.name || !formData.email || !formData.eventType || !formData.guestCount}
                 >
                   Request Custom Quote
                 </Button>
+
+                <div className="text-center space-y-2">
+                  <p className="text-sm text-muted-foreground">
+                    We'll review your request and get back to you within 24 hours with a detailed quote.
+                  </p>
+                  <p className="text-sm text-muted-foreground">
+                    <strong>Planning ahead?</strong> We recommend booking catering services at least 2 weeks in advance.
+                  </p>
+                  <p className="text-sm text-muted-foreground">
+                    Questions? Call us at <strong>(503) 555-BOMB</strong> or email <strong>catering@colombianbakerypdx.com</strong>
+                  </p>
+                </div>
               </form>
             </CardContent>
           </Card>
-
-          {/* Additional Info */}
-          <div className="text-center mt-12 space-y-4">
-            <p className="text-muted-foreground">
-              <strong>Planning ahead?</strong> We recommend booking catering services at least 2 weeks in advance for best availability.
-            </p>
-            <p className="text-muted-foreground">
-              Questions? Call us directly at <strong>(503) 555-BOMB</strong> or email <strong>catering@colombianbakerypdx.com</strong>
-            </p>
-          </div>
         </div>
       </div>
-    </section>
+    </div>
   );
 };
 
-export default CateringSection;
+export default CustomQuotePage;

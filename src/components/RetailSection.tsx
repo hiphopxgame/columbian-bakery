@@ -163,7 +163,7 @@ const RetailSection = () => {
               <Button 
                 size="lg" 
                 className="w-full bg-bread-brown hover:bg-bread-brown/90 text-coconut-white text-lg font-semibold py-4"
-                disabled={!doughType || !filling || !delivery}
+                onClick={() => window.location.href = '/order'}
               >
                 Customize & Order Now
               </Button>

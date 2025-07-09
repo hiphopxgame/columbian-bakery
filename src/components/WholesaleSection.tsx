@@ -118,7 +118,10 @@ const WholesaleSection = () => {
                     <Badge variant="secondary">Included</Badge>
                   </div>
                 </div>
-                <Button className="w-full bg-dulce-caramel hover:bg-dulce-caramel/90 text-coconut-white">
+                <Button 
+                  className="w-full bg-dulce-caramel hover:bg-dulce-caramel/90 text-coconut-white"
+                  onClick={() => window.location.href = '/order'}
+                >
                   Order Baked & Stuffed
                 </Button>
               </CardContent>
@@ -150,7 +153,10 @@ const WholesaleSection = () => {
                     <span className="font-semibold">+$10/unit</span>
                   </div>
                 </div>
-                <Button className="w-full bg-bread-brown hover:bg-bread-brown/90 text-coconut-white">
+                <Button 
+                  className="w-full bg-bread-brown hover:bg-bread-brown/90 text-coconut-white"
+                  onClick={() => window.location.href = '/order'}
+                >
                   Order Frozen Dough
                 </Button>
               </CardContent>
@@ -162,7 +168,12 @@ const WholesaleSection = () => {
             <p className="text-muted-foreground mb-4">
               Need a custom wholesale solution? Have questions about bulk orders?
             </p>
-            <Button variant="outline" size="lg" className="border-bread-brown text-bread-brown hover:bg-bread-brown hover:text-coconut-white">
+            <Button 
+              variant="outline" 
+              size="lg" 
+              className="border-bread-brown text-bread-brown hover:bg-bread-brown hover:text-coconut-white"
+              onClick={() => window.location.href = '/custom-quote'}
+            >
               Contact Our Wholesale Team
             </Button>
           </div>
