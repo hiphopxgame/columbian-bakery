@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { Card, CardContent } from '@/components/ui/card';
+import BombshellGallery from '@/components/BombshellGallery';
 
 const AboutSection = () => {
   return (
@@ -45,18 +46,8 @@ const AboutSection = () => {
               </div>
             </div>
 
-            {/* Right Column - Image Placeholder */}
-            <div className="relative">
-              <div className="aspect-square bg-gradient-to-br from-dulce-caramel to-guava-pink rounded-2xl shadow-2xl flex items-center justify-center">
-                <div className="text-center text-coconut-white">
-                  <div className="w-32 h-32 bg-coconut-white/20 rounded-full flex items-center justify-center mb-4 mx-auto">
-                    <span className="text-4xl">🥮</span>
-                  </div>
-                  <p className="text-lg font-medium">Bombshell Cross-Section</p>
-                  <p className="text-sm opacity-90">Golden yuca pastry with creamy guava filling</p>
-                </div>
-              </div>
-            </div>
+            {/* Right Column - Gallery */}
+            <BombshellGallery />
           </div>
 
           {/* Feature Cards */}
