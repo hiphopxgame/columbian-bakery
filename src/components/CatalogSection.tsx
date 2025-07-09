@@ -2,6 +2,9 @@
 import React from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import pandeBonoImage from '@/assets/pandebono.jpg';
+import almojabanaImage from '@/assets/almojabana.jpg';
+import panDeYucaImage from '@/assets/pan-de-yuca.jpg';
 
 const CatalogSection = () => {
   const products = [
@@ -105,8 +108,12 @@ const CatalogSection = () => {
 
             <div className="grid md:grid-cols-3 gap-6 mb-12">
               <Card className="hover:shadow-lg transition-shadow">
-                <div className="h-32 bg-gradient-to-br from-bread-brown/20 to-dulce-caramel/20 flex items-center justify-center">
-                  <div className="text-4xl opacity-60">🍞</div>
+                <div className="h-32 bg-gradient-to-br from-bread-brown/20 to-dulce-caramel/20 flex items-center justify-center overflow-hidden">
+                  <img 
+                    src={pandeBonoImage} 
+                    alt="Pandebono - Traditional Colombian cheese bread"
+                    className="w-full h-full object-cover"
+                  />
                 </div>
                 <CardContent className="p-6">
                   <h4 className="text-lg font-serif font-semibold text-bread-brown mb-2">
@@ -127,8 +134,12 @@ const CatalogSection = () => {
               </Card>
 
               <Card className="hover:shadow-lg transition-shadow">
-                <div className="h-32 bg-gradient-to-br from-coconut-white to-yuca-cream flex items-center justify-center">
-                  <div className="text-4xl opacity-60">🧀</div>
+                <div className="h-32 bg-gradient-to-br from-coconut-white to-yuca-cream flex items-center justify-center overflow-hidden">
+                  <img 
+                    src={almojabanaImage} 
+                    alt="Almojábana - Traditional Colombian fluffy cheese bread"
+                    className="w-full h-full object-cover"
+                  />
                 </div>
                 <CardContent className="p-6">
                   <h4 className="text-lg font-serif font-semibold text-bread-brown mb-2">
@@ -149,8 +160,12 @@ const CatalogSection = () => {
               </Card>
 
               <Card className="hover:shadow-lg transition-shadow">
-                <div className="h-32 bg-gradient-to-br from-yuca-cream to-guava-pink/20 flex items-center justify-center">
-                  <div className="text-4xl opacity-60">🥖</div>
+                <div className="h-32 bg-gradient-to-br from-yuca-cream to-guava-pink/20 flex items-center justify-center overflow-hidden">
+                  <img 
+                    src={panDeYucaImage} 
+                    alt="Pan de Yuca - Traditional Colombian chewy yuca bread"
+                    className="w-full h-full object-cover"
+                  />
                 </div>
                 <CardContent className="p-6">
                   <h4 className="text-lg font-serif font-semibold text-bread-brown mb-2">
