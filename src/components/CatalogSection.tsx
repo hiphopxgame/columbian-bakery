@@ -91,10 +91,91 @@ const CatalogSection = () => {
             ))}
           </div>
 
+          {/* Traditional Colombian Breads Section */}
+          <div className="mt-16">
+            <div className="text-center mb-12">
+              <h3 className="text-3xl md:text-4xl font-serif font-bold text-bread-brown mb-4">
+                Traditional Colombian Breads
+              </h3>
+              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+                Beyond our signature Bombshells, our Colombian bakery offers authentic traditional breads 
+                that have been cherished in Colombian kitchens for generations.
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-3 gap-6 mb-12">
+              <Card className="hover:shadow-lg transition-shadow">
+                <div className="h-32 bg-gradient-to-br from-bread-brown/20 to-dulce-caramel/20 flex items-center justify-center">
+                  <div className="text-4xl opacity-60">🍞</div>
+                </div>
+                <CardContent className="p-6">
+                  <h4 className="text-lg font-serif font-semibold text-bread-brown mb-2">
+                    Pandebono
+                  </h4>
+                  <p className="text-muted-foreground text-sm leading-relaxed mb-3">
+                    A cheese bread made with cassava starch, cornmeal, cheese, and egg, often shaped into a ring or ball.
+                  </p>
+                  <div className="flex flex-wrap gap-2">
+                    <Badge variant="outline" className="text-xs bg-bread-brown/20 text-bread-brown border-bread-brown/30">
+                      Traditional
+                    </Badge>
+                    <Badge variant="outline" className="text-xs bg-green-100 text-green-700 border-green-200">
+                      Gluten-Free
+                    </Badge>
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card className="hover:shadow-lg transition-shadow">
+                <div className="h-32 bg-gradient-to-br from-coconut-white to-yuca-cream flex items-center justify-center">
+                  <div className="text-4xl opacity-60">🧀</div>
+                </div>
+                <CardContent className="p-6">
+                  <h4 className="text-lg font-serif font-semibold text-bread-brown mb-2">
+                    Almojábana
+                  </h4>
+                  <p className="text-muted-foreground text-sm leading-relaxed mb-3">
+                    A lighter, fluffier cheese bread made with cornmeal and fresh cheese.
+                  </p>
+                  <div className="flex flex-wrap gap-2">
+                    <Badge variant="outline" className="text-xs bg-bread-brown/20 text-bread-brown border-bread-brown/30">
+                      Traditional
+                    </Badge>
+                    <Badge variant="outline" className="text-xs bg-green-100 text-green-700 border-green-200">
+                      Gluten-Free
+                    </Badge>
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card className="hover:shadow-lg transition-shadow">
+                <div className="h-32 bg-gradient-to-br from-yuca-cream to-guava-pink/20 flex items-center justify-center">
+                  <div className="text-4xl opacity-60">🥖</div>
+                </div>
+                <CardContent className="p-6">
+                  <h4 className="text-lg font-serif font-semibold text-bread-brown mb-2">
+                    Pan de Yuca
+                  </h4>
+                  <p className="text-muted-foreground text-sm leading-relaxed mb-3">
+                    A chewy, cheese-filled bread made with yuca flour.
+                  </p>
+                  <div className="flex flex-wrap gap-2">
+                    <Badge variant="outline" className="text-xs bg-bread-brown/20 text-bread-brown border-bread-brown/30">
+                      Traditional
+                    </Badge>
+                    <Badge variant="outline" className="text-xs bg-green-100 text-green-700 border-green-200">
+                      Gluten-Free
+                    </Badge>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+
           {/* Footer Note */}
           <div className="text-center mt-12 p-6 bg-yuca-cream rounded-lg">
             <p className="text-muted-foreground">
-              <strong>Custom orders available.</strong> Don't see what you're looking for? 
+              <strong>Traditional breads available by special order.</strong> Contact us to place an order for our authentic Colombian breads. 
               We can work with you to create the perfect Colombian bread experience for your needs.
             </p>
           </div>
