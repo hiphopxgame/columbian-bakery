@@ -9,7 +9,8 @@ const CatalogSection = () => {
       name: "Classic Bombshell",
       description: "Traditional yuca pastry filled with sweet guava and cream. Every Bombshell includes a rich cream filling by default.",
       tags: ["Retail", "Wholesale", "Gluten-Free"],
-      color: "from-guava-pink/20 to-dulce-caramel/20"
+      color: "from-guava-pink/20 to-dulce-caramel/20",
+      image: "/lovable-uploads/25811de9-3a06-4de9-b0ef-66a20f1e5a99.png"
     },
     {
       name: "Vegan Bombshell",
@@ -55,8 +56,16 @@ const CatalogSection = () => {
                 key={index} 
                 className="group hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border-border/50 overflow-hidden"
               >
-                <div className={`h-32 bg-gradient-to-br ${product.color} flex items-center justify-center`}>
-                  <div className="text-4xl opacity-60">🥮</div>
+                <div className={`h-48 bg-gradient-to-br ${product.color} flex items-center justify-center overflow-hidden`}>
+                  {product.image ? (
+                    <img 
+                      src={product.image} 
+                      alt={product.name}
+                      className="w-full h-full object-cover"
+                    />
+                  ) : (
+                    <div className="text-4xl opacity-60">🥮</div>
+                  )}
                 </div>
                 <CardContent className="p-6">
                   <h3 className="text-lg font-serif font-semibold text-bread-brown mb-2 group-hover:text-dulce-caramel transition-colors">
