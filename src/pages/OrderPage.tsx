@@ -218,17 +218,14 @@ const OrderPage = () => {
 
                   <div>
                     <label className="block text-sm font-medium text-foreground mb-2">
-                      Filling *
+                      Filling (Guava & Cream included) *
                     </label>
                     <Select value={formData.filling} onValueChange={(value) => handleInputChange('filling', value)}>
                       <SelectTrigger>
                         <SelectValue placeholder="Select your favorite filling" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="guava">Guava Cream</SelectItem>
-                        <SelectItem value="dulce">Dulce de Leche</SelectItem>
-                        <SelectItem value="coconut">Coconut Cream</SelectItem>
-                        <SelectItem value="none">None (Plain)</SelectItem>
+                        <SelectItem value="guava">Guava & Cream (Standard)</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>

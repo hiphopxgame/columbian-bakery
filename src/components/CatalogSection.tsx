@@ -6,52 +6,16 @@ import { Badge } from '@/components/ui/badge';
 const CatalogSection = () => {
   const products = [
     {
-      name: "Classic Guava Bombshell",
-      description: "Traditional yuca pastry filled with sweet guava cream",
+      name: "Classic Bombshell",
+      description: "Traditional yuca pastry filled with sweet guava and cream. Every Bombshell includes a rich cream filling by default.",
       tags: ["Retail", "Wholesale", "Gluten-Free"],
       color: "from-guava-pink/20 to-dulce-caramel/20"
     },
     {
-      name: "Dulce de Leche Bombshell",
-      description: "Rich caramel-filled pastry with authentic Colombian dulce de leche",
-      tags: ["Retail", "Wholesale", "Gluten-Free"],
-      color: "from-dulce-caramel/20 to-bread-brown/20"
-    },
-    {
-      name: "Coconut Cream Bombshell",
-      description: "Light and tropical with creamy coconut filling",
-      tags: ["Retail", "Wholesale", "Gluten-Free"],
-      color: "from-coconut-white to-yuca-cream"
-    },
-    {
       name: "Vegan Bombshell",
-      description: "Plant-based yuca pastry with dairy-free fillings",
-      tags: ["Retail", "Wholesale", "Vegan", "Coming Soon"],
+      description: "Plant-based yuca pastry with dairy-free guava and cashew-based cream. Just as decadent as our classic version.",
+      tags: ["Retail", "Wholesale", "Vegan", "Gluten-Free"],
       color: "from-yuca-cream to-guava-pink/20"
-    },
-    {
-      name: "Pandebono",
-      description: "Traditional Colombian cheese bread, crispy outside and chewy inside",
-      tags: ["Retail", "Seasonal"],
-      color: "from-bread-brown/20 to-dulce-caramel/20"
-    },
-    {
-      name: "Almojábana",
-      description: "Sweet and salty Colombian bread with fresh cheese",
-      tags: ["Retail", "Seasonal"],
-      color: "from-coconut-white to-yuca-cream"
-    },
-    {
-      name: "Roscones",
-      description: "Ring-shaped sweet bread, perfect for special occasions",
-      tags: ["Catering", "Seasonal"],
-      color: "from-guava-pink/20 to-bread-brown/20"
-    },
-    {
-      name: "Raw Dough Portions",
-      description: "Uncooked yuca dough for wholesale customers to bake fresh",
-      tags: ["Wholesale", "Raw"],
-      color: "from-yuca-cream to-coconut-white"
     }
   ];
 
@@ -78,14 +42,14 @@ const CatalogSection = () => {
             <h2 className="text-4xl md:text-5xl font-serif font-bold text-bread-brown mb-6">
               Bakery Catalog
             </h2>
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              Explore our complete selection of authentic Colombian breads and pastries, 
-              each made with traditional recipes and the finest ingredients
+           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+              Our signature pastry — the Bombshell — is a gluten-free, yuca-based creation traditionally filled with guava and cream. 
+              Every Bombshell includes a rich cream filling by default, with vegan versions available.
             </p>
           </div>
 
           {/* Products Grid */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
             {products.map((product, index) => (
               <Card 
                 key={index} 
