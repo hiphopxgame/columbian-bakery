@@ -135,7 +135,7 @@ const CatalogSection = () => {
               <Card className="hover:shadow-lg transition-shadow">
                 <div className="h-32 bg-gradient-to-br from-yuca-cream to-guava-pink/20 flex items-center justify-center overflow-hidden">
                   <img 
-                    src={panDeYucaImage} 
+                    src="/lovable-uploads/83a02062-7942-4c9d-8980-42b95562ae22.png" 
                     alt="Pan de Yuca - Traditional Colombian chewy yuca bread"
                     className="w-full h-full object-cover"
                   />
