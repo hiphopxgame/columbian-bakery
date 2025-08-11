@@ -2,9 +2,8 @@
 import React from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import pandeBonoImage from '@/assets/pandebono.jpg';
-import almojabanaImage from '@/assets/almojabana.jpg';
-import panDeYucaImage from '@/assets/pan-de-yuca.jpg';
+import pandeBonoImage from '@/assets/pandebono-new.jpg';
+import panDeYucaImage from '@/assets/pan-de-yuca-new.jpg';
 
 const CatalogSection = () => {
   const products = [
@@ -106,7 +105,7 @@ const CatalogSection = () => {
               </p>
             </div>
 
-            <div className="grid md:grid-cols-3 gap-6 mb-12">
+            <div className="grid md:grid-cols-2 gap-6 mb-12">
               <Card className="hover:shadow-lg transition-shadow">
                 <div className="h-32 bg-gradient-to-br from-bread-brown/20 to-dulce-caramel/20 flex items-center justify-center overflow-hidden">
                   <img 
@@ -121,32 +120,6 @@ const CatalogSection = () => {
                   </h4>
                   <p className="text-muted-foreground text-sm leading-relaxed mb-3">
                     A cheese bread made with cassava starch, cornmeal, cheese, and egg, often shaped into a ring or ball.
-                  </p>
-                  <div className="flex flex-wrap gap-2">
-                    <Badge variant="outline" className="text-xs bg-bread-brown/20 text-bread-brown border-bread-brown/30">
-                      Traditional
-                    </Badge>
-                    <Badge variant="outline" className="text-xs bg-green-100 text-green-700 border-green-200">
-                      Gluten-Free
-                    </Badge>
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card className="hover:shadow-lg transition-shadow">
-                <div className="h-32 bg-gradient-to-br from-coconut-white to-yuca-cream flex items-center justify-center overflow-hidden">
-                  <img 
-                    src={almojabanaImage} 
-                    alt="Almojábana - Traditional Colombian fluffy cheese bread"
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-                <CardContent className="p-6">
-                  <h4 className="text-lg font-serif font-semibold text-bread-brown mb-2">
-                    Almojábana
-                  </h4>
-                  <p className="text-muted-foreground text-sm leading-relaxed mb-3">
-                    A lighter, fluffier cheese bread made with cornmeal and fresh cheese.
                   </p>
                   <div className="flex flex-wrap gap-2">
                     <Badge variant="outline" className="text-xs bg-bread-brown/20 text-bread-brown border-bread-brown/30">
