@@ -9,14 +9,9 @@ import {
 
 const BombshellGallery = () => {
   const images = [
-    '/lovable-uploads/d19d4938-15fa-41fc-a515-47093ac4239a.png',
-    '/lovable-uploads/a2ef11b1-af95-4824-b397-ccc6e2e537ab.png',
-    '/lovable-uploads/871ce97d-7c8b-45c1-bc72-42a33c3e2956.png',
-    '/lovable-uploads/3158bddf-4527-4a8b-940c-5b0ef15c6d57.png',
-    '/lovable-uploads/c03fd8e2-7379-427a-aace-4c30e2e41f14.png',
-    '/lovable-uploads/3bac3804-1983-4829-82b1-3db97a1856d2.png',
-    '/lovable-uploads/b6885ed7-b5a7-4f96-b04a-74819abd3824.png',
-    '/lovable-uploads/a9d2895e-7072-49a0-8e6a-407e9c11b741.png'
+    '/lovable-uploads/3050b739-d234-44fa-a6cc-4f394cd962a4.png',
+    '/lovable-uploads/43147ce4-8157-4c4a-9198-abf9f5baae8a.png',
+    '/lovable-uploads/4809ef95-b0a8-4409-a91e-65ea30799e62.png'
   ];
 
   return (
