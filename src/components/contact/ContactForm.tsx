@@ -1,12 +1,13 @@
-
 import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { useToast } from '@/hooks/use-toast';
 
 const ContactForm = () => {
+  const { toast } = useToast();
   const [contactForm, setContactForm] = useState({
     name: '',
     email: '',
@@ -29,15 +30,21 @@ const ContactForm = () => {
       const result = await response.json();
 
       if (result.success) {
-        // Success toast would need to be imported and used here
-        console.log('Contact form submitted successfully');
+        toast({
+          title: "Message Sent Successfully!",
+          description: "We've received your message and will get back to you soon.",
+        });
         setContactForm({ name: '', email: '', inquiryType: '', message: '' });
       } else {
         throw new Error(result.error || 'Failed to send message');
       }
     } catch (error) {
       console.error('Error sending contact form:', error);
-      // Error handling - could add toast notification here
+      toast({
+        title: "Error Sending Message",
+        description: "There was an issue sending your message. Please try again or contact us directly.",
+        variant: "destructive",
+      });
     }
   };
 

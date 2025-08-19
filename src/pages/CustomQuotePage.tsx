@@ -30,14 +30,58 @@ const CustomQuotePage = () => {
     setFormData(prev => ({ ...prev, [field]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Here you would typically send the quote request to your backend
-    toast({
-      title: "Quote Request Submitted!",
-      description: "We'll get back to you within 24 hours with a custom quote.",
-    });
-    console.log('Quote request submitted:', formData);
+    
+    try {
+      const quoteData = {
+        ...formData,
+        setupRequirements: formData.setupRequired,
+        additionalDetails: formData.message
+      };
+
+      const response = await fetch('/api/send-quote-email', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ quoteData }),
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        toast({
+          title: "Quote Request Submitted!",
+          description: "We've received your request and will send you a custom quote within 48 hours.",
+        });
+        
+        // Reset form
+        setFormData({
+          name: '',
+          email: '',
+          phone: '',
+          company: '',
+          eventType: '',
+          guestCount: '',
+          eventDate: '',
+          flavors: '',
+          budget: '',
+          deliveryLocation: '',
+          setupRequired: '',
+          message: ''
+        });
+      } else {
+        throw new Error(result.error || 'Failed to submit quote request');
+      }
+    } catch (error) {
+      console.error('Error submitting quote request:', error);
+      toast({
+        title: "Error Submitting Request",
+        description: "There was an issue submitting your quote request. Please try again or contact us directly.",
+        variant: "destructive",
+      });
+    }
   };
 
   const cateringOptions = [
