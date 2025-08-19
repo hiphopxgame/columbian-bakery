@@ -40,10 +40,11 @@ const CustomQuotePage = () => {
         additionalDetails: formData.message
       };
 
-      const response = await fetch('/api/send-quote-email', {
+      const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/send-quote-email`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
         },
         body: JSON.stringify({ quoteData }),
       });
