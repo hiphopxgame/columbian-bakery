@@ -14,11 +14,31 @@ const ContactForm = () => {
     message: ''
   });
 
-  const handleContactSubmit = (e: React.FormEvent) => {
+  const handleContactSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Contact form submitted:', contactForm);
-    // Handle contact form submission
-    setContactForm({ name: '', email: '', inquiryType: '', message: '' });
+    
+    try {
+      const response = await fetch('/api/send-contact-email', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ contactData: contactForm }),
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        // Success toast would need to be imported and used here
+        console.log('Contact form submitted successfully');
+        setContactForm({ name: '', email: '', inquiryType: '', message: '' });
+      } else {
+        throw new Error(result.error || 'Failed to send message');
+      }
+    } catch (error) {
+      console.error('Error sending contact form:', error);
+      // Error handling - could add toast notification here
+    }
   };
 
   return (

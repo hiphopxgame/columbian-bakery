@@ -40,14 +40,56 @@ const OrderPage = () => {
     return 0;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Here you would typically send the order to your backend
-    toast({
-      title: "Order Submitted!",
-      description: "We'll contact you within 24 hours to confirm your order.",
-    });
-    console.log('Order submitted:', formData);
+    
+    const orderData = {
+      ...formData,
+      orderType,
+      estimatedTotal: calculateTotal()
+    };
+
+    try {
+      const response = await fetch('/api/send-order-email', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ orderData }),
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        toast({
+          title: "Order Submitted Successfully!",
+          description: "We've sent you a confirmation email. We'll contact you within 24 hours to confirm your order.",
+        });
+        
+        // Reset form
+        setFormData({
+          name: '',
+          email: '',
+          phone: '',
+          orderType: 'retail',
+          quantity: 2,
+          doughType: '',
+          filling: '',
+          delivery: '',
+          specialInstructions: ''
+        });
+        setOrderType('retail');
+      } else {
+        throw new Error(result.error || 'Failed to submit order');
+      }
+    } catch (error) {
+      console.error('Error submitting order:', error);
+      toast({
+        title: "Error Submitting Order",
+        description: "There was an issue submitting your order. Please try again or contact us directly.",
+        variant: "destructive",
+      });
+    }
   };
 
   return (
