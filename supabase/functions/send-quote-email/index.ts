@@ -75,8 +75,8 @@ serve(async (req) => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        from: 'catering@yourdomain.com',
-        to: ['your-bakery-email@example.com'], // Replace with actual bakery email
+        from: 'catering@gavabombshellpdx.com',
+        to: ['gavabombshellpdx@gmail.com'],
         subject: `New Custom Quote Request from ${quoteData.name}`,
         html: ownerEmailContent,
       }),
@@ -90,7 +90,7 @@ serve(async (req) => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        from: 'catering@yourdomain.com',
+        from: 'catering@gavabombshellpdx.com',
         to: [quoteData.email],
         subject: 'Custom Quote Request Received - Colombian Bombshells',
         html: customerEmailContent,
