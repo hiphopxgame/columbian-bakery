@@ -9,6 +9,7 @@ import CustomQuotePage from "./pages/CustomQuotePage";
 import CulturalHeritagePage from "./pages/CulturalHeritagePage";
 import NutritionalValuePage from "./pages/NutritionalValuePage";
 import InnovationTraditionPage from "./pages/InnovationTraditionPage";
+import AdminPage from "./pages/AdminPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -26,6 +27,7 @@ const App = () => (
           <Route path="/cultural-heritage" element={<CulturalHeritagePage />} />
           <Route path="/nutritional-value" element={<NutritionalValuePage />} />
           <Route path="/innovation-tradition" element={<InnovationTraditionPage />} />
+          <Route path="/admin" element={<AdminPage />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

@@ -5,6 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useToast } from '@/hooks/use-toast';
+import { supabase } from '@/integrations/supabase/client';
 
 const ContactForm = () => {
   const { toast } = useToast();
@@ -19,26 +20,22 @@ const ContactForm = () => {
     e.preventDefault();
     
     try {
-      const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/send-contact-email`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
-        },
-        body: JSON.stringify({ contactData: contactForm }),
+      const { error } = await supabase
+        .from('cbake_messages')
+        .insert([{
+          name: contactForm.name,
+          email: contactForm.email,
+          inquiry_type: contactForm.inquiryType,
+          message: contactForm.message
+        }]);
+
+      if (error) throw error;
+
+      toast({
+        title: "Message Sent Successfully!",
+        description: "We've received your message and will get back to you soon.",
       });
-
-      const result = await response.json();
-
-      if (result.success) {
-        toast({
-          title: "Message Sent Successfully!",
-          description: "We've received your message and will get back to you soon.",
-        });
-        setContactForm({ name: '', email: '', inquiryType: '', message: '' });
-      } else {
-        throw new Error(result.error || 'Failed to send message');
-      }
+      setContactForm({ name: '', email: '', inquiryType: '', message: '' });
     } catch (error) {
       console.error('Error sending contact form:', error);
       toast({

@@ -3,15 +3,44 @@ import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { useToast } from '@/hooks/use-toast';
+import { supabase } from '@/integrations/supabase/client';
 
 const NewsletterSignup = () => {
   const [newsletterEmail, setNewsletterEmail] = useState('');
+  const { toast } = useToast();
 
-  const handleNewsletterSubmit = (e: React.FormEvent) => {
+  const handleNewsletterSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Newsletter signup:', newsletterEmail);
-    // Handle newsletter signup
-    setNewsletterEmail('');
+    
+    try {
+      const { error } = await supabase
+        .from('cbake_newsletter_subscriptions')
+        .insert([{ email: newsletterEmail }]);
+
+      if (error) throw error;
+
+      toast({
+        title: "Subscribed Successfully!",
+        description: "You'll be the first to know about new flavors and exclusive offers!",
+      });
+      setNewsletterEmail('');
+    } catch (error: any) {
+      console.error('Error subscribing to newsletter:', error);
+      if (error.code === '23505') {
+        toast({
+          title: "Already Subscribed",
+          description: "You're already subscribed to our newsletter!",
+          variant: "destructive",
+        });
+      } else {
+        toast({
+          title: "Subscription Failed",
+          description: "There was an issue subscribing you to our newsletter. Please try again.",
+          variant: "destructive",
+        });
+      }
+    }
   };
 
   return (

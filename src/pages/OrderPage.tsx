@@ -8,6 +8,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Badge } from '@/components/ui/badge';
 import { ArrowLeft } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { supabase } from '@/integrations/supabase/client';
 
 const OrderPage = () => {
   const navigate = useNavigate();
@@ -43,46 +44,42 @@ const OrderPage = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    const orderData = {
-      ...formData,
-      orderType,
-      estimatedTotal: calculateTotal()
-    };
-
     try {
-      const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/send-order-email`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
-        },
-        body: JSON.stringify({ orderData }),
+      const { error } = await supabase
+        .from('cbake_orders')
+        .insert([{
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          order_type: orderType,
+          quantity: formData.quantity,
+          dough_type: formData.doughType,
+          filling: formData.filling,
+          delivery: formData.delivery,
+          special_instructions: formData.specialInstructions,
+          estimated_total: calculateTotal()
+        }]);
+
+      if (error) throw error;
+
+      toast({
+        title: "Order Submitted Successfully!",
+        description: "We've received your order and will contact you within 24 hours to confirm.",
       });
-
-      const result = await response.json();
-
-      if (result.success) {
-        toast({
-          title: "Order Submitted Successfully!",
-          description: "We've sent you a confirmation email. We'll contact you within 24 hours to confirm your order.",
-        });
-        
-        // Reset form
-        setFormData({
-          name: '',
-          email: '',
-          phone: '',
-          orderType: 'retail',
-          quantity: 2,
-          doughType: '',
-          filling: '',
-          delivery: '',
-          specialInstructions: ''
-        });
-        setOrderType('retail');
-      } else {
-        throw new Error(result.error || 'Failed to submit order');
-      }
+      
+      // Reset form
+      setFormData({
+        name: '',
+        email: '',
+        phone: '',
+        orderType: 'retail',
+        quantity: 2,
+        doughType: '',
+        filling: '',
+        delivery: '',
+        specialInstructions: ''
+      });
+      setOrderType('retail');
     } catch (error) {
       console.error('Error submitting order:', error);
       toast({
