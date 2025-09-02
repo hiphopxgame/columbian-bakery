@@ -9,7 +9,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { ArrowLeft, Package, MessageSquare, Mail, FileText, Eye, CheckCircle, XCircle } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
-
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 interface Order {
   id: string;
   name: string;
@@ -69,16 +70,57 @@ const AdminPage = () => {
   const [quotes, setQuotes] = useState<Quote[]>([]);
   const [loading, setLoading] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [authLoading, setAuthLoading] = useState(false);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   useEffect(() => {
     checkAuth();
   }, []);
 
   const checkAuth = async () => {
-    // For now, allow admin access without authentication for testing
-    // In production, you should implement proper authentication
-    setIsAuthenticated(true);
-    fetchData();
+    const { data: { user } } = await supabase.auth.getUser();
+    if (user?.email === 'hiphopxgame@gmail.com') {
+      setIsAuthenticated(true);
+      fetchData();
+    } else {
+      setIsAuthenticated(false);
+    }
+  };
+
+  const handleSignIn = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      setAuthLoading(true);
+      const { error } = await supabase.auth.signInWithPassword({ email, password });
+      if (error) {
+        toast({ title: 'Sign in failed', description: error.message, variant: 'destructive' });
+      } else {
+        toast({ title: 'Signed in', description: 'Welcome back.' });
+        await checkAuth();
+      }
+    } finally {
+      setAuthLoading(false);
+    }
+  };
+
+  const handleSignUp = async () => {
+    try {
+      setAuthLoading(true);
+      const redirectUrl = `${window.location.origin}/admin`;
+      const { error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: { emailRedirectTo: redirectUrl }
+      });
+      if (error) {
+        toast({ title: 'Sign up failed', description: error.message, variant: 'destructive' });
+      } else {
+        toast({ title: 'Check your email', description: 'Confirm your email to complete signup.' });
+      }
+    } finally {
+      setAuthLoading(false);
+    }
   };
 
   const fetchData = async () => {
@@ -183,7 +225,36 @@ const AdminPage = () => {
   };
 
   if (!isAuthenticated) {
-    return <div>Loading...</div>;
+    return (
+      <div className="min-h-screen bg-background py-8">
+        <div className="container mx-auto px-4">
+          <div className="max-w-md mx-auto">
+            <Card>
+              <CardHeader>
+                <CardTitle>Admin Login</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <form onSubmit={handleSignIn} className="space-y-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="email">Email</Label>
+                    <Input id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="password">Password</Label>
+                    <Input id="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+                  </div>
+                  <div className="flex gap-2">
+                    <Button type="submit" disabled={authLoading}>Sign in</Button>
+                    <Button type="button" variant="outline" onClick={handleSignUp} disabled={authLoading}>Sign up</Button>
+                  </div>
+                  <p className="text-xs text-muted-foreground">Use the admin email to view orders.</p>
+                </form>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </div>
+    );
   }
 
   return (
