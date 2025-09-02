@@ -164,7 +164,8 @@ const CatalogSection = () => {
                   <img 
                     src="/lovable-uploads/a6a97d39-dabc-41a2-9777-6c6c4085aa47.png" 
                     alt="Pandequeso - Traditional Colombian cheese bread"
-                    className="w-full h-full object-cover object-center"
+                    className="w-full h-full object-cover object-center filter brightness-105 contrast-105"
+                    style={{ imageRendering: 'crisp-edges' }}
                   />
                 </div>
                 <CardContent className="p-6">
