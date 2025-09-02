@@ -16,8 +16,6 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { ArrowLeft, Package, MessageSquare, Mail, FileText, Users, Crown, Shield } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
-import { useAuth } from '@/hooks/useAuth';
-import { AuthModal } from '@/components/auth/AuthModal';
 
 interface CbakeProfile {
   id: string;
@@ -85,23 +83,15 @@ interface Quote {
 const AdminPage = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
-  const { user, profile, isAdmin, loading: authLoading } = useAuth();
   
   const [orders, setOrders] = useState<Order[]>([]);
   const [messages, setMessages] = useState<Message[]>([]);
   const [profiles, setProfiles] = useState<CbakeProfile[]>([]);
   const [loading, setLoading] = useState(true);
-  const [authModalOpen, setAuthModalOpen] = useState(false);
 
   useEffect(() => {
-    if (!authLoading) {
-      if (isAdmin) {
-        fetchData();
-      } else {
-        setLoading(false);
-      }
-    }
-  }, [isAdmin, authLoading]);
+    fetchData();
+  }, []);
 
   const fetchData = async () => {
     try {
@@ -249,56 +239,6 @@ const AdminPage = () => {
     }
   };
 
-  if (authLoading) {
-    return (
-      <div className="min-h-screen bg-background flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-bread-brown mx-auto mb-4"></div>
-          <p>Loading...</p>
-        </div>
-      </div>
-    );
-  }
-
-  if (!user || !isAdmin) {
-    return (
-      <div className="min-h-screen bg-background py-8">
-        <div className="container mx-auto px-4">
-          <div className="max-w-md mx-auto">
-            <Card>
-              <CardHeader>
-                <CardTitle>Admin Access Required</CardTitle>
-                <CardDescription>
-                  {!user ? 'You must be signed in to access the admin panel.' : 'You do not have admin privileges.'}
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                {!user ? (
-                  <Button onClick={() => setAuthModalOpen(true)} className="w-full">
-                    Sign In
-                  </Button>
-                ) : (
-                  <div className="space-y-4">
-                    <p className="text-sm text-muted-foreground">
-                      Contact an administrator to request admin access.
-                    </p>
-                    <Button onClick={() => navigate('/')} variant="outline" className="w-full">
-                      Return to Home
-                    </Button>
-                  </div>
-                )}
-              </CardContent>
-            </Card>
-          </div>
-        </div>
-        
-        <AuthModal 
-          isOpen={authModalOpen} 
-          onClose={() => setAuthModalOpen(false)} 
-        />
-      </div>
-    );
-  }
 
   return (
     <div className="min-h-screen bg-background py-8">
@@ -320,7 +260,7 @@ const AdminPage = () => {
                   Admin Dashboard
                 </h1>
                 <p className="text-muted-foreground">
-                  Welcome back, {profile?.full_name || user.email}
+                  Manage your bakery operations
                 </p>
               </div>
               <Badge variant="secondary" className="bg-guava-pink/10 text-guava-pink">
@@ -559,20 +499,13 @@ const AdminPage = () => {
                             <TableCell>{formatDate(userProfile.created_at)}</TableCell>
                             <TableCell>{formatDate(userProfile.updated_at)}</TableCell>
                             <TableCell>
-                              {userProfile.user_id !== user.id && (
-                                <Button
-                                  variant={userProfile.is_admin ? "destructive" : "outline"}
-                                  size="sm"
-                                  onClick={() => toggleUserAdmin(userProfile.user_id, userProfile.is_admin)}
-                                >
-                                  {userProfile.is_admin ? 'Remove Admin' : 'Make Admin'}
-                                </Button>
-                              )}
-                              {userProfile.user_id === user.id && (
-                                <Badge variant="outline" className="text-xs">
-                                  You
-                                </Badge>
-                              )}
+                              <Button
+                                variant={userProfile.is_admin ? "destructive" : "outline"}
+                                size="sm"
+                                onClick={() => toggleUserAdmin(userProfile.user_id, userProfile.is_admin)}
+                              >
+                                {userProfile.is_admin ? 'Remove Admin' : 'Make Admin'}
+                              </Button>
                             </TableCell>
                           </TableRow>
                         ))}
