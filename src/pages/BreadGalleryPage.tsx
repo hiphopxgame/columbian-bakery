@@ -32,30 +32,6 @@ const BreadGalleryPage = () => {
       image: "/lovable-uploads/a6a97d39-dabc-41a2-9777-6c6c4085aa47.png",
       origin: "Andean regions of Colombia",
       ingredients: "Fresh cheese, cassava flour, eggs, milk"
-    },
-    {
-      name: "Almojábana",
-      description: "A traditional Colombian bread made with corn flour and fresh cheese. These small, round breads are crispy on the outside and soft on the inside.",
-      tags: ["Traditional", "Gluten-Free", "Cheese"],
-      image: "/lovable-uploads/a9d2895e-7072-49a0-8e6a-407e9c11b741.png",
-      origin: "Santander and Boyacá regions",
-      ingredients: "Corn flour, fresh cheese, eggs, butter"
-    },
-    {
-      name: "Buñuelo",
-      description: "Deep-fried dough balls made with cheese and cassava starch, traditionally enjoyed during holidays. Crispy exterior with a soft, cheesy interior.",
-      tags: ["Traditional", "Gluten-Free", "Holiday Special"],
-      image: "/lovable-uploads/3158bddf-4527-4a8b-940c-5b0ef15c6d57.png",
-      origin: "Throughout Colombia",
-      ingredients: "Cassava starch, fresh cheese, eggs, oil"
-    },
-    {
-      name: "Arepa de Chócolo",
-      description: "Sweet corn arepa with a golden color and slightly sweet flavor. Made from fresh corn kernels, it's a beloved traditional bread across Colombia.",
-      tags: ["Traditional", "Gluten-Free", "Sweet Corn"],
-      image: "/lovable-uploads/4809ef95-b0a8-4409-a91e-65ea30799e62.png",
-      origin: "Antioquia region",
-      ingredients: "Fresh corn, salt, sugar, butter"
     }
   ];
 
