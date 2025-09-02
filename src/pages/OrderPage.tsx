@@ -67,6 +67,9 @@ const OrderPage = () => {
         description: "We've received your order and will contact you within 24 hours to confirm.",
       });
       
+      // Navigate to thank you page
+      navigate('/thank-you');
+      
       // Reset form
       setFormData({
         name: '',

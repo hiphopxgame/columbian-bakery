@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import Index from "./pages/Index";
 import OrderPage from "./pages/OrderPage";
+import ThankYouPage from "./pages/ThankYouPage";
 import CustomQuotePage from "./pages/CustomQuotePage";
 import CulturalHeritagePage from "./pages/CulturalHeritagePage";
 import NutritionalValuePage from "./pages/NutritionalValuePage";
@@ -24,6 +25,7 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/order" element={<OrderPage />} />
+          <Route path="/thank-you" element={<ThankYouPage />} />
           <Route path="/custom-quote" element={<CustomQuotePage />} />
           <Route path="/cultural-heritage" element={<CulturalHeritagePage />} />
           <Route path="/nutritional-value" element={<NutritionalValuePage />} />
