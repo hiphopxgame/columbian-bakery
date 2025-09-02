@@ -109,7 +109,7 @@ const CatalogSection = () => {
               <Card className="hover:shadow-lg transition-shadow">
                 <div className="h-64 bg-gradient-to-br from-bread-brown/20 to-dulce-caramel/20 flex items-center justify-center overflow-hidden">
                   <img 
-                    src="/lovable-uploads/45fe5bda-ccc6-47ce-a73a-5c66d2b03cfe.png" 
+                    src="/lovable-uploads/b8ecc4df-07da-4ac1-80b9-dda53ef13137.png" 
                     alt="Pandebono - Traditional Colombian cheese bread"
                     className="w-full h-full object-cover"
                   />
