@@ -549,6 +549,168 @@ export type Database = {
         }
         Relationships: []
       }
+      cbake_messages: {
+        Row: {
+          created_at: string
+          email: string
+          id: string
+          inquiry_type: string
+          message: string
+          name: string
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          id?: string
+          inquiry_type: string
+          message: string
+          name: string
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          id?: string
+          inquiry_type?: string
+          message?: string
+          name?: string
+          status?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      cbake_newsletter_subscriptions: {
+        Row: {
+          created_at: string
+          email: string
+          id: string
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          id?: string
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          id?: string
+          status?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      cbake_orders: {
+        Row: {
+          created_at: string
+          delivery: string
+          dough_type: string
+          email: string
+          estimated_total: number | null
+          filling: string
+          id: string
+          name: string
+          order_type: string
+          phone: string | null
+          quantity: number
+          special_instructions: string | null
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          delivery: string
+          dough_type: string
+          email: string
+          estimated_total?: number | null
+          filling: string
+          id?: string
+          name: string
+          order_type: string
+          phone?: string | null
+          quantity?: number
+          special_instructions?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          delivery?: string
+          dough_type?: string
+          email?: string
+          estimated_total?: number | null
+          filling?: string
+          id?: string
+          name?: string
+          order_type?: string
+          phone?: string | null
+          quantity?: number
+          special_instructions?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      cbake_quotes: {
+        Row: {
+          admin_notes: string | null
+          business_name: string | null
+          catering_services: Json | null
+          created_at: string
+          email: string
+          event_date: string | null
+          event_type: string | null
+          guest_count: number | null
+          id: string
+          name: string
+          phone: string | null
+          quoted_amount: number | null
+          special_requirements: string | null
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          admin_notes?: string | null
+          business_name?: string | null
+          catering_services?: Json | null
+          created_at?: string
+          email: string
+          event_date?: string | null
+          event_type?: string | null
+          guest_count?: number | null
+          id?: string
+          name: string
+          phone?: string | null
+          quoted_amount?: number | null
+          special_requirements?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          admin_notes?: string | null
+          business_name?: string | null
+          catering_services?: Json | null
+          created_at?: string
+          email?: string
+          event_date?: string | null
+          event_type?: string | null
+          guest_count?: number | null
+          id?: string
+          name?: string
+          phone?: string | null
+          quoted_amount?: number | null
+          special_requirements?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       contact_messages: {
         Row: {
           company: string | null
