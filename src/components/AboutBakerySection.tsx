@@ -17,8 +17,8 @@ const AboutBakerySection = () => {
             </p>
           </div>
 
-          <div className="grid lg:grid-cols-2 gap-12 items-center mb-16">
-            {/* Left Column - Story */}
+          <div className="max-w-4xl mx-auto mb-16">
+            {/* Story */}
             <div className="space-y-6">
               <h3 className="text-2xl font-serif font-semibold text-bread-brown">
                 Our Story
@@ -40,19 +40,6 @@ const AboutBakerySection = () => {
                   techniques, premium ingredients, and the love that only comes from honoring 
                   one's roots while embracing innovation.
                 </p>
-              </div>
-            </div>
-
-            {/* Right Column - Image Placeholder */}
-            <div className="relative">
-              <div className="aspect-[4/3] bg-gradient-to-br from-dulce-caramel to-bread-brown rounded-2xl shadow-2xl flex items-center justify-center">
-                <div className="text-center text-coconut-white">
-                  <div className="w-24 h-24 bg-coconut-white/20 rounded-full flex items-center justify-center mb-4 mx-auto">
-                    <span className="text-3xl">👩‍🍳</span>
-                  </div>
-                  <p className="text-lg font-medium">Our Founder</p>
-                  <p className="text-sm opacity-90">Crafting authentic Colombian flavors</p>
-                </div>
               </div>
             </div>
           </div>
