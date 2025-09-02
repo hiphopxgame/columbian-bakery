@@ -1,57 +1,57 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { supabase } from '@/integrations/supabase/client';
+
+interface Product {
+  id: string;
+  name: string;
+  description: string;
+  product_type: 'signature' | 'traditional';
+  tags: string[];
+  image_url: string;
+  base_price: number;
+  ingredients?: string;
+  origin?: string;
+}
 
 const BreadGalleryPage = () => {
   const navigate = useNavigate();
+  const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  const traditionalBreads = [
-    {
-      name: "Pandebono",
-      description: "A cheese bread made with cassava starch, cornmeal, cheese, and egg, often shaped into a ring or ball. This beloved Colombian staple has a slightly sweet flavor and chewy texture.",
-      tags: ["Traditional", "Gluten-Free", "Cheese"],
-      image: "/lovable-uploads/b8ecc4df-07da-4ac1-80b9-dda53ef13137.png",
-      origin: "Valle del Cauca region",
-      ingredients: "Cassava starch, cornmeal, fresh cheese, eggs"
-    },
-    {
-      name: "Pan de Yuca",
-      description: "A chewy, cheese-filled bread made with yuca flour. This traditional bread has a unique texture and rich cheese flavor that pairs perfectly with Colombian coffee.",
-      tags: ["Traditional", "Gluten-Free", "Cheese"],
-      image: "/lovable-uploads/83a02062-7942-4c9d-8980-42b95562ae22.png",
-      origin: "Coastal regions of Colombia",
-      ingredients: "Yuca flour, fresh cheese, eggs, butter"
-    },
-    {
-      name: "Pandequeso",
-      description: "A soft, fluffy cheese bread made with fresh cheese, creating a light and airy texture with a rich, savory flavor. Perfect for breakfast or afternoon snack.",
-      tags: ["Traditional", "Gluten-Free", "Cheese"],
-      image: "/lovable-uploads/a6a97d39-dabc-41a2-9777-6c6c4085aa47.png",
-      origin: "Andean regions of Colombia",
-      ingredients: "Fresh cheese, cassava flour, eggs, milk"
-    }
-  ];
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const { data, error } = await supabase
+          .from('cbake_products')
+          .select('*')
+          .eq('is_active', true)
+          .order('display_order');
+        
+        if (error) {
+          console.error('Error fetching products:', error);
+        } else {
+          setProducts((data || []).map(product => ({
+            ...product,
+            product_type: product.product_type as 'signature' | 'traditional'
+          })));
+        }
+      } catch (error) {
+        console.error('Error:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  const signatureProducts = [
-    {
-      name: "Classic Bombshell",
-      description: "Our signature yuca pastry filled with sweet guava and cream. Every Bombshell includes a rich cream filling by default.",
-      tags: ["Signature", "Gluten-Free", "Guava"],
-      image: "/lovable-uploads/25811de9-3a06-4de9-b0ef-66a20f1e5a99.png",
-      specialty: "House specialty with traditional Colombian flavors"
-    },
-    {
-      name: "Vegan Bombshell",
-      description: "Plant-based yuca pastry with dairy-free guava and cashew-based cream. Just as decadent as our classic version.",
-      tags: ["Signature", "Vegan", "Gluten-Free"],
-      image: "/lovable-uploads/c831cef9-238a-4a72-b80b-03e9497ef8b2.png",
-      specialty: "Plant-based version of our beloved Bombshell"
-    }
-  ];
+    fetchProducts();
+  }, []);
 
+  const signatureProducts = products.filter(p => p.product_type === 'signature');
+  const traditionalBreads = products.filter(p => p.product_type === 'traditional');
   const getTagColor = (tag: string) => {
     switch (tag) {
       case 'Traditional': return 'bg-bread-brown/20 text-bread-brown border-bread-brown/30';
@@ -65,6 +65,26 @@ const BreadGalleryPage = () => {
       default: return 'bg-secondary text-secondary-foreground';
     }
   };
+
+  const handleOrderClick = (product: Product) => {
+    navigate('/order', { 
+      state: { 
+        selectedProduct: {
+          id: product.id,
+          name: product.name,
+          price: product.base_price
+        }
+      }
+    });
+  };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <p className="text-muted-foreground">Loading products...</p>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-background">
@@ -107,25 +127,33 @@ const BreadGalleryPage = () => {
             
             <div className="grid md:grid-cols-2 gap-8 mb-16">
               {signatureProducts.map((product, index) => (
-                <Card key={index} className="group hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                <Card 
+                  key={product.id} 
+                  className="group hover:shadow-xl transition-all duration-300 hover:-translate-y-1 cursor-pointer"
+                  onClick={() => handleOrderClick(product)}
+                >
                   <div className="h-64 bg-gradient-to-br from-guava-pink/20 to-dulce-caramel/20 overflow-hidden">
                     <img 
-                      src={product.image} 
+                      src={product.image_url} 
                       alt={product.name}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                     />
                   </div>
                   <CardContent className="p-6">
-                    <h3 className="text-xl font-serif font-semibold text-bread-brown mb-3">
-                      {product.name}
-                    </h3>
-                    <p className="text-muted-foreground mb-3 leading-relaxed">
+                    <div className="flex justify-between items-start mb-3">
+                      <h3 className="text-xl font-serif font-semibold text-bread-brown">
+                        {product.name}
+                      </h3>
+                      {product.base_price && (
+                        <span className="text-lg font-semibold text-guava-pink">
+                          ${product.base_price}
+                        </span>
+                      )}
+                    </div>
+                    <p className="text-muted-foreground mb-4 leading-relaxed">
                       {product.description}
                     </p>
-                    <p className="text-sm text-dulce-caramel font-medium mb-4 italic">
-                      {product.specialty}
-                    </p>
-                    <div className="flex flex-wrap gap-2">
+                    <div className="flex flex-wrap gap-2 mb-4">
                       {product.tags.map((tag, tagIndex) => (
                         <Badge 
                           key={tagIndex} 
@@ -136,6 +164,15 @@ const BreadGalleryPage = () => {
                         </Badge>
                       ))}
                     </div>
+                    <Button 
+                      className="w-full bg-guava-pink hover:bg-guava-pink/90 text-coconut-white"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleOrderClick(product);
+                      }}
+                    >
+                      Order Now
+                    </Button>
                   </CardContent>
                 </Card>
               ))}
@@ -159,32 +196,49 @@ const BreadGalleryPage = () => {
             </div>
             
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {traditionalBreads.map((bread, index) => (
-                <Card key={index} className="group hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+              {traditionalBreads.map((product, index) => (
+                <Card 
+                  key={product.id} 
+                  className="group hover:shadow-xl transition-all duration-300 hover:-translate-y-1 cursor-pointer"
+                  onClick={() => handleOrderClick(product)}
+                >
                   <div className="h-48 bg-gradient-to-br from-bread-brown/20 to-dulce-caramel/20 overflow-hidden">
                     <img 
-                      src={bread.image} 
-                      alt={bread.name}
+                      src={product.image_url} 
+                      alt={product.name}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                     />
                   </div>
                   <CardContent className="p-6">
-                    <h3 className="text-lg font-serif font-semibold text-bread-brown mb-2">
-                      {bread.name}
-                    </h3>
-                    <p className="text-muted-foreground text-sm mb-3 leading-relaxed">
-                      {bread.description}
-                    </p>
-                    <div className="space-y-2 mb-4">
-                      <div className="text-xs text-dulce-caramel font-medium">
-                        <strong>Origin:</strong> {bread.origin}
-                      </div>
-                      <div className="text-xs text-dulce-caramel font-medium">
-                        <strong>Key Ingredients:</strong> {bread.ingredients}
-                      </div>
+                    <div className="flex justify-between items-start mb-2">
+                      <h3 className="text-lg font-serif font-semibold text-bread-brown">
+                        {product.name}
+                      </h3>
+                      {product.base_price && (
+                        <span className="text-sm font-semibold text-guava-pink">
+                          ${product.base_price}
+                        </span>
+                      )}
                     </div>
-                    <div className="flex flex-wrap gap-2">
-                      {bread.tags.map((tag, tagIndex) => (
+                    <p className="text-muted-foreground text-sm mb-3 leading-relaxed">
+                      {product.description}
+                    </p>
+                    {(product.origin || product.ingredients) && (
+                      <div className="space-y-2 mb-4">
+                        {product.origin && (
+                          <div className="text-xs text-dulce-caramel font-medium">
+                            <strong>Origin:</strong> {product.origin}
+                          </div>
+                        )}
+                        {product.ingredients && (
+                          <div className="text-xs text-dulce-caramel font-medium">
+                            <strong>Key Ingredients:</strong> {product.ingredients}
+                          </div>
+                        )}
+                      </div>
+                    )}
+                    <div className="flex flex-wrap gap-2 mb-4">
+                      {product.tags.map((tag, tagIndex) => (
                         <Badge 
                           key={tagIndex} 
                           variant="outline" 
@@ -194,6 +248,15 @@ const BreadGalleryPage = () => {
                         </Badge>
                       ))}
                     </div>
+                    <Button 
+                      className="w-full bg-guava-pink hover:bg-guava-pink/90 text-coconut-white"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleOrderClick(product);
+                      }}
+                    >
+                      Order Now - ${product.base_price}
+                    </Button>
                   </CardContent>
                 </Card>
               ))}

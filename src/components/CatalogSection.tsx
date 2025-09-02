@@ -1,49 +1,52 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
+import { supabase } from '@/integrations/supabase/client';
+
+interface Product {
+  id: string;
+  name: string;
+  description: string;
+  product_type: 'signature' | 'traditional';
+  tags: string[];
+  image_url: string;
+  base_price: number;
+  display_order: number;
+}
 
 const CatalogSection = () => {
   const navigate = useNavigate();
-  
-  const products = [
-    {
-      name: "Classic Bombshell",
-      description: "Traditional yuca pastry filled with sweet guava and cream. Every Bombshell includes a rich cream filling by default.",
-      tags: ["Signature", "Gluten-Free"],
-      color: "from-guava-pink/20 to-dulce-caramel/20",
-      image: "/lovable-uploads/25811de9-3a06-4de9-b0ef-66a20f1e5a99.png"
-    },
-    {
-      name: "Vegan Bombshell",
-      description: "Plant-based yuca pastry with dairy-free guava and cashew-based cream. Just as decadent as our classic version.",
-      tags: ["Signature", "Vegan", "Gluten-Free"],
-      color: "from-yuca-cream to-guava-pink/20",
-      image: "/lovable-uploads/c831cef9-238a-4a72-b80b-03e9497ef8b2.png"
-    },
-    {
-      name: "Pandebono",
-      description: "A cheese bread made with cassava starch, cornmeal, cheese, and egg, often shaped into a ring or ball.",
-      tags: ["Traditional", "Gluten-Free"],
-      color: "from-bread-brown/20 to-dulce-caramel/20",
-      image: "/lovable-uploads/b8ecc4df-07da-4ac1-80b9-dda53ef13137.png"
-    },
-    {
-      name: "Pan de Yuca",
-      description: "A chewy, cheese-filled bread made with yuca flour.",
-      tags: ["Traditional", "Gluten-Free"],
-      color: "from-yuca-cream to-guava-pink/20",
-      image: "/lovable-uploads/83a02062-7942-4c9d-8980-42b95562ae22.png"
-    },
-    {
-      name: "Pandequeso",
-      description: "A soft, fluffy cheese bread made with fresh cheese, creating a light and airy texture with a rich, savory flavor.",
-      tags: ["Traditional", "Gluten-Free"],
-      color: "from-dulce-caramel/20 to-bread-brown/20",
-      image: "/lovable-uploads/a6a97d39-dabc-41a2-9777-6c6c4085aa47.png"
-    }
-  ];
+  const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const { data, error } = await supabase
+          .from('cbake_products')
+          .select('*')
+          .eq('is_active', true)
+          .order('display_order');
+        
+        if (error) {
+          console.error('Error fetching products:', error);
+        } else {
+          setProducts((data || []).map(product => ({
+            ...product,
+            product_type: product.product_type as 'signature' | 'traditional'
+          })));
+        }
+      } catch (error) {
+        console.error('Error:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProducts();
+  }, []);
 
   const getTagColor = (tag: string) => {
     switch (tag) {
@@ -58,6 +61,42 @@ const CatalogSection = () => {
       default: return 'bg-secondary text-secondary-foreground';
     }
   };
+
+  const getGradientColor = (productType: string, index: number) => {
+    if (productType === 'signature') {
+      return index % 2 === 0 ? 'from-guava-pink/20 to-dulce-caramel/20' : 'from-yuca-cream to-guava-pink/20';
+    }
+    const gradients = [
+      'from-bread-brown/20 to-dulce-caramel/20',
+      'from-yuca-cream to-guava-pink/20',
+      'from-dulce-caramel/20 to-bread-brown/20'
+    ];
+    return gradients[index % gradients.length];
+  };
+
+  const handleOrderClick = (product: Product) => {
+    navigate('/order', { 
+      state: { 
+        selectedProduct: {
+          id: product.id,
+          name: product.name,
+          price: product.base_price
+        }
+      }
+    });
+  };
+
+  if (loading) {
+    return (
+      <section id="catalog" className="py-20 bg-background">
+        <div className="container mx-auto px-4">
+          <div className="max-w-6xl mx-auto text-center">
+            <p className="text-muted-foreground">Loading products...</p>
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section id="catalog" className="py-20 bg-background">
@@ -84,13 +123,14 @@ const CatalogSection = () => {
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
             {products.map((product, index) => (
               <Card 
-                key={index} 
-                className="group hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border-border/50 overflow-hidden"
+                key={product.id} 
+                className="group hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border-border/50 overflow-hidden cursor-pointer"
+                onClick={() => handleOrderClick(product)}
               >
-                <div className={`h-48 bg-gradient-to-br ${product.color} flex items-center justify-center overflow-hidden`}>
-                  {product.image ? (
+                <div className={`h-48 bg-gradient-to-br ${getGradientColor(product.product_type, index)} flex items-center justify-center overflow-hidden`}>
+                  {product.image_url ? (
                     <img 
-                      src={product.image} 
+                      src={product.image_url} 
                       alt={product.name}
                       className="w-full h-full object-cover"
                     />
@@ -99,13 +139,20 @@ const CatalogSection = () => {
                   )}
                 </div>
                 <CardContent className="p-6">
-                  <h3 className="text-lg font-serif font-semibold text-bread-brown mb-2 group-hover:text-dulce-caramel transition-colors">
-                    {product.name}
-                  </h3>
+                  <div className="flex justify-between items-start mb-2">
+                    <h3 className="text-lg font-serif font-semibold text-bread-brown group-hover:text-dulce-caramel transition-colors">
+                      {product.name}
+                    </h3>
+                    {product.base_price && (
+                      <span className="text-sm font-semibold text-guava-pink">
+                        ${product.base_price}
+                      </span>
+                    )}
+                  </div>
                   <p className="text-muted-foreground mb-4 text-sm leading-relaxed">
                     {product.description}
                   </p>
-                  <div className="flex flex-wrap gap-2">
+                  <div className="flex flex-wrap gap-2 mb-4">
                     {product.tags.map((tag, tagIndex) => (
                       <Badge 
                         key={tagIndex} 
@@ -116,6 +163,15 @@ const CatalogSection = () => {
                       </Badge>
                     ))}
                   </div>
+                  <Button 
+                    className="w-full bg-guava-pink hover:bg-guava-pink/90 text-coconut-white"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleOrderClick(product);
+                    }}
+                  >
+                    Order Now
+                  </Button>
                 </CardContent>
               </Card>
             ))}

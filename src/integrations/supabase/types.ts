@@ -629,6 +629,8 @@ export type Database = {
           name: string
           order_type: string
           phone: string | null
+          product_id: string | null
+          product_name: string | null
           quantity: number
           special_instructions: string | null
           status: string
@@ -646,6 +648,8 @@ export type Database = {
           name: string
           order_type: string
           phone?: string | null
+          product_id?: string | null
+          product_name?: string | null
           quantity?: number
           special_instructions?: string | null
           status?: string
@@ -663,6 +667,8 @@ export type Database = {
           name?: string
           order_type?: string
           phone?: string | null
+          product_id?: string | null
+          product_name?: string | null
           quantity?: number
           special_instructions?: string | null
           status?: string
@@ -671,6 +677,13 @@ export type Database = {
         }
         Relationships: [
           {
+            foreignKeyName: "cbake_orders_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "cbake_products"
+            referencedColumns: ["id"]
+          },
+          {
             foreignKeyName: "cbake_orders_user_id_fkey"
             columns: ["user_id"]
             isOneToOne: false
@@ -678,6 +691,54 @@ export type Database = {
             referencedColumns: ["user_id"]
           },
         ]
+      }
+      cbake_products: {
+        Row: {
+          base_price: number | null
+          created_at: string
+          description: string | null
+          display_order: number | null
+          id: string
+          image_url: string | null
+          ingredients: string | null
+          is_active: boolean
+          name: string
+          origin: string | null
+          product_type: string
+          tags: string[] | null
+          updated_at: string
+        }
+        Insert: {
+          base_price?: number | null
+          created_at?: string
+          description?: string | null
+          display_order?: number | null
+          id?: string
+          image_url?: string | null
+          ingredients?: string | null
+          is_active?: boolean
+          name: string
+          origin?: string | null
+          product_type: string
+          tags?: string[] | null
+          updated_at?: string
+        }
+        Update: {
+          base_price?: number | null
+          created_at?: string
+          description?: string | null
+          display_order?: number | null
+          id?: string
+          image_url?: string | null
+          ingredients?: string | null
+          is_active?: boolean
+          name?: string
+          origin?: string | null
+          product_type?: string
+          tags?: string[] | null
+          updated_at?: string
+        }
+        Relationships: []
       }
       cbake_profiles: {
         Row: {

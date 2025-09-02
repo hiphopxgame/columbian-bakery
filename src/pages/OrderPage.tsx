@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -12,8 +12,10 @@ import { supabase } from '@/integrations/supabase/client';
 
 const OrderPage = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { toast } = useToast();
   const [orderType, setOrderType] = useState('retail');
+  const [selectedProduct, setSelectedProduct] = useState<any>(null);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -26,11 +28,21 @@ const OrderPage = () => {
     specialInstructions: ''
   });
 
+  useEffect(() => {
+    // Check if product was selected from catalog
+    if (location.state?.selectedProduct) {
+      setSelectedProduct(location.state.selectedProduct);
+    }
+  }, [location.state]);
+
   const handleInputChange = (field: string, value: string | number) => {
     setFormData(prev => ({ ...prev, [field]: value }));
   };
 
   const calculateTotal = () => {
+    if (selectedProduct) {
+      return formData.quantity * (selectedProduct.price || 0);
+    }
     if (orderType === 'retail') {
       return formData.quantity * 25;
     } else if (orderType === 'wholesale-baked') {
@@ -52,6 +64,8 @@ const OrderPage = () => {
           email: formData.email,
           phone: formData.phone,
           order_type: orderType,
+          product_id: selectedProduct?.id || null,
+          product_name: selectedProduct?.name || null,
           quantity: formData.quantity,
           dough_type: formData.doughType,
           filling: formData.filling,
@@ -108,11 +122,21 @@ const OrderPage = () => {
               Back to Home
             </Button>
             <h1 className="text-4xl font-serif font-bold text-bread-brown mb-2">
-              Place Your Order
+              {selectedProduct ? `Order ${selectedProduct.name}` : 'Place Your Order'}
             </h1>
             <p className="text-muted-foreground">
-              Fill out the form below to place your Bombshell order
+              {selectedProduct 
+                ? `Fill out the form below to order ${selectedProduct.name}` 
+                : 'Fill out the form below to place your order'
+              }
             </p>
+            {selectedProduct && (
+              <div className="mt-4 p-4 bg-yuca-cream rounded-lg">
+                <p className="text-bread-brown font-semibold">
+                  Selected Product: {selectedProduct.name} - ${selectedProduct.price}
+                </p>
+              </div>
+            )}
           </div>
 
           {/* Order Type Selection */}
