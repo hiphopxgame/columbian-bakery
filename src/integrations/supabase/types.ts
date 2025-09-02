@@ -559,6 +559,7 @@ export type Database = {
           name: string
           status: string
           updated_at: string
+          user_id: string | null
         }
         Insert: {
           created_at?: string
@@ -569,6 +570,7 @@ export type Database = {
           name: string
           status?: string
           updated_at?: string
+          user_id?: string | null
         }
         Update: {
           created_at?: string
@@ -579,8 +581,17 @@ export type Database = {
           name?: string
           status?: string
           updated_at?: string
+          user_id?: string | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "cbake_messages_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "cbake_profiles"
+            referencedColumns: ["user_id"]
+          },
+        ]
       }
       cbake_newsletter_subscriptions: {
         Row: {
@@ -622,6 +633,7 @@ export type Database = {
           special_instructions: string | null
           status: string
           updated_at: string
+          user_id: string | null
         }
         Insert: {
           created_at?: string
@@ -638,6 +650,7 @@ export type Database = {
           special_instructions?: string | null
           status?: string
           updated_at?: string
+          user_id?: string | null
         }
         Update: {
           created_at?: string
@@ -654,6 +667,45 @@ export type Database = {
           special_instructions?: string | null
           status?: string
           updated_at?: string
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "cbake_orders_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "cbake_profiles"
+            referencedColumns: ["user_id"]
+          },
+        ]
+      }
+      cbake_profiles: {
+        Row: {
+          created_at: string
+          email: string
+          full_name: string | null
+          id: string
+          is_admin: boolean
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          full_name?: string | null
+          id?: string
+          is_admin?: boolean
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          full_name?: string | null
+          id?: string
+          is_admin?: boolean
+          updated_at?: string
+          user_id?: string
         }
         Relationships: []
       }
