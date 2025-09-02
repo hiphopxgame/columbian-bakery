@@ -1,11 +1,15 @@
 
 import React, { useState, useEffect } from 'react';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, User, LogOut } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { useAuth } from '@/hooks/useAuth';
+import { AuthModal } from '@/components/auth/AuthModal';
 
 const Navigation = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [authModalOpen, setAuthModalOpen] = useState(false);
+  const { user, profile, signOut, loading } = useAuth();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -61,6 +65,38 @@ const Navigation = () => {
                 <span>{item.label}</span>
               </button>
             ))}
+            
+            {/* Auth buttons */}
+            {!loading && (
+              <div className="flex items-center space-x-2 ml-4 border-l border-cacao-brown/20 pl-4">
+                {user ? (
+                  <div className="flex items-center space-x-2">
+                    <span className="text-sm text-cacao-brown">
+                      {profile?.full_name || user.email}
+                      {profile?.is_admin && <span className="ml-1 text-guava-pink">👑</span>}
+                    </span>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={signOut}
+                      className="text-cacao-brown hover:text-guava-pink"
+                    >
+                      <LogOut size={16} />
+                    </Button>
+                  </div>
+                ) : (
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => setAuthModalOpen(true)}
+                    className="text-cacao-brown hover:text-guava-pink"
+                  >
+                    <User size={16} className="mr-1" />
+                    Sign In
+                  </Button>
+                )}
+              </div>
+            )}
           </div>
 
           {/* Mobile Menu Button with enhanced styling */}
@@ -90,10 +126,48 @@ const Navigation = () => {
                   <span>{item.label}</span>
                 </button>
               ))}
+              
+              {/* Mobile auth section */}
+              {!loading && (
+                <div className="border-t border-cacao-brown/20 pt-2">
+                  {user ? (
+                    <div className="px-4 py-2 space-y-2">
+                      <div className="text-sm text-cacao-brown">
+                        {profile?.full_name || user.email}
+                        {profile?.is_admin && <span className="ml-1">👑</span>}
+                      </div>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={signOut}
+                        className="w-full justify-start text-cacao-brown hover:text-guava-pink"
+                      >
+                        <LogOut size={16} className="mr-2" />
+                        Sign Out
+                      </Button>
+                    </div>
+                  ) : (
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => setAuthModalOpen(true)}
+                      className="w-full justify-start text-cacao-brown hover:text-guava-pink mx-2"
+                    >
+                      <User size={16} className="mr-2" />
+                      Sign In
+                    </Button>
+                  )}
+                </div>
+              )}
             </div>
           </div>
         )}
       </div>
+      
+      <AuthModal 
+        isOpen={authModalOpen} 
+        onClose={() => setAuthModalOpen(false)} 
+      />
     </nav>
   );
 };
