@@ -91,6 +91,12 @@ const AdminPage = () => {
         supabase.from('cbake_quotes').select('*').order('created_at', { ascending: false })
       ]);
 
+      console.log('Orders fetched:', ordersRes.data);
+      console.log('Orders error:', ordersRes.error);
+      console.log('Messages fetched:', messagesRes.data);
+      console.log('Newsletter subscriptions fetched:', newslettersRes.data);
+      console.log('Quotes fetched:', quotesRes.data);
+
       if (ordersRes.data) setOrders(ordersRes.data);
       if (messagesRes.data) setMessages(messagesRes.data);
       if (newslettersRes.data) setNewsletters(newslettersRes.data);
