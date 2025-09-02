@@ -13,19 +13,10 @@ import {
   TableRow 
 } from '@/components/ui/table';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { ArrowLeft, Package, MessageSquare, Mail, FileText, Users, Crown, Shield } from 'lucide-react';
+import { ArrowLeft, Package, MessageSquare, Mail, FileText } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 
-interface CbakeProfile {
-  id: string;
-  user_id: string;
-  email: string;
-  full_name: string | null;
-  is_admin: boolean;
-  created_at: string;
-  updated_at: string;
-}
 
 interface Order {
   id: string;
@@ -56,13 +47,6 @@ interface Message {
   user_id?: string;
 }
 
-interface NewsletterSubscription {
-  id: string;
-  email: string;
-  status: string;
-  created_at: string;
-}
-
 interface Quote {
   id: string;
   name: string;
@@ -80,13 +64,20 @@ interface Quote {
   created_at: string;
 }
 
+interface NewsletterSubscription {
+  id: string;
+  email: string;
+  created_at: string;
+}
+
 const AdminPage = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
   
   const [orders, setOrders] = useState<Order[]>([]);
   const [messages, setMessages] = useState<Message[]>([]);
-  const [profiles, setProfiles] = useState<CbakeProfile[]>([]);
+  const [quotes, setQuotes] = useState<Quote[]>([]);  
+  const [newsletters, setNewsletters] = useState<NewsletterSubscription[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -97,41 +88,55 @@ const AdminPage = () => {
     try {
       setLoading(true);
       
-      // Fetch orders
-      const { data: ordersData, error: ordersError } = await supabase
-        .from('cbake_orders')
-        .select('*')
-        .order('created_at', { ascending: false });
-      
-      if (ordersError) {
-        console.error('Orders error:', ordersError);
-        toast({ title: 'Error fetching orders', description: ordersError.message, variant: 'destructive' });
+      const [ordersResult, messagesResult, quotesResult, newslettersResult] = await Promise.all([
+        // Fetch orders
+        supabase
+          .from('cbake_orders')
+          .select('*')
+          .order('created_at', { ascending: false }),
+        
+        // Fetch messages  
+        supabase
+          .from('cbake_messages')
+          .select('*')
+          .order('created_at', { ascending: false }),
+        
+        // Fetch catering quotes
+        supabase
+          .from('cbake_quotes')
+          .select('*')
+          .order('created_at', { ascending: false }),
+          
+        // Fetch newsletter subscriptions
+        supabase
+          .from('cbake_newsletter_subscriptions')
+          .select('*')
+          .order('created_at', { ascending: false })
+      ]);
+
+      if (ordersResult.error) {
+        console.error('Orders error:', ordersResult.error);
+        toast({ title: 'Error fetching orders', description: ordersResult.error.message, variant: 'destructive' });
       } else {
-        setOrders(ordersData || []);
+        setOrders(ordersResult.data || []);
       }
 
-      // Fetch messages
-      const { data: messagesData, error: messagesError } = await supabase
-        .from('cbake_messages')
-        .select('*')
-        .order('created_at', { ascending: false });
-      
-      if (messagesError) {
-        console.error('Messages error:', messagesError);
+      if (messagesResult.error) {
+        console.error('Messages error:', messagesResult.error);
       } else {
-        setMessages(messagesData || []);
+        setMessages(messagesResult.data || []);
       }
 
-      // Fetch user profiles
-      const { data: profilesData, error: profilesError } = await supabase
-        .from('cbake_profiles')
-        .select('*')
-        .order('created_at', { ascending: false });
-      
-      if (profilesError) {
-        console.error('Profiles error:', profilesError);
+      if (quotesResult.error) {
+        console.error('Quotes error:', quotesResult.error);
       } else {
-        setProfiles(profilesData || []);
+        setQuotes(quotesResult.data || []);
+      }
+
+      if (newslettersResult.error) {
+        console.error('Newsletter error:', newslettersResult.error);
+      } else {
+        setNewsletters(newslettersResult.data || []);
       }
 
     } catch (error) {
@@ -196,28 +201,28 @@ const AdminPage = () => {
     }
   };
 
-  const toggleUserAdmin = async (userId: string, currentAdminStatus: boolean) => {
+  const updateQuoteStatus = async (id: string, status: string) => {
     try {
       const { error } = await supabase
-        .from('cbake_profiles')
-        .update({ is_admin: !currentAdminStatus })
-        .eq('user_id', userId);
+        .from('cbake_quotes')
+        .update({ status })
+        .eq('id', id);
 
       if (error) throw error;
 
-      setProfiles(prev => prev.map(profile => 
-        profile.user_id === userId ? { ...profile, is_admin: !currentAdminStatus } : profile
+      setQuotes(prev => prev.map(quote => 
+        quote.id === id ? { ...quote, status } : quote
       ));
 
       toast({
         title: "Success",
-        description: `User ${!currentAdminStatus ? 'promoted to' : 'removed from'} admin.`,
+        description: "Quote status updated.",
       });
     } catch (error) {
-      console.error('Error updating user admin status:', error);
+      console.error('Error updating quote:', error);
       toast({
         title: "Error",
-        description: "Failed to update user admin status.",
+        description: "Failed to update quote status.",
         variant: "destructive",
       });
     }
@@ -264,14 +269,13 @@ const AdminPage = () => {
                 </p>
               </div>
               <Badge variant="secondary" className="bg-guava-pink/10 text-guava-pink">
-                <Crown className="w-4 h-4 mr-1" />
                 Admin
               </Badge>
             </div>
           </div>
 
           {/* Overview Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
             <Card>
               <CardContent className="p-6">
                 <div className="flex items-center">
@@ -299,10 +303,22 @@ const AdminPage = () => {
             <Card>
               <CardContent className="p-6">
                 <div className="flex items-center">
-                  <Users className="h-8 w-8 text-bread-brown" />
+                  <FileText className="h-8 w-8 text-bread-brown" />
                   <div className="ml-4">
-                    <p className="text-sm font-medium text-muted-foreground">Users</p>
-                    <p className="text-2xl font-bold text-foreground">{profiles.length}</p>
+                    <p className="text-sm font-medium text-muted-foreground">Catering Requests</p>
+                    <p className="text-2xl font-bold text-foreground">{quotes.length}</p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardContent className="p-6">
+                <div className="flex items-center">
+                  <Mail className="h-8 w-8 text-bread-brown" />
+                  <div className="ml-4">
+                    <p className="text-sm font-medium text-muted-foreground">Newsletter Subscribers</p>
+                    <p className="text-2xl font-bold text-foreground">{newsletters.length}</p>
                   </div>
                 </div>
               </CardContent>
@@ -311,10 +327,11 @@ const AdminPage = () => {
 
           {/* Data Tables */}
           <Tabs defaultValue="orders" className="w-full">
-            <TabsList className="grid w-full grid-cols-3">
+            <TabsList className="grid w-full grid-cols-4">
               <TabsTrigger value="orders">Orders</TabsTrigger>
               <TabsTrigger value="messages">Messages</TabsTrigger>
-              <TabsTrigger value="users">Users</TabsTrigger>
+              <TabsTrigger value="catering">Catering</TabsTrigger>
+              <TabsTrigger value="newsletter">Newsletter</TabsTrigger>
             </TabsList>
 
             <TabsContent value="orders">
@@ -448,13 +465,10 @@ const AdminPage = () => {
               </Card>
             </TabsContent>
 
-            <TabsContent value="users">
+            <TabsContent value="catering">
               <Card>
                 <CardHeader>
-                  <CardTitle>User Management</CardTitle>
-                  <CardDescription>
-                    Manage user accounts and admin privileges
-                  </CardDescription>
+                  <CardTitle>Catering Requests</CardTitle>
                 </CardHeader>
                 <CardContent>
                   {loading ? (
@@ -465,48 +479,89 @@ const AdminPage = () => {
                     <Table>
                       <TableHeader>
                         <TableRow>
-                          <TableHead>User</TableHead>
-                          <TableHead>Role</TableHead>
-                          <TableHead>Joined</TableHead>
-                          <TableHead>Last Updated</TableHead>
+                          <TableHead>Customer</TableHead>
+                          <TableHead>Event</TableHead>
+                          <TableHead>Date</TableHead>
+                          <TableHead>Guests</TableHead>
+                          <TableHead>Status</TableHead>
+                          <TableHead>Quote</TableHead>
                           <TableHead>Actions</TableHead>
                         </TableRow>
                       </TableHeader>
                       <TableBody>
-                        {profiles.map((userProfile) => (
-                          <TableRow key={userProfile.id}>
+                        {quotes.map((quote) => (
+                          <TableRow key={quote.id}>
                             <TableCell>
                               <div>
-                                <p className="font-medium">{userProfile.full_name || 'No name'}</p>
-                                <p className="text-sm text-muted-foreground">{userProfile.email}</p>
-                              </div>
-                            </TableCell>
-                            <TableCell>
-                              <div className="flex items-center gap-2">
-                                {userProfile.is_admin ? (
-                                  <Badge className="bg-guava-pink/10 text-guava-pink">
-                                    <Crown className="w-3 h-3 mr-1" />
-                                    Admin
-                                  </Badge>
-                                ) : (
-                                  <Badge variant="secondary">
-                                    <Shield className="w-3 h-3 mr-1" />
-                                    User
-                                  </Badge>
+                                <p className="font-medium">{quote.name}</p>
+                                <p className="text-sm text-muted-foreground">{quote.email}</p>
+                                {quote.business_name && (
+                                  <p className="text-sm text-muted-foreground">{quote.business_name}</p>
                                 )}
                               </div>
                             </TableCell>
-                            <TableCell>{formatDate(userProfile.created_at)}</TableCell>
-                            <TableCell>{formatDate(userProfile.updated_at)}</TableCell>
+                            <TableCell className="capitalize">{quote.event_type || 'N/A'}</TableCell>
                             <TableCell>
-                              <Button
-                                variant={userProfile.is_admin ? "destructive" : "outline"}
-                                size="sm"
-                                onClick={() => toggleUserAdmin(userProfile.user_id, userProfile.is_admin)}
-                              >
-                                {userProfile.is_admin ? 'Remove Admin' : 'Make Admin'}
-                              </Button>
+                              {quote.event_date ? new Date(quote.event_date).toLocaleDateString() : 'N/A'}
                             </TableCell>
+                            <TableCell>{quote.guest_count || 'N/A'}</TableCell>
+                            <TableCell>
+                              <Badge className={getStatusColor(quote.status)}>
+                                {quote.status}
+                              </Badge>
+                            </TableCell>
+                            <TableCell>
+                              {quote.quoted_amount ? `$${quote.quoted_amount}` : 'Pending'}
+                            </TableCell>
+                            <TableCell>
+                              <Select
+                                value={quote.status}
+                                onValueChange={(value) => updateQuoteStatus(quote.id, value)}
+                              >
+                                <SelectTrigger className="w-32">
+                                  <SelectValue />
+                                </SelectTrigger>
+                                <SelectContent>
+                                  <SelectItem value="pending">Pending</SelectItem>
+                                  <SelectItem value="quoted">Quoted</SelectItem>
+                                  <SelectItem value="confirmed">Confirmed</SelectItem>
+                                  <SelectItem value="completed">Completed</SelectItem>
+                                  <SelectItem value="cancelled">Cancelled</SelectItem>
+                                </SelectContent>
+                              </Select>
+                            </TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  )}
+                </CardContent>
+              </Card>
+            </TabsContent>
+
+            <TabsContent value="newsletter">
+              <Card>
+                <CardHeader>
+                  <CardTitle>Newsletter Subscriptions</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  {loading ? (
+                    <div className="flex justify-center py-8">
+                      <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-bread-brown"></div>
+                    </div>
+                  ) : (
+                    <Table>
+                      <TableHeader>
+                        <TableRow>
+                          <TableHead>Email</TableHead>
+                          <TableHead>Subscribed Date</TableHead>
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody>
+                        {newsletters.map((newsletter) => (
+                          <TableRow key={newsletter.id}>
+                            <TableCell className="font-medium">{newsletter.email}</TableCell>
+                            <TableCell>{formatDate(newsletter.created_at)}</TableCell>
                           </TableRow>
                         ))}
                       </TableBody>
