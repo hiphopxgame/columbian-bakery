@@ -111,7 +111,8 @@ const CatalogSection = () => {
                   <img 
                     src="/lovable-uploads/b8ecc4df-07da-4ac1-80b9-dda53ef13137.png" 
                     alt="Pandebono - Traditional Colombian cheese bread"
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-cover object-center filter brightness-105 contrast-105"
+                    style={{ imageRendering: 'crisp-edges' }}
                   />
                 </div>
                 <CardContent className="p-6">
