@@ -19,9 +19,7 @@ const Navigation = () => {
     { label: 'Home', href: '#home', emoji: '🏠' },
     { label: 'About', href: '#about', emoji: '📖' },
     { label: 'Retail', href: '#retail', emoji: '🛍️' },
-    { label: 'Wholesale', href: '#wholesale', emoji: '🏢' },
     { label: 'Catalog', href: '#catalog', emoji: '📋' },
-    { label: 'Catering', href: '#catering', emoji: '🎉' },
     { label: 'Contact', href: '#contact', emoji: '💬' }
   ];
 

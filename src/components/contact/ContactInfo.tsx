@@ -13,22 +13,12 @@ const ContactInfo = () => {
       <CardContent className="space-y-4">
         <div>
           <h4 className="font-semibold text-foreground mb-1">Phone</h4>
-          <p className="text-muted-foreground">(503) 555-BOMB</p>
+          <p className="text-muted-foreground">(541) 625-3627</p>
         </div>
         
         <div>
           <h4 className="font-semibold text-foreground mb-1">Email</h4>
-          <p className="text-muted-foreground">hello@colombianbakerypdx.com</p>
-        </div>
-        
-        <div>
-          <h4 className="font-semibold text-foreground mb-1">Catering</h4>
-          <p className="text-muted-foreground">catering@colombianbakerypdx.com</p>
-        </div>
-        
-        <div>
-          <h4 className="font-semibold text-foreground mb-1">Wholesale</h4>
-          <p className="text-muted-foreground">wholesale@colombianbakerypdx.com</p>
+          <p className="text-muted-foreground">gavabombshellpdx@gmail.com</p>
         </div>
         
         <div>

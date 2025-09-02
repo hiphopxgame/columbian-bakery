@@ -53,7 +53,7 @@ const ContactForm = () => {
           Send us a Message
         </CardTitle>
         <p className="text-muted-foreground">
-          Have questions about our products, orders, or partnerships? 
+          Have questions about our products or orders? 
           We're here to help!
         </p>
       </CardHeader>
@@ -98,8 +98,8 @@ const ContactForm = () => {
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="general">General Inquiries</SelectItem>
-                <SelectItem value="wholesale">Wholesale Requests</SelectItem>
-                <SelectItem value="catering">Catering Requests</SelectItem>
+                <SelectItem value="product">Product Questions</SelectItem>
+                <SelectItem value="order">Order Support</SelectItem>
               </SelectContent>
             </Select>
           </div>

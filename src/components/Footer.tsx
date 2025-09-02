@@ -41,18 +41,10 @@ const Footer = () => {
                 </li>
                 <li>
                   <button 
-                    onClick={() => document.querySelector('#wholesale')?.scrollIntoView({ behavior: 'smooth' })}
+                    onClick={() => document.querySelector('#catalog')?.scrollIntoView({ behavior: 'smooth' })}
                     className="hover:text-coconut-white transition-colors"
                   >
-                    Wholesale
-                  </button>
-                </li>
-                <li>
-                  <button 
-                    onClick={() => document.querySelector('#catering')?.scrollIntoView({ behavior: 'smooth' })}
-                    className="hover:text-coconut-white transition-colors"
-                  >
-                    Catering
+                    Product Catalog
                   </button>
                 </li>
               </ul>
@@ -62,8 +54,8 @@ const Footer = () => {
             <div>
               <h4 className="text-lg font-serif font-semibold mb-4">Contact</h4>
               <div className="space-y-2 text-coconut-white/80">
-                <p>(503) 555-BOMB</p>
-                <p>hello@colombianbakerypdx.com</p>
+                <p>(541) 625-3627</p>
+                <p>gavabombshellpdx@gmail.com</p>
                 <p>Portland, Oregon</p>
               </div>
             </div>
