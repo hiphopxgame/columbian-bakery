@@ -161,7 +161,11 @@ const CatalogSection = () => {
 
               <Card className="hover:shadow-lg transition-shadow">
                 <div className="h-64 bg-gradient-to-br from-dulce-caramel/20 to-bread-brown/20 flex items-center justify-center overflow-hidden">
-                  <div className="text-6xl opacity-60">🧀</div>
+                  <img 
+                    src="/lovable-uploads/a6a97d39-dabc-41a2-9777-6c6c4085aa47.png" 
+                    alt="Pandequeso - Traditional Colombian cheese bread"
+                    className="w-full h-full object-cover object-center"
+                  />
                 </div>
                 <CardContent className="p-6">
                   <h4 className="text-lg font-serif font-semibold text-bread-brown mb-2">
