@@ -2,10 +2,13 @@
 import React from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { useNavigate } from 'react-router-dom';
 import pandeBonoImage from '@/assets/pandebono-new.jpg';
 import panDeYucaImage from '@/assets/pan-de-yuca-new.jpg';
 
 const CatalogSection = () => {
+  const navigate = useNavigate();
   const products = [
     {
       name: "Classic Bombshell",
@@ -99,10 +102,16 @@ const CatalogSection = () => {
               <h3 className="text-3xl md:text-4xl font-serif font-bold text-bread-brown mb-4">
                 Traditional Colombian Breads
               </h3>
-              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-6">
                 Beyond our signature Bombshells, our Colombian bakery offers authentic traditional breads 
                 that have been cherished in Colombian kitchens for generations.
               </p>
+              <Button
+                onClick={() => navigate('/bread-gallery')}
+                className="bg-guava-pink hover:bg-guava-pink/90 text-coconut-white"
+              >
+                View Full Bread Gallery
+              </Button>
             </div>
 
             <div className="grid md:grid-cols-3 gap-6 mb-12">

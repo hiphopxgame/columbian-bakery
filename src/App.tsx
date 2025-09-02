@@ -12,6 +12,7 @@ import CulturalHeritagePage from "./pages/CulturalHeritagePage";
 import NutritionalValuePage from "./pages/NutritionalValuePage";
 import InnovationTraditionPage from "./pages/InnovationTraditionPage";
 import AdminPage from "./pages/AdminPage";
+import BreadGalleryPage from "./pages/BreadGalleryPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -31,6 +32,7 @@ const App = () => (
           <Route path="/nutritional-value" element={<NutritionalValuePage />} />
           <Route path="/innovation-tradition" element={<InnovationTraditionPage />} />
           <Route path="/admin" element={<AdminPage />} />
+          <Route path="/bread-gallery" element={<BreadGalleryPage />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
