@@ -26,41 +26,51 @@ export const AuthModal = ({ isOpen, onClose, defaultMode = 'signin' }: AuthModal
     if (!email || !password) return;
 
     setLoading(true);
-    try {
-      if (mode === 'signup') {
-        const { error } = await signUp(email, password, fullName);
-        if (error) {
-          toast({
-            title: 'Sign up failed',
-            description: error.message,
-            variant: 'destructive'
-          });
+      try {
+        if (mode === 'signup') {
+          const { error } = await signUp(email, password, fullName);
+          if (error) {
+            // Gracefully handle existing accounts without touching other projects' data
+            const msg = String(error?.message || '').toLowerCase();
+            if (msg.includes('already registered') || (error as any)?.status === 422 || (error as any)?.code === 'user_already_exists') {
+              toast({
+                title: 'Account already exists',
+                description: 'Please sign in instead. We switched you to the sign-in form.',
+              });
+              setMode('signin');
+            } else {
+              toast({
+                title: 'Sign up failed',
+                description: (error as any).message || 'Please try again.',
+                variant: 'destructive'
+              });
+            }
+          } else {
+            toast({
+              title: 'Success!',
+              description: 'Check your email to confirm your account.'
+            });
+            onClose();
+          }
         } else {
-          toast({
-            title: 'Success!',
-            description: 'Check your email to confirm your account.'
-          });
-          onClose();
+          const { error } = await signIn(email, password);
+          if (error) {
+            toast({
+              title: 'Sign in failed',
+              description: error.message,
+              variant: 'destructive'
+            });
+          } else {
+            toast({
+              title: 'Welcome back!',
+              description: 'You have been signed in successfully.'
+            });
+            onClose();
+          }
         }
-      } else {
-        const { error } = await signIn(email, password);
-        if (error) {
-          toast({
-            title: 'Sign in failed',
-            description: error.message,
-            variant: 'destructive'
-          });
-        } else {
-          toast({
-            title: 'Welcome back!',
-            description: 'You have been signed in successfully.'
-          });
-          onClose();
-        }
+      } finally {
+        setLoading(false);
       }
-    } finally {
-      setLoading(false);
-    }
   };
 
   const resetForm = () => {

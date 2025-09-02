@@ -49,6 +49,44 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       console.error('Error fetching profile:', error);
       return null;
     }
+};
+
+  const ensureProfile = async (user: User) => {
+    try {
+      // Check if a profile already exists
+      const { data: existing } = await supabase
+        .from('cbake_profiles')
+        .select('id')
+        .eq('user_id', user.id)
+        .maybeSingle();
+
+      if (!existing) {
+        const insertPayload: Partial<CbakeProfile> & { user_id: string; email: string } = {
+          user_id: user.id,
+          email: user.email as string,
+          full_name: (user.user_metadata as any)?.full_name || (user.email as string),
+          is_admin: false,
+        } as any;
+
+        // If this is the very first cbake profile, make them admin
+        const { count } = await supabase
+          .from('cbake_profiles')
+          .select('id', { count: 'exact', head: true });
+        if ((count ?? 0) === 0) (insertPayload as any).is_admin = true;
+
+        const { error: insertError } = await supabase
+          .from('cbake_profiles')
+          .insert(insertPayload);
+        if (insertError) {
+          console.warn('ensureProfile insert failed', insertError);
+        }
+      }
+
+      return await fetchProfile(user.id);
+    } catch (e) {
+      console.warn('ensureProfile failed', e);
+      return null;
+    }
   };
 
   useEffect(() => {
@@ -61,7 +99,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         if (session?.user) {
           // Fetch profile data when user is authenticated
           setTimeout(async () => {
-            const profileData = await fetchProfile(session.user.id);
+            let profileData = await fetchProfile(session.user.id);
+            if (!profileData) {
+              profileData = await ensureProfile(session.user);
+            }
             setProfile(profileData);
             setLoading(false);
           }, 0);
@@ -78,7 +119,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       setUser(session?.user ?? null);
       
       if (session?.user) {
-        const profileData = await fetchProfile(session.user.id);
+        let profileData = await fetchProfile(session.user.id);
+        if (!profileData) {
+          profileData = await ensureProfile(session.user);
+        }
         setProfile(profileData);
       }
       setLoading(false);
