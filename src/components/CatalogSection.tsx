@@ -42,13 +42,6 @@ const CatalogSection = () => {
       tags: ["Traditional", "Gluten-Free"],
       color: "from-dulce-caramel/20 to-bread-brown/20",
       image: "/lovable-uploads/a6a97d39-dabc-41a2-9777-6c6c4085aa47.png"
-    },
-    {
-      name: "Almojábana",
-      description: "A traditional Colombian bread made with corn flour and fresh cheese. These small, round breads are crispy on the outside and soft on the inside.",
-      tags: ["Traditional", "Gluten-Free"],
-      color: "from-bread-brown/20 to-yuca-cream",
-      image: "/lovable-uploads/a9d2895e-7072-49a0-8e6a-407e9c11b741.png"
     }
   ];
 
