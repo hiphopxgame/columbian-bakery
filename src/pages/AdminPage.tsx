@@ -88,6 +88,8 @@ const AdminPage = () => {
     try {
       setLoading(true);
       
+      console.log('Starting to fetch admin data...');
+      
       const [ordersResult, messagesResult, quotesResult, newslettersResult] = await Promise.all([
         // Fetch orders
         supabase
@@ -114,10 +116,16 @@ const AdminPage = () => {
           .order('created_at', { ascending: false })
       ]);
 
+      console.log('Orders result:', ordersResult);
+      console.log('Messages result:', messagesResult);
+      console.log('Quotes result:', quotesResult);
+      console.log('Newsletters result:', newslettersResult);
+
       if (ordersResult.error) {
         console.error('Orders error:', ordersResult.error);
         toast({ title: 'Error fetching orders', description: ordersResult.error.message, variant: 'destructive' });
       } else {
+        console.log('Setting orders:', ordersResult.data);
         setOrders(ordersResult.data || []);
       }
 
