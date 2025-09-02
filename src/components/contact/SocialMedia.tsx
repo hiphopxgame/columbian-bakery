@@ -2,7 +2,7 @@
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Instagram, Video, Image } from 'lucide-react';
+import { Instagram, Video } from 'lucide-react';
 
 const SocialMedia = () => {
   return (
@@ -37,17 +37,6 @@ const SocialMedia = () => {
             <a href="#" target="_blank" rel="noopener noreferrer">
               <Video className="w-5 h-5 mr-2" />
               TikTok
-            </a>
-          </Button>
-          <Button 
-            variant="outline" 
-            size="lg" 
-            className="flex-1 border-secondary-foreground text-secondary-foreground hover:bg-secondary hover:text-secondary-foreground transition-all duration-300 hover:scale-105"
-            asChild
-          >
-            <a href="#" target="_blank" rel="noopener noreferrer">
-              <Image className="w-5 h-5 mr-2" />
-              Pinterest
             </a>
           </Button>
         </div>
