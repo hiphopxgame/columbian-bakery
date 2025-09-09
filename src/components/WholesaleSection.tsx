@@ -15,7 +15,7 @@ const WholesaleSection = () => {
               Wholesale Orders
             </h2>
             <p className="text-xl text-muted-foreground">
-              For cafés, restaurants, and retailers
+              For cafés, restaurants, and wholesale buyers
             </p>
           </div>
 
