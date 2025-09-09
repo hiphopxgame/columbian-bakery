@@ -63,13 +63,13 @@ const WholesaleSection = () => {
                       </div>
                       <div className="text-right">
                         <div className="text-xs text-muted-foreground line-through">Retail: $12.99</div>
-                        <div className="font-bold text-guava-pink">$8.00 each</div>
+                        <div className="font-bold text-guava-pink">$2.00 each</div>
                       </div>
                     </div>
                     <div className="space-y-1 text-sm">
                       <div className="flex justify-between">
                         <span>Per Unit (100):</span>
-                        <span className="font-semibold">$800</span>
+                        <span className="font-semibold">$200</span>
                       </div>
                       <div className="flex justify-between">
                         <span>Minimum:</span>
@@ -88,13 +88,13 @@ const WholesaleSection = () => {
                       </div>
                       <div className="text-right">
                         <div className="text-xs text-muted-foreground line-through">Retail: $13.99</div>
-                        <div className="font-bold text-tropic-green">$8.50 each</div>
+                        <div className="font-bold text-tropic-green">$2.25 each</div>
                       </div>
                     </div>
                     <div className="space-y-1 text-sm">
                       <div className="flex justify-between">
                         <span>Per Unit (100):</span>
-                        <span className="font-semibold">$850</span>
+                        <span className="font-semibold">$225</span>
                       </div>
                       <div className="flex justify-between">
                         <span>Minimum:</span>
@@ -122,13 +122,13 @@ const WholesaleSection = () => {
                       </div>
                       <div className="text-right">
                         <div className="text-xs text-muted-foreground line-through">Retail: $8.99</div>
-                        <div className="font-bold text-bread-brown">$5.50 each</div>
+                        <div className="font-bold text-bread-brown">$1.50 each</div>
                       </div>
                     </div>
                     <div className="space-y-1 text-sm">
                       <div className="flex justify-between">
                         <span>Per Unit (100):</span>
-                        <span className="font-semibold">$550</span>
+                        <span className="font-semibold">$150</span>
                       </div>
                       <div className="flex justify-between">
                         <span>Minimum:</span>
@@ -147,13 +147,13 @@ const WholesaleSection = () => {
                       </div>
                       <div className="text-right">
                         <div className="text-xs text-muted-foreground line-through">Retail: $9.99</div>
-                        <div className="font-bold text-dulce-caramel">$6.00 each</div>
+                        <div className="font-bold text-dulce-caramel">$1.75 each</div>
                       </div>
                     </div>
                     <div className="space-y-1 text-sm">
                       <div className="flex justify-between">
                         <span>Per Unit (100):</span>
-                        <span className="font-semibold">$600</span>
+                        <span className="font-semibold">$175</span>
                       </div>
                       <div className="flex justify-between">
                         <span>Minimum:</span>
@@ -172,13 +172,13 @@ const WholesaleSection = () => {
                       </div>
                       <div className="text-right">
                         <div className="text-xs text-muted-foreground line-through">Retail: $9.49</div>
-                        <div className="font-bold text-guava-pink">$5.75 each</div>
+                        <div className="font-bold text-guava-pink">$1.60 each</div>
                       </div>
                     </div>
                     <div className="space-y-1 text-sm">
                       <div className="flex justify-between">
                         <span>Per Unit (100):</span>
-                        <span className="font-semibold">$575</span>
+                        <span className="font-semibold">$160</span>
                       </div>
                       <div className="flex justify-between">
                         <span>Minimum:</span>
