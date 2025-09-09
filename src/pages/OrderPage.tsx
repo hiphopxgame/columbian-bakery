@@ -14,15 +14,13 @@ const OrderPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { toast } = useToast();
-  const [orderType, setOrderType] = useState('wholesale-frozen');
+  const [orderType, setOrderType] = useState('wholesale-baked');
   const [selectedProduct, setSelectedProduct] = useState<any>(null);
-  const [wholesaleProduct, setWholesaleProduct] = useState('');
-  const [products, setProducts] = useState<any[]>([]);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     phone: '',
-    orderType: 'wholesale-frozen',
+    orderType: 'wholesale-baked',
     quantity: 2,
     doughType: '',
     filling: '',
@@ -30,37 +28,7 @@ const OrderPage = () => {
     specialInstructions: ''
   });
 
-  // Wholesale pricing mapping
-  const wholesalePricing = {
-    'e27d0fd9-94db-4b5d-9c81-a876b831ca3f': 800, // Classic Bombshell
-    'de1d2c3b-d2dc-4d09-bba6-82051180cade': 850, // Vegan Bombshell
-    'a7323d9f-d71c-4017-89cf-64beda401a44': 550, // Pandebono
-    'db78b11a-9547-441b-9d1b-ed74f74f7012': 600, // Pan de Yuca
-    '1e3472fd-7dcd-42c1-ae41-6cf420f5a0d7': 575  // Pandequeso
-  };
-
   useEffect(() => {
-    // Fetch products for wholesale selection
-    const fetchProducts = async () => {
-      try {
-        const { data, error } = await supabase
-          .from('cbake_products')
-          .select('*')
-          .eq('is_active', true)
-          .order('display_order');
-        
-        if (error) {
-          console.error('Error fetching products:', error);
-        } else {
-          setProducts(data || []);
-        }
-      } catch (error) {
-        console.error('Error:', error);
-      }
-    };
-
-    fetchProducts();
-
     // Check if product was selected from catalog
     if (location.state?.selectedProduct) {
       setSelectedProduct(location.state.selectedProduct);
@@ -75,8 +43,10 @@ const OrderPage = () => {
     if (selectedProduct) {
       return formData.quantity * (selectedProduct.price || 0);
     }
-    if (wholesaleProduct && wholesalePricing[wholesaleProduct]) {
-      return formData.quantity * (wholesalePricing[wholesaleProduct] / 100);
+    if (orderType === 'wholesale-baked') {
+      return formData.quantity * 300;
+    } else if (orderType === 'wholesale-frozen') {
+      return formData.quantity * 200;
     }
     return 0;
   };
@@ -92,8 +62,8 @@ const OrderPage = () => {
           email: formData.email,
           phone: formData.phone,
           order_type: orderType,
-          product_id: selectedProduct?.id || wholesaleProduct || null,
-          product_name: selectedProduct?.name || products.find(p => p.id === wholesaleProduct)?.name || null,
+          product_id: selectedProduct?.id || null,
+          product_name: selectedProduct?.name || null,
           quantity: formData.quantity,
           dough_type: formData.doughType,
           filling: formData.filling,
@@ -117,14 +87,14 @@ const OrderPage = () => {
         name: '',
         email: '',
         phone: '',
-        orderType: 'wholesale-frozen',
+        orderType: 'wholesale-baked',
         quantity: 2,
         doughType: '',
         filling: '',
         delivery: '',
         specialInstructions: ''
       });
-      setOrderType('wholesale-frozen');
+      setOrderType('wholesale-baked');
     } catch (error) {
       console.error('Error submitting order:', error);
       toast({
@@ -171,72 +141,38 @@ const OrderPage = () => {
           <Card className="mb-8">
             <CardHeader>
               <CardTitle className="text-xl font-serif text-bread-brown">
-                Wholesale Order
+                Select Order Type
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="p-4 bg-yuca-cream/50 rounded-lg">
-                <div className="flex items-center justify-center text-center">
-                  <div>
-                    <span className="text-2xl mr-2">❄️</span>
-                    <span className="font-semibold text-bread-brown">Frozen Dough Only</span>
-                    <p className="text-sm text-muted-foreground mt-2">
-                      All wholesale orders are frozen dough for maximum freshness - bake fresh in your establishment
-                    </p>
-                  </div>
-                </div>
+              <div className="grid md:grid-cols-2 gap-4">
+                <Button
+                  variant={orderType === 'wholesale-baked' ? 'default' : 'outline'}
+                  onClick={() => {
+                    setOrderType('wholesale-baked');
+                    handleInputChange('orderType', 'wholesale-baked');
+                  }}
+                  className="h-auto p-4 flex flex-col"
+                >
+                  <span className="font-semibold">Wholesale Baked</span>
+                  <span className="text-sm opacity-75">Ready to serve</span>
+                  <Badge variant="secondary" className="mt-2">$300/unit</Badge>
+                </Button>
+                <Button
+                  variant={orderType === 'wholesale-frozen' ? 'default' : 'outline'}
+                  onClick={() => {
+                    setOrderType('wholesale-frozen');
+                    handleInputChange('orderType', 'wholesale-frozen');
+                  }}
+                  className="h-auto p-4 flex flex-col"
+                >
+                  <span className="font-semibold">Wholesale Frozen</span>
+                  <span className="text-sm opacity-75">Bake fresh in-house</span>
+                  <Badge variant="secondary" className="mt-2">$200/unit</Badge>
+                </Button>
               </div>
             </CardContent>
           </Card>
-
-          {/* Product Selection for Wholesale */}
-          {!selectedProduct && (
-            <Card className="mb-8">
-              <CardHeader>
-                <CardTitle className="text-xl font-serif text-bread-brown">
-                  Select Product
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-                  {products.map((product) => {
-                    const wholesalePrice = wholesalePricing[product.id];
-                    const pricePerUnit = wholesalePrice / 100;
-                    
-                    return (
-                      <Card 
-                        key={product.id}
-                        className={`cursor-pointer transition-all border-2 ${
-                          wholesaleProduct === product.id 
-                            ? 'border-bread-brown bg-yuca-cream/50' 
-                            : 'border-border hover:border-bread-brown/50'
-                        }`}
-                        onClick={() => setWholesaleProduct(product.id)}
-                      >
-                        <CardContent className="p-4">
-                          <div className="text-center">
-                            <h4 className="font-semibold text-bread-brown mb-2">{product.name}</h4>
-                            <p className="text-xs text-muted-foreground mb-3">{product.description}</p>
-                            <div className="space-y-1">
-                              <div className="text-lg font-bold text-bread-brown">${pricePerUnit.toFixed(2)} each</div>
-                              <div className="text-sm text-muted-foreground">${wholesalePrice}/unit (100)</div>
-                            </div>
-                            <div className="flex flex-wrap gap-1 mt-2">
-                              {product.tags.map((tag, idx) => (
-                                <Badge key={idx} variant="outline" className="text-xs">
-                                  {tag}
-                                </Badge>
-                              ))}
-                            </div>
-                          </div>
-                        </CardContent>
-                      </Card>
-                    );
-                  })}
-                </div>
-              </CardContent>
-            </Card>
-          )}
 
           {/* Order Form */}
           <Card>
@@ -286,70 +222,82 @@ const OrderPage = () => {
                   />
                 </div>
 
-                 <div>
-                   <label className="block text-sm font-medium text-foreground mb-2">
-                     Quantity (units) - Minimum 2 units
-                   </label>
-                   <div className="flex items-center space-x-4">
-                     <Button 
-                       type="button"
-                       variant="outline" 
-                       size="sm"
-                       onClick={() => handleInputChange('quantity', Math.max(2, formData.quantity - 1))}
-                       disabled={formData.quantity <= 2}
-                     >
-                       -
-                     </Button>
-                     <span className="text-xl font-semibold w-12 text-center">{formData.quantity}</span>
-                     <Button 
-                       type="button"
-                       variant="outline" 
-                       size="sm"
-                       onClick={() => handleInputChange('quantity', formData.quantity + 1)}
-                     >
-                       +
-                     </Button>
-                     <span className="text-muted-foreground ml-4">
-                       ({formData.quantity * 100} pieces total)
-                     </span>
-                   </div>
-                 </div>
+                {/* Quantity */}
+                <div>
+                  <label className="block text-sm font-medium text-foreground mb-2">
+                    Quantity (units)
+                  </label>
+                  <div className="flex items-center space-x-4">
+                    <Button 
+                      type="button"
+                      variant="outline" 
+                      size="sm"
+                      onClick={() => handleInputChange('quantity', Math.max(2, formData.quantity - 1))}
+                      disabled={formData.quantity <= 2}
+                    >
+                      -
+                    </Button>
+                    <span className="text-xl font-semibold w-12 text-center">{formData.quantity}</span>
+                    <Button 
+                      type="button"
+                      variant="outline" 
+                      size="sm"
+                      onClick={() => handleInputChange('quantity', formData.quantity + 1)}
+                    >
+                      +
+                    </Button>
+                    <span className="text-muted-foreground ml-4">
+                      ({formData.quantity * 100} Bombshells total)
+                    </span>
+                  </div>
+                </div>
 
-                 {/* Product Options */}
-                 <div className="grid md:grid-cols-2 gap-6">
-                   <div>
-                     <label className="block text-sm font-medium text-foreground mb-2">
-                       Delivery Format *
-                     </label>
-                     <Select value={formData.delivery} onValueChange={(value) => handleInputChange('delivery', value)}>
-                       <SelectTrigger>
-                         <SelectValue placeholder="How would you like them delivered?" />
-                       </SelectTrigger>
-                       <SelectContent>
-                         <SelectItem value="frozen">Frozen Dough (recommended)</SelectItem>
-                         <SelectItem value="pickup">Pickup at Bakery</SelectItem>
-                         <SelectItem value="delivery">Local Delivery</SelectItem>
-                       </SelectContent>
-                     </Select>
-                   </div>
+                {/* Product Options */}
+                <div className="grid md:grid-cols-2 gap-6">
+                  <div>
+                    <label className="block text-sm font-medium text-foreground mb-2">
+                      Dough Type *
+                    </label>
+                    <Select value={formData.doughType} onValueChange={(value) => handleInputChange('doughType', value)}>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Choose your dough type" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="classic">Classic Yuca Dough</SelectItem>
+                        <SelectItem value="vegan">Vegan Yuca Dough</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
 
-                   <div>
-                     <label className="block text-sm font-medium text-foreground mb-2">
-                       Special Requirements
-                     </label>
-                     <Select value={formData.filling} onValueChange={(value) => handleInputChange('filling', value)}>
-                       <SelectTrigger>
-                         <SelectValue placeholder="Any special requirements?" />
-                       </SelectTrigger>
-                       <SelectContent>
-                         <SelectItem value="standard">Standard Recipe</SelectItem>
-                         <SelectItem value="extra-cream">Extra Cream (+$10/unit)</SelectItem>
-                         <SelectItem value="no-cream">No Cream Filling</SelectItem>
-                         <SelectItem value="custom">Custom (specify in instructions)</SelectItem>
-                       </SelectContent>
-                     </Select>
-                   </div>
-                 </div>
+                  <div>
+                    <label className="block text-sm font-medium text-foreground mb-2">
+                      Filling (Guava & Cream included) *
+                    </label>
+                    <Select value={formData.filling} onValueChange={(value) => handleInputChange('filling', value)}>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select your favorite filling" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="guava">Guava & Cream (Standard)</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-foreground mb-2">
+                    Delivery Format *
+                  </label>
+                  <Select value={formData.delivery} onValueChange={(value) => handleInputChange('delivery', value)}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="How would you like them delivered?" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="frozen">Frozen (reheat at home)</SelectItem>
+                      <SelectItem value="warm">Warm & Ready-to-Eat</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
 
                 <div>
                   <label className="block text-sm font-medium text-foreground mb-2">
@@ -363,53 +311,40 @@ const OrderPage = () => {
                   />
                 </div>
 
-                 {/* Order Summary */}
-                 <div className="bg-yuca-cream p-6 rounded-lg">
-                   <h4 className="text-lg font-serif font-semibold text-bread-brown mb-4">
-                     Order Summary
-                   </h4>
-                   <div className="space-y-2 text-foreground">
-                     <div className="flex justify-between">
-                       <span>Product:</span>
-                       <span>{
-                         selectedProduct?.name || 
-                         products.find(p => p.id === wholesaleProduct)?.name || 
-                         'Select a product'
-                       }</span>
-                     </div>
-                     <div className="flex justify-between">
-                       <span>Format:</span>
-                       <span>Frozen Dough (Wholesale)</span>
-                     </div>
-                     <div className="flex justify-between">
-                       <span>Quantity:</span>
-                       <span>{formData.quantity} unit{formData.quantity > 1 ? 's' : ''}</span>
-                     </div>
-                     <div className="flex justify-between">
-                       <span>Total Pieces:</span>
-                       <span>{formData.quantity * 100}</span>
-                     </div>
-                     {wholesaleProduct && (
-                       <div className="flex justify-between">
-                         <span>Price per Unit:</span>
-                         <span>${(wholesalePricing[wholesaleProduct] || 0).toFixed(0)}</span>
-                       </div>
-                     )}
-                     <div className="flex justify-between font-semibold text-lg border-t border-border pt-2">
-                       <span>Estimated Total:</span>
-                       <span>${calculateTotal().toFixed(0)}</span>
-                     </div>
-                   </div>
-                 </div>
+                {/* Order Summary */}
+                <div className="bg-yuca-cream p-6 rounded-lg">
+                  <h4 className="text-lg font-serif font-semibold text-bread-brown mb-4">
+                    Order Summary
+                  </h4>
+                  <div className="space-y-2 text-foreground">
+                    <div className="flex justify-between">
+                      <span>Order Type:</span>
+                      <span className="capitalize">{orderType.replace('-', ' ')}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>Quantity:</span>
+                      <span>{formData.quantity} unit{formData.quantity > 1 ? 's' : ''}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>Total Bombshells:</span>
+                      <span>{formData.quantity * 100}</span>
+                    </div>
+                    <div className="flex justify-between font-semibold text-lg border-t border-border pt-2">
+                      <span>Estimated Total:</span>
+                      <span>${calculateTotal()}</span>
+                    </div>
+                  </div>
+                </div>
 
-                 <Button 
-                   type="submit"
-                   size="lg" 
-                   className="w-full bg-bread-brown hover:bg-bread-brown/90 text-coconut-white text-lg font-semibold py-4"
-                   disabled={!formData.name || !formData.email || !formData.delivery || (!selectedProduct && !wholesaleProduct)}
-                 >
-                   Submit Wholesale Order Request
-                 </Button>
+                {/* Submit Button */}
+                <Button 
+                  type="submit"
+                  size="lg" 
+                  className="w-full bg-bread-brown hover:bg-bread-brown/90 text-coconut-white text-lg font-semibold py-4"
+                  disabled={!formData.name || !formData.email || !formData.doughType || !formData.filling || !formData.delivery}
+                >
+                  Submit Order Request
+                </Button>
 
                 <p className="text-sm text-muted-foreground text-center">
                   This is a request for quote. We'll contact you within 24 hours to confirm availability, 
