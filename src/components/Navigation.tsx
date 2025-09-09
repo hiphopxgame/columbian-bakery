@@ -18,6 +18,7 @@ const Navigation = () => {
   const navItems = [
     { label: 'Home', href: '#home', emoji: '🏠' },
     { label: 'About', href: '#about', emoji: '📖' },
+    { label: 'Wholesale', href: '#wholesale', emoji: '🏢' },
     { label: 'Catalog', href: '#catalog', emoji: '📋' },
     { label: 'Contact', href: '#contact', emoji: '💬' }
   ];
