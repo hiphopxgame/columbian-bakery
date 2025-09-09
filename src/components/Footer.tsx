@@ -33,10 +33,10 @@ const Footer = () => {
                 </li>
                 <li>
                   <button 
-                    onClick={() => document.querySelector('#retail')?.scrollIntoView({ behavior: 'smooth' })}
+                    onClick={() => document.querySelector('#catalog')?.scrollIntoView({ behavior: 'smooth' })}
                     className="hover:text-coconut-white transition-colors"
                   >
-                    Retail Orders
+                    Our Products
                   </button>
                 </li>
                 <li>

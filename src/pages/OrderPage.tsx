@@ -14,13 +14,13 @@ const OrderPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { toast } = useToast();
-  const [orderType, setOrderType] = useState('retail');
+  const [orderType, setOrderType] = useState('wholesale-baked');
   const [selectedProduct, setSelectedProduct] = useState<any>(null);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     phone: '',
-    orderType: 'retail',
+    orderType: 'wholesale-baked',
     quantity: 2,
     doughType: '',
     filling: '',
@@ -43,9 +43,7 @@ const OrderPage = () => {
     if (selectedProduct) {
       return formData.quantity * (selectedProduct.price || 0);
     }
-    if (orderType === 'retail') {
-      return formData.quantity * 25;
-    } else if (orderType === 'wholesale-baked') {
+    if (orderType === 'wholesale-baked') {
       return formData.quantity * 300;
     } else if (orderType === 'wholesale-frozen') {
       return formData.quantity * 200;
@@ -89,14 +87,14 @@ const OrderPage = () => {
         name: '',
         email: '',
         phone: '',
-        orderType: 'retail',
+        orderType: 'wholesale-baked',
         quantity: 2,
         doughType: '',
         filling: '',
         delivery: '',
         specialInstructions: ''
       });
-      setOrderType('retail');
+      setOrderType('wholesale-baked');
     } catch (error) {
       console.error('Error submitting order:', error);
       toast({
@@ -147,19 +145,7 @@ const OrderPage = () => {
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="grid md:grid-cols-3 gap-4">
-                <Button
-                  variant={orderType === 'retail' ? 'default' : 'outline'}
-                  onClick={() => {
-                    setOrderType('retail');
-                    handleInputChange('orderType', 'retail');
-                  }}
-                  className="h-auto p-4 flex flex-col"
-                >
-                  <span className="font-semibold">Retail</span>
-                  <span className="text-sm opacity-75">2+ dozen minimum</span>
-                  <Badge variant="secondary" className="mt-2">$25/dozen</Badge>
-                </Button>
+              <div className="grid md:grid-cols-2 gap-4">
                 <Button
                   variant={orderType === 'wholesale-baked' ? 'default' : 'outline'}
                   onClick={() => {
@@ -239,14 +225,14 @@ const OrderPage = () => {
                 {/* Quantity */}
                 <div>
                   <label className="block text-sm font-medium text-foreground mb-2">
-                    Quantity ({orderType === 'retail' ? 'dozens' : 'units'})
+                    Quantity (units)
                   </label>
                   <div className="flex items-center space-x-4">
                     <Button 
                       type="button"
                       variant="outline" 
                       size="sm"
-                      onClick={() => handleInputChange('quantity', Math.max(orderType === 'retail' ? 2 : 2, formData.quantity - 1))}
+                      onClick={() => handleInputChange('quantity', Math.max(2, formData.quantity - 1))}
                       disabled={formData.quantity <= 2}
                     >
                       -
@@ -261,7 +247,7 @@ const OrderPage = () => {
                       +
                     </Button>
                     <span className="text-muted-foreground ml-4">
-                      ({orderType === 'retail' ? formData.quantity * 13 : formData.quantity * 100} Bombshells total)
+                      ({formData.quantity * 100} Bombshells total)
                     </span>
                   </div>
                 </div>
@@ -337,11 +323,11 @@ const OrderPage = () => {
                     </div>
                     <div className="flex justify-between">
                       <span>Quantity:</span>
-                      <span>{formData.quantity} {orderType === 'retail' ? 'dozen' : 'unit'}{formData.quantity > 1 ? 's' : ''}</span>
+                      <span>{formData.quantity} unit{formData.quantity > 1 ? 's' : ''}</span>
                     </div>
                     <div className="flex justify-between">
                       <span>Total Bombshells:</span>
-                      <span>{orderType === 'retail' ? formData.quantity * 13 : formData.quantity * 100}</span>
+                      <span>{formData.quantity * 100}</span>
                     </div>
                     <div className="flex justify-between font-semibold text-lg border-t border-border pt-2">
                       <span>Estimated Total:</span>

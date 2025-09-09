@@ -52,7 +52,7 @@ const HeroSection = () => {
             <Button 
               size="lg" 
               className="bg-cacao-brown hover:bg-cacao-brown/90 text-coconut-white px-8 py-4 text-lg font-semibold btn-joyful texture-wood"
-              onClick={() => scrollToSection('#retail')}
+              onClick={() => scrollToSection('#wholesale')}
             >
               🏠 Order for Home
             </Button>
