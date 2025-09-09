@@ -41,126 +41,53 @@ const WholesaleSection = () => {
             </Card>
           </div>
 
-          {/* Pricing Table */}
-          <Card className="mb-12">
+          {/* Pricing Card */}
+          <Card className="mb-12 bg-gradient-to-br from-bread-brown/10 to-yuca-cream border-bread-brown/20">
             <CardHeader>
               <CardTitle className="text-2xl font-serif text-bread-brown text-center">
-                Wholesale Pricing
+                Wholesale Pricing - Frozen Dough Only
               </CardTitle>
             </CardHeader>
-            <CardContent>
-              <div className="overflow-x-auto">
-                <table className="w-full">
-                  <thead>
-                    <tr className="border-b border-border">
-                      <th className="text-left py-4 px-4 font-serif text-bread-brown">Format</th>
-                      <th className="text-center py-4 px-4 font-serif text-bread-brown">Price Each</th>
-                      <th className="text-center py-4 px-4 font-serif text-bread-brown">Unit Total</th>
-                      <th className="text-center py-4 px-4 font-serif text-bread-brown">Cream Add-On</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr className="border-b border-border/50">
-                      <td className="py-6 px-4">
-                        <div>
-                          <h4 className="font-semibold text-foreground">Baked & Stuffed</h4>
-                          <p className="text-sm text-muted-foreground">Ready to serve</p>
-                        </div>
-                      </td>
-                      <td className="text-center py-6 px-4 font-semibold text-lg text-bread-brown">$3.00</td>
-                      <td className="text-center py-6 px-4 font-semibold text-lg text-bread-brown">$300</td>
-                      <td className="text-center py-6 px-4">
-                        <Badge variant="secondary">Included</Badge>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="py-6 px-4">
-                        <div>
-                          <h4 className="font-semibold text-foreground">Frozen Dough Only</h4>
-                          <p className="text-sm text-muted-foreground">Bake fresh in-house</p>
-                        </div>
-                      </td>
-                      <td className="text-center py-6 px-4 font-semibold text-lg text-bread-brown">$2.00</td>
-                      <td className="text-center py-6 px-4 font-semibold text-lg text-bread-brown">$200</td>
-                      <td className="text-center py-6 px-4 text-bread-brown font-semibold">+$10/unit</td>
-                    </tr>
-                  </tbody>
-                </table>
+            <CardContent className="text-center">
+              <div className="max-w-md mx-auto">
+                <div className="text-6xl mb-4">❄️</div>
+                <h3 className="text-xl font-serif font-bold text-bread-brown mb-4">
+                  Frozen Dough Bombshells
+                </h3>
+                <p className="text-muted-foreground mb-6">
+                  Perfect for establishments that want maximum freshness. 
+                  Bake in-house for the ultimate fresh experience.
+                </p>
+                <div className="space-y-3 mb-6">
+                  <div className="flex justify-between text-lg">
+                    <span>Per Bombshell:</span>
+                    <span className="font-bold text-bread-brown">$2.00</span>
+                  </div>
+                  <div className="flex justify-between text-lg">
+                    <span>Per Unit (100):</span>
+                    <span className="font-bold text-bread-brown">$200</span>
+                  </div>
+                  <div className="flex justify-between text-lg">
+                    <span>Add Cream:</span>
+                    <span className="font-semibold text-bread-brown">+$10/unit</span>
+                  </div>
+                </div>
               </div>
             </CardContent>
           </Card>
 
-          {/* Order Options */}
-          <div className="grid md:grid-cols-2 gap-8">
-            <Card className="bg-gradient-to-br from-dulce-caramel/10 to-guava-pink/10 border-dulce-caramel/20">
-              <CardHeader>
-                <CardTitle className="text-xl font-serif text-bread-brown flex items-center">
-                  <span className="mr-2">🔥</span>
-                  Baked & Stuffed
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <p className="text-muted-foreground">
-                  Perfect for cafés and restaurants that want to serve immediately. 
-                  Comes fully baked with your choice of filling.
-                </p>
-                <div className="space-y-2">
-                  <div className="flex justify-between">
-                    <span>Per Bombshell:</span>
-                    <span className="font-semibold">$3.00</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>Per Unit (100):</span>
-                    <span className="font-semibold">$300</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>Filling:</span>
-                    <Badge variant="secondary">Included</Badge>
-                  </div>
-                </div>
-                <Button 
-                  className="w-full bg-dulce-caramel hover:bg-dulce-caramel/90 text-coconut-white"
-                  onClick={() => window.location.href = '/order'}
-                >
-                  Order Baked & Stuffed
-                </Button>
-              </CardContent>
-            </Card>
-
-            <Card className="bg-gradient-to-br from-bread-brown/10 to-yuca-cream border-bread-brown/20">
-              <CardHeader>
-                <CardTitle className="text-xl font-serif text-bread-brown flex items-center">
-                  <span className="mr-2">❄️</span>
-                  Frozen Dough Only
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <p className="text-muted-foreground">
-                  Ideal for establishments that want maximum freshness. 
-                  Bake in-house for the ultimate fresh experience.
-                </p>
-                <div className="space-y-2">
-                  <div className="flex justify-between">
-                    <span>Per Bombshell:</span>
-                    <span className="font-semibold">$2.00</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>Per Unit (100):</span>
-                    <span className="font-semibold">$200</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>Add Cream:</span>
-                    <span className="font-semibold">+$10/unit</span>
-                  </div>
-                </div>
-                <Button 
-                  className="w-full bg-bread-brown hover:bg-bread-brown/90 text-coconut-white"
-                  onClick={() => window.location.href = '/order'}
-                >
-                  Order Frozen Dough
-                </Button>
-              </CardContent>
-            </Card>
+          {/* Order Action */}
+          <div className="text-center mb-12">
+            <Button 
+              size="lg"
+              className="bg-bread-brown hover:bg-bread-brown/90 text-coconut-white px-12 py-6 text-xl"
+              onClick={() => window.location.href = '/order'}
+            >
+              Place Wholesale Order
+            </Button>
+            <p className="text-sm text-muted-foreground mt-4">
+              Frozen dough bombshells - bake fresh in your establishment
+            </p>
           </div>
 
           {/* Contact for Wholesale */}

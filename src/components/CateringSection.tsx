@@ -1,59 +1,9 @@
-
-import React, { useState } from 'react';
+import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Badge } from '@/components/ui/badge';
 
 const CateringSection = () => {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    eventType: '',
-    guestCount: '',
-    eventDate: '',
-    flavors: '',
-    message: ''
-  });
-
-  const handleInputChange = (field: string, value: string) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log('Catering inquiry submitted:', formData);
-    // Handle form submission
-  };
-
-  const cateringOptions = [
-    {
-      title: "Weddings",
-      description: "Make your special day even sweeter with authentic Colombian pastries",
-      icon: "💍",
-      features: ["Custom flavor selection", "Elegant presentation", "Dietary accommodations"]
-    },
-    {
-      title: "Corporate Events",
-      description: "Impress clients and colleagues with unique, professional catering",
-      icon: "🏢",
-      features: ["Bulk ordering", "On-time delivery", "Professional setup"]
-    },
-    {
-      title: "Private Parties",
-      description: "Celebrate any occasion with a taste of Colombia",
-      icon: "🎉",
-      features: ["Flexible quantities", "Mix and match flavors", "Personal touch"]
-    },
-    {
-      title: "Café Partnerships",
-      description: "Regular wholesale supply for your establishment",
-      icon: "☕",
-      features: ["Consistent supply", "Competitive pricing", "Brand collaboration"]
-    }
-  ];
-
   return (
     <section id="catering" className="py-20 bg-gradient-to-b from-coconut-white to-yuca-cream">
       <div className="container mx-auto px-4">
@@ -61,162 +11,192 @@ const CateringSection = () => {
           {/* Section Header */}
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-serif font-bold text-bread-brown mb-6">
-              Catering & Special Orders
+              Event Catering Services
             </h2>
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              Bring the authentic taste of Colombia to your special events, 
-              corporate gatherings, and celebrations
+            <p className="text-xl text-muted-foreground">
+              Fresh baked bombshells delivered hot for your special events
             </p>
           </div>
 
-          {/* Catering Options */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
-            {cateringOptions.map((option, index) => (
-              <Card key={index} className="text-center hover:shadow-lg transition-shadow duration-300 bg-card/50">
-                <CardContent className="p-6">
-                  <div className="text-4xl mb-4">{option.icon}</div>
-                  <h3 className="text-lg font-serif font-semibold text-bread-brown mb-2">
-                    {option.title}
-                  </h3>
-                  <p className="text-muted-foreground text-sm mb-4">
-                    {option.description}
-                  </p>
-                  <div className="space-y-1">
-                    {option.features.map((feature, featureIndex) => (
-                      <p key={featureIndex} className="text-xs text-foreground flex items-center">
-                        <span className="w-1.5 h-1.5 bg-guava-pink rounded-full mr-2"></span>
-                        {feature}
-                      </p>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-
-          {/* Contact Form */}
-          <Card className="max-w-4xl mx-auto">
-            <CardHeader>
-              <CardTitle className="text-2xl font-serif text-bread-brown text-center">
-                Request a Custom Quote
-              </CardTitle>
-              <p className="text-muted-foreground text-center">
-                Tell us about your event and we'll create the perfect Colombian experience
+          {/* Hero Card */}
+          <Card className="mb-12 bg-gradient-to-r from-dulce-caramel/20 to-guava-pink/20 border-dulce-caramel/30">
+            <CardContent className="p-8 text-center">
+              <div className="text-6xl mb-4">🎉</div>
+              <h3 className="text-2xl font-serif font-bold text-bread-brown mb-4">
+                Hire Our Team for Your Event
+              </h3>
+              <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
+                Let our professional team bring the authentic Colombian experience directly to your event. 
+                We'll bake fresh bombshells on-site and serve them hot with premium fillings.
               </p>
-            </CardHeader>
-            <CardContent>
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div>
-                    <label className="block text-sm font-medium text-foreground mb-2">
-                      Name *
-                    </label>
-                    <Input
-                      value={formData.name}
-                      onChange={(e) => handleInputChange('name', e.target.value)}
-                      placeholder="Your full name"
-                      required
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-foreground mb-2">
-                      Email *
-                    </label>
-                    <Input
-                      type="email"
-                      value={formData.email}
-                      onChange={(e) => handleInputChange('email', e.target.value)}
-                      placeholder="your.email@example.com"
-                      required
-                    />
-                  </div>
-                </div>
-
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div>
-                    <label className="block text-sm font-medium text-foreground mb-2">
-                      Event Type *
-                    </label>
-                    <Select value={formData.eventType} onValueChange={(value) => handleInputChange('eventType', value)}>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select event type" />
-                      </SelectTrigger>
-                      <SelectContent className="bg-coconut-white">
-                        <SelectItem value="wedding">Wedding</SelectItem>
-                        <SelectItem value="corporate">Corporate Event</SelectItem>
-                        <SelectItem value="private">Private Party</SelectItem>
-                        <SelectItem value="cafe">Café Partnership</SelectItem>
-                        <SelectItem value="other">Other</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-foreground mb-2">
-                      Number of Guests
-                    </label>
-                    <Input
-                      value={formData.guestCount}
-                      onChange={(e) => handleInputChange('guestCount', e.target.value)}
-                      placeholder="Approximate guest count"
-                    />
-                  </div>
-                </div>
-
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div>
-                    <label className="block text-sm font-medium text-foreground mb-2">
-                      Event Date
-                    </label>
-                    <Input
-                      type="date"
-                      value={formData.eventDate}
-                      onChange={(e) => handleInputChange('eventDate', e.target.value)}
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-foreground mb-2">
-                      Preferred Flavors
-                    </label>
-                    <Input
-                      value={formData.flavors}
-                      onChange={(e) => handleInputChange('flavors', e.target.value)}
-                      placeholder="Guava, Dulce de Leche, Coconut..."
-                    />
-                  </div>
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-foreground mb-2">
-                    Additional Details
-                  </label>
-                  <Textarea
-                    value={formData.message}
-                    onChange={(e) => handleInputChange('message', e.target.value)}
-                    placeholder="Tell us more about your event, special dietary requirements, or any specific requests..."
-                    rows={4}
-                  />
-                </div>
-
-                <Button 
-                  type="button"
-                  size="lg" 
-                  className="w-full bg-bread-brown hover:bg-bread-brown/90 text-coconut-white text-lg font-semibold py-4"
-                  onClick={() => window.location.href = '/custom-quote'}
-                >
-                  Request Custom Quote
-                </Button>
-              </form>
             </CardContent>
           </Card>
 
-          {/* Additional Info */}
-          <div className="text-center mt-12 space-y-4">
-            <p className="text-muted-foreground">
-              <strong>Planning ahead?</strong> We recommend booking catering services at least 2 weeks in advance for best availability.
-            </p>
-            <p className="text-muted-foreground">
-              Questions? Call us directly at <strong>(503) 555-BOMB</strong> or email <strong>catering@colombianbakerypdx.com</strong>
-            </p>
+          {/* Services Grid */}
+          <div className="grid md:grid-cols-3 gap-8 mb-12">
+            <Card className="text-center bg-card/50 border-tropic-green/20">
+              <CardContent className="p-6">
+                <div className="text-4xl mb-4">👨‍🍳</div>
+                <h3 className="text-xl font-serif font-bold text-bread-brown mb-2">Professional Team</h3>
+                <p className="text-muted-foreground">Experienced bakers and service staff</p>
+              </CardContent>
+            </Card>
+            <Card className="text-center bg-card/50 border-guava-pink/20">
+              <CardContent className="p-6">
+                <div className="text-4xl mb-4">🔥</div>
+                <h3 className="text-xl font-serif font-bold text-bread-brown mb-2">Fresh & Hot</h3>
+                <p className="text-muted-foreground">Baked fresh on-site during your event</p>
+              </CardContent>
+            </Card>
+            <Card className="text-center bg-card/50 border-dulce-caramel/20">
+              <CardContent className="p-6">
+                <div className="text-4xl mb-4">🎪</div>
+                <h3 className="text-xl font-serif font-bold text-bread-brown mb-2">Full Service</h3>
+                <p className="text-muted-foreground">Complete setup, service, and cleanup</p>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Event Types */}
+          <Card className="mb-12">
+            <CardHeader>
+              <CardTitle className="text-2xl font-serif text-bread-brown text-center">
+                Perfect For Your Event
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="grid md:grid-cols-2 gap-8">
+                <div>
+                  <h4 className="text-lg font-semibold text-bread-brown mb-4 flex items-center">
+                    <span className="mr-2">🎊</span>
+                    Corporate Events
+                  </h4>
+                  <ul className="space-y-2 text-muted-foreground">
+                    <li>• Company parties and celebrations</li>
+                    <li>• Product launches and conferences</li>
+                    <li>• Team building events</li>
+                    <li>• Office grand openings</li>
+                  </ul>
+                </div>
+                <div>
+                  <h4 className="text-lg font-semibold text-bread-brown mb-4 flex items-center">
+                    <span className="mr-2">💒</span>
+                    Special Occasions
+                  </h4>
+                  <ul className="space-y-2 text-muted-foreground">
+                    <li>• Weddings and receptions</li>
+                    <li>• Birthday parties and anniversaries</li>
+                    <li>• Cultural festivals and fairs</li>
+                    <li>• Community gatherings</li>
+                  </ul>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Catering Packages */}
+          <div className="grid md:grid-cols-2 gap-8">
+            <Card className="bg-gradient-to-br from-guava-pink/10 to-dulce-caramel/10 border-guava-pink/20">
+              <CardHeader>
+                <CardTitle className="text-xl font-serif text-bread-brown flex items-center">
+                  <span className="mr-2">🥖</span>
+                  Standard Catering
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <p className="text-muted-foreground">
+                  Perfect for smaller events and gatherings. Fresh baked bombshells 
+                  with choice of traditional fillings.
+                </p>
+                <div className="space-y-2">
+                  <div className="flex justify-between">
+                    <span>Minimum:</span>
+                    <span className="font-semibold">50 guests</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>Service Time:</span>
+                    <span className="font-semibold">2-4 hours</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>Includes:</span>
+                    <Badge variant="secondary">Setup & Service</Badge>
+                  </div>
+                </div>
+                <Button 
+                  className="w-full bg-guava-pink hover:bg-guava-pink/90 text-coconut-white"
+                  onClick={() => window.location.href = '/custom-quote?service=standard-catering'}
+                >
+                  Request Standard Catering
+                </Button>
+              </CardContent>
+            </Card>
+
+            <Card className="bg-gradient-to-br from-tropic-green/10 to-bread-brown/10 border-tropic-green/20">
+              <CardHeader>
+                <CardTitle className="text-xl font-serif text-bread-brown flex items-center">
+                  <span className="mr-2">👑</span>
+                  Premium Experience
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <p className="text-muted-foreground">
+                  Complete Colombian culinary experience with premium fillings, 
+                  interactive stations, and cultural presentation.
+                </p>
+                <div className="space-y-2">
+                  <div className="flex justify-between">
+                    <span>Minimum:</span>
+                    <span className="font-semibold">100 guests</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>Service Time:</span>
+                    <span className="font-semibold">3-6 hours</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>Includes:</span>
+                    <Badge variant="secondary">Full Experience</Badge>
+                  </div>
+                </div>
+                <Button 
+                  className="w-full bg-tropic-green hover:bg-tropic-green/90 text-coconut-white"
+                  onClick={() => window.location.href = '/custom-quote?service=premium-catering'}
+                >
+                  Request Premium Experience
+                </Button>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Contact CTA */}
+          <div className="text-center mt-12">
+            <div className="mb-6">
+              <h3 className="text-2xl font-serif font-bold text-bread-brown mb-2">
+                Ready to Bring Colombia to Your Event?
+              </h3>
+              <p className="text-muted-foreground">
+                Contact us for a custom quote and let's make your event unforgettable!
+              </p>
+            </div>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Button 
+                size="lg" 
+                className="bg-cacao-brown hover:bg-cacao-brown/90 text-coconut-white"
+                onClick={() => window.location.href = '/custom-quote?service=event-catering'}
+              >
+                Get Custom Catering Quote
+              </Button>
+              <Button 
+                variant="outline" 
+                size="lg" 
+                className="border-bread-brown text-bread-brown hover:bg-bread-brown hover:text-coconut-white"
+                onClick={() => {
+                  const element = document.querySelector('#contact');
+                  if (element) element.scrollIntoView({ behavior: 'smooth' });
+                }}
+              >
+                Contact Our Catering Team
+              </Button>
+            </div>
           </div>
         </div>
       </div>
