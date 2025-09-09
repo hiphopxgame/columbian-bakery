@@ -41,40 +41,86 @@ const WholesaleSection = () => {
             </Card>
           </div>
 
-          {/* Pricing Card */}
-          <Card className="mb-12 bg-gradient-to-br from-bread-brown/10 to-yuca-cream border-bread-brown/20">
-            <CardHeader>
-              <CardTitle className="text-2xl font-serif text-bread-brown text-center">
-                Wholesale Pricing - Frozen Dough Only
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-center">
-              <div className="max-w-md mx-auto">
-                <div className="text-6xl mb-4">❄️</div>
-                <h3 className="text-xl font-serif font-bold text-bread-brown mb-4">
-                  Frozen Dough Bombshells
-                </h3>
-                <p className="text-muted-foreground mb-6">
-                  Perfect for establishments that want maximum freshness. 
-                  Bake in-house for the ultimate fresh experience.
-                </p>
-                <div className="space-y-3 mb-6">
-                  <div className="flex justify-between text-lg">
-                    <span>Per Bombshell:</span>
-                    <span className="font-bold text-bread-brown">$2.00</span>
+          {/* Pricing Cards */}
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+            <Card className="bg-gradient-to-br from-guava-pink/10 to-yuca-cream border-guava-pink/20">
+              <CardHeader>
+                <CardTitle className="text-xl font-serif text-bread-brown text-center">
+                  Classic Bombshells
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="text-center">
+                <div className="text-4xl mb-3">🥮</div>
+                <div className="space-y-2 mb-4">
+                  <div className="flex justify-between text-sm">
+                    <span>Frozen:</span>
+                    <span className="font-bold text-bread-brown">$2.00 each</span>
                   </div>
-                  <div className="flex justify-between text-lg">
+                  <div className="flex justify-between text-sm">
+                    <span>Ready-Baked:</span>
+                    <span className="font-bold text-bread-brown">$3.00 each</span>
+                  </div>
+                  <div className="flex justify-between text-xs text-muted-foreground border-t pt-2">
                     <span>Per Unit (100):</span>
-                    <span className="font-bold text-bread-brown">$200</span>
-                  </div>
-                  <div className="flex justify-between text-lg">
-                    <span>Add Cream:</span>
-                    <span className="font-semibold text-bread-brown">+$10/unit</span>
+                    <span>$200 / $300</span>
                   </div>
                 </div>
-              </div>
-            </CardContent>
-          </Card>
+              </CardContent>
+            </Card>
+
+            <Card className="bg-gradient-to-br from-emerald-100/50 to-yuca-cream border-emerald-200/50">
+              <CardHeader>
+                <CardTitle className="text-xl font-serif text-bread-brown text-center">
+                  Vegan Bombshells
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="text-center">
+                <div className="text-4xl mb-3">🌱</div>
+                <div className="space-y-2 mb-4">
+                  <div className="flex justify-between text-sm">
+                    <span>Frozen:</span>
+                    <span className="font-bold text-bread-brown">$2.50 each</span>
+                  </div>
+                  <div className="flex justify-between text-sm">
+                    <span>Ready-Baked:</span>
+                    <span className="font-bold text-bread-brown">$3.75 each</span>
+                  </div>
+                  <div className="flex justify-between text-xs text-muted-foreground border-t pt-2">
+                    <span>Per Unit (100):</span>
+                    <span>$250 / $375</span>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="bg-gradient-to-br from-bread-brown/10 to-yuca-cream border-bread-brown/20">
+              <CardHeader>
+                <CardTitle className="text-xl font-serif text-bread-brown text-center">
+                  Traditional Breads
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="text-center">
+                <div className="text-4xl mb-3">🍞</div>
+                <div className="space-y-2 mb-4 text-xs">
+                  <div className="flex justify-between">
+                    <span>Pandebono:</span>
+                    <span className="font-bold">$2.25 / $3.38</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>Pan de Yuca:</span>
+                    <span className="font-bold">$2.75 / $4.13</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>Pandequeso:</span>
+                    <span className="font-bold">$2.60 / $3.90</span>
+                  </div>
+                  <div className="text-xs text-muted-foreground border-t pt-2">
+                    Frozen / Ready-Baked per piece
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
 
           {/* Order Action */}
           <div className="text-center mb-12">

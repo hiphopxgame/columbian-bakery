@@ -39,9 +39,29 @@ const OrderPage = () => {
     setFormData(prev => ({ ...prev, [field]: value }));
   };
 
+  const getWholesalePricePerUnit = (productName: string, orderType: string) => {
+    const basePrice = orderType === 'wholesale-baked' ? 1.5 : 1; // Baked costs 50% more
+    
+    switch (productName?.toLowerCase()) {
+      case 'classic bombshell':
+        return 200 * basePrice; // $2.00 per bombshell * 100
+      case 'vegan bombshell':
+        return 250 * basePrice; // $2.50 per bombshell * 100
+      case 'pandebono':
+        return 225 * basePrice; // $2.25 per bombshell * 100
+      case 'pan de yuca':
+        return 275 * basePrice; // $2.75 per bombshell * 100
+      case 'pandequeso':
+        return 260 * basePrice; // $2.60 per bombshell * 100
+      default:
+        return orderType === 'wholesale-baked' ? 300 : 200; // Default pricing
+    }
+  };
+
   const calculateTotal = () => {
     if (selectedProduct) {
-      return formData.quantity * (selectedProduct.price || 0);
+      const pricePerUnit = getWholesalePricePerUnit(selectedProduct.name, orderType);
+      return formData.quantity * pricePerUnit;
     }
     if (orderType === 'wholesale-baked') {
       return formData.quantity * 300;
@@ -156,7 +176,9 @@ const OrderPage = () => {
                 >
                   <span className="font-semibold">Wholesale Baked</span>
                   <span className="text-sm opacity-75">Ready to serve</span>
-                  <Badge variant="secondary" className="mt-2">$300/unit</Badge>
+                  <Badge variant="secondary" className="mt-2">
+                    {selectedProduct ? `$${getWholesalePricePerUnit(selectedProduct.name, 'wholesale-baked')}/unit` : '$300/unit'}
+                  </Badge>
                 </Button>
                 <Button
                   variant={orderType === 'wholesale-frozen' ? 'default' : 'outline'}
@@ -168,7 +190,9 @@ const OrderPage = () => {
                 >
                   <span className="font-semibold">Wholesale Frozen</span>
                   <span className="text-sm opacity-75">Bake fresh in-house</span>
-                  <Badge variant="secondary" className="mt-2">$200/unit</Badge>
+                  <Badge variant="secondary" className="mt-2">
+                    {selectedProduct ? `$${getWholesalePricePerUnit(selectedProduct.name, 'wholesale-frozen')}/unit` : '$200/unit'}
+                  </Badge>
                 </Button>
               </div>
             </CardContent>
