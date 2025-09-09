@@ -41,85 +41,154 @@ const WholesaleSection = () => {
             </Card>
           </div>
 
-          {/* Pricing Cards */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-            <Card className="bg-gradient-to-br from-guava-pink/10 to-yuca-cream border-guava-pink/20">
-              <CardHeader>
-                <CardTitle className="text-xl font-serif text-bread-brown text-center">
-                  Classic Bombshells
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="text-center">
-                <div className="text-4xl mb-3">🥮</div>
-                <div className="space-y-2 mb-4">
-                  <div className="flex justify-between text-sm">
-                    <span>Frozen:</span>
-                    <span className="font-bold text-bread-brown">$2.00 each</span>
-                  </div>
-                  <div className="flex justify-between text-sm">
-                    <span>Ready-Baked:</span>
-                    <span className="font-bold text-bread-brown">$3.00 each</span>
-                  </div>
-                  <div className="flex justify-between text-xs text-muted-foreground border-t pt-2">
-                    <span>Per Unit (100):</span>
-                    <span>$200 / $300</span>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
+          {/* Wholesale Products */}
+          <div className="mb-12">
+            <h3 className="text-2xl font-serif font-bold text-bread-brown text-center mb-8">
+              Wholesale Product Catalog
+            </h3>
+            
+            {/* Signature Products */}
+            <div className="mb-8">
+              <h4 className="text-xl font-serif font-semibold text-bread-brown mb-6 flex items-center">
+                <span className="mr-2">⭐</span>
+                Signature Products
+              </h4>
+              <div className="grid md:grid-cols-2 gap-6">
+                <Card className="bg-gradient-to-br from-guava-pink/10 to-dulce-caramel/10 border-guava-pink/20">
+                  <CardContent className="p-6">
+                    <div className="flex justify-between items-start mb-4">
+                      <div>
+                        <h5 className="text-lg font-semibold text-bread-brown">Classic Bombshell</h5>
+                        <p className="text-sm text-muted-foreground">Yuca pastry with guava and cream</p>
+                      </div>
+                      <div className="text-right">
+                        <div className="text-xs text-muted-foreground line-through">Retail: $12.99</div>
+                        <div className="font-bold text-guava-pink">$2.00 each</div>
+                      </div>
+                    </div>
+                    <div className="space-y-1 text-sm">
+                      <div className="flex justify-between">
+                        <span>Per Unit (100):</span>
+                        <span className="font-semibold">$200</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>Minimum:</span>
+                        <span>2 Units (200 pcs)</span>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
 
-            <Card className="bg-gradient-to-br from-emerald-100/50 to-yuca-cream border-emerald-200/50">
-              <CardHeader>
-                <CardTitle className="text-xl font-serif text-bread-brown text-center">
-                  Vegan Bombshells
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="text-center">
-                <div className="text-4xl mb-3">🌱</div>
-                <div className="space-y-2 mb-4">
-                  <div className="flex justify-between text-sm">
-                    <span>Frozen:</span>
-                    <span className="font-bold text-bread-brown">$2.50 each</span>
-                  </div>
-                  <div className="flex justify-between text-sm">
-                    <span>Ready-Baked:</span>
-                    <span className="font-bold text-bread-brown">$3.75 each</span>
-                  </div>
-                  <div className="flex justify-between text-xs text-muted-foreground border-t pt-2">
-                    <span>Per Unit (100):</span>
-                    <span>$250 / $375</span>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
+                <Card className="bg-gradient-to-br from-tropic-green/10 to-dulce-caramel/10 border-tropic-green/20">
+                  <CardContent className="p-6">
+                    <div className="flex justify-between items-start mb-4">
+                      <div>
+                        <h5 className="text-lg font-semibold text-bread-brown">Vegan Bombshell</h5>
+                        <p className="text-sm text-muted-foreground">Plant-based with cashew cream</p>
+                      </div>
+                      <div className="text-right">
+                        <div className="text-xs text-muted-foreground line-through">Retail: $13.99</div>
+                        <div className="font-bold text-tropic-green">$2.50 each</div>
+                      </div>
+                    </div>
+                    <div className="space-y-1 text-sm">
+                      <div className="flex justify-between">
+                        <span>Per Unit (100):</span>
+                        <span className="font-semibold">$250</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>Minimum:</span>
+                        <span>2 Units (200 pcs)</span>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+            </div>
 
-            <Card className="bg-gradient-to-br from-bread-brown/10 to-yuca-cream border-bread-brown/20">
-              <CardHeader>
-                <CardTitle className="text-xl font-serif text-bread-brown text-center">
-                  Traditional Breads
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="text-center">
-                <div className="text-4xl mb-3">🍞</div>
-                <div className="space-y-2 mb-4 text-xs">
-                  <div className="flex justify-between">
-                    <span>Pandebono:</span>
-                    <span className="font-bold">$2.25 / $3.38</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>Pan de Yuca:</span>
-                    <span className="font-bold">$2.75 / $4.13</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>Pandequeso:</span>
-                    <span className="font-bold">$2.60 / $3.90</span>
-                  </div>
-                  <div className="text-xs text-muted-foreground border-t pt-2">
-                    Frozen / Ready-Baked per piece
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
+            {/* Traditional Products */}
+            <div>
+              <h4 className="text-xl font-serif font-semibold text-bread-brown mb-6 flex items-center">
+                <span className="mr-2">🥖</span>
+                Traditional Colombian Breads
+              </h4>
+              <div className="grid md:grid-cols-3 gap-6">
+                <Card className="bg-gradient-to-br from-bread-brown/10 to-yuca-cream border-bread-brown/20">
+                  <CardContent className="p-6">
+                    <div className="flex justify-between items-start mb-4">
+                      <div>
+                        <h5 className="text-lg font-semibold text-bread-brown">Pandebono</h5>
+                        <p className="text-sm text-muted-foreground">Cheese bread with cassava starch</p>
+                      </div>
+                      <div className="text-right">
+                        <div className="text-xs text-muted-foreground line-through">Retail: $8.99</div>
+                        <div className="font-bold text-bread-brown">$2.25 each</div>
+                      </div>
+                    </div>
+                    <div className="space-y-1 text-sm">
+                      <div className="flex justify-between">
+                        <span>Per Unit (100):</span>
+                        <span className="font-semibold">$225</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>Minimum:</span>
+                        <span>2 Units (200 pcs)</span>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+
+                <Card className="bg-gradient-to-br from-dulce-caramel/10 to-yuca-cream border-dulce-caramel/20">
+                  <CardContent className="p-6">
+                    <div className="flex justify-between items-start mb-4">
+                      <div>
+                        <h5 className="text-lg font-semibold text-bread-brown">Pan de Yuca</h5>
+                        <p className="text-sm text-muted-foreground">Chewy cheese bread with yuca flour</p>
+                      </div>
+                      <div className="text-right">
+                        <div className="text-xs text-muted-foreground line-through">Retail: $9.99</div>
+                        <div className="font-bold text-dulce-caramel">$2.75 each</div>
+                      </div>
+                    </div>
+                    <div className="space-y-1 text-sm">
+                      <div className="flex justify-between">
+                        <span>Per Unit (100):</span>
+                        <span className="font-semibold">$275</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>Minimum:</span>
+                        <span>2 Units (200 pcs)</span>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+
+                <Card className="bg-gradient-to-br from-guava-pink/10 to-yuca-cream border-guava-pink/20">
+                  <CardContent className="p-6">
+                    <div className="flex justify-between items-start mb-4">
+                      <div>
+                        <h5 className="text-lg font-semibold text-bread-brown">Pandequeso</h5>
+                        <p className="text-sm text-muted-foreground">Soft, fluffy cheese bread</p>
+                      </div>
+                      <div className="text-right">
+                        <div className="text-xs text-muted-foreground line-through">Retail: $9.49</div>
+                        <div className="font-bold text-guava-pink">$2.60 each</div>
+                      </div>
+                    </div>
+                    <div className="space-y-1 text-sm">
+                      <div className="flex justify-between">
+                        <span>Per Unit (100):</span>
+                        <span className="font-semibold">$260</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>Minimum:</span>
+                        <span>2 Units (200 pcs)</span>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+            </div>
           </div>
 
           {/* Order Action */}
@@ -132,8 +201,15 @@ const WholesaleSection = () => {
               Place Wholesale Order
             </Button>
             <p className="text-sm text-muted-foreground mt-4">
-              Frozen dough bombshells - bake fresh in your establishment
+              All products available as frozen dough - bake fresh in your establishment
             </p>
+            <div className="mt-4 p-4 bg-yuca-cream/50 rounded-lg max-w-2xl mx-auto">
+              <p className="text-sm text-muted-foreground">
+                <strong>Note:</strong> All wholesale prices are for frozen dough only. 
+                Products can be mixed and matched in your orders. 
+                Cream filling available as add-on for applicable products.
+              </p>
+            </div>
           </div>
 
           {/* Contact for Wholesale */}
