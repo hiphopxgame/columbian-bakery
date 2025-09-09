@@ -51,13 +51,6 @@ const HeroSection = () => {
           <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in-up" style={{animationDelay: '0.6s'}}>
             <Button 
               size="lg" 
-              className="bg-cacao-brown hover:bg-cacao-brown/90 text-coconut-white px-8 py-4 text-lg font-semibold btn-joyful texture-wood"
-              onClick={() => scrollToSection('#wholesale')}
-            >
-              🏠 Order for Home
-            </Button>
-            <Button 
-              size="lg" 
               variant="outline" 
               className="border-2 border-tropic-green text-tropic-green hover:bg-tropic-green hover:text-coconut-white px-8 py-4 text-lg font-semibold btn-joyful"
               onClick={() => scrollToSection('#wholesale')}
