@@ -86,13 +86,13 @@ const WholesaleSection = () => {
                         <p className="text-sm text-muted-foreground">Plant-based with cashew cream</p>
                       </div>
                       <div className="text-right">
-                        <div className="font-bold text-tropic-green">$3.00 each</div>
+                        <div className="font-bold text-tropic-green">$2.50 each</div>
                       </div>
                     </div>
                     <div className="space-y-1 text-sm">
                       <div className="flex justify-between">
                         <span>Per Unit (100):</span>
-                        <span className="font-semibold">$300</span>
+                        <span className="font-semibold">$250</span>
                       </div>
                       <div className="flex justify-between">
                         <span>Minimum:</span>
