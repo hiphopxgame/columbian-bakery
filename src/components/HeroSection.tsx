@@ -1,8 +1,11 @@
 
 import React from 'react';
 import { Button } from '@/components/ui/button';
+import { useNavigate } from 'react-router-dom';
 
 const HeroSection = () => {
+  const navigate = useNavigate();
+  
   const scrollToSection = (href: string) => {
     const element = document.querySelector(href);
     if (element) {
@@ -61,7 +64,7 @@ const HeroSection = () => {
               size="lg" 
               variant="ghost" 
               className="text-guava-pink hover:bg-guava-pink/20 hover:text-cacao-brown px-8 py-4 text-lg font-semibold btn-joyful"
-              onClick={() => scrollToSection('#about')}
+              onClick={() => navigate('/order')}
             >
               ✨ Explore the Bakery
             </Button>
