@@ -143,13 +143,13 @@ const WholesaleSection = () => {
                         <p className="text-sm text-muted-foreground">Chewy cheese bread with yuca flour</p>
                       </div>
                       <div className="text-right">
-                        <div className="font-bold text-dulce-caramel">$2.75 each</div>
+                        <div className="font-bold text-dulce-caramel">$3.00 each</div>
                       </div>
                     </div>
                     <div className="space-y-1 text-sm">
                       <div className="flex justify-between">
                         <span>Per Unit (100):</span>
-                        <span className="font-semibold">$275</span>
+                        <span className="font-semibold">$300</span>
                       </div>
                       <div className="flex justify-between">
                         <span>Minimum:</span>
