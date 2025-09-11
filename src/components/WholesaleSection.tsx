@@ -62,7 +62,6 @@ const WholesaleSection = () => {
                         <p className="text-sm text-muted-foreground">Yuca pastry with guava and cream</p>
                       </div>
                       <div className="text-right">
-                        <div className="text-xs text-muted-foreground line-through">Retail: $12.99</div>
                         <div className="font-bold text-guava-pink">$2.00 each</div>
                       </div>
                     </div>
@@ -87,7 +86,6 @@ const WholesaleSection = () => {
                         <p className="text-sm text-muted-foreground">Plant-based with cashew cream</p>
                       </div>
                       <div className="text-right">
-                        <div className="text-xs text-muted-foreground line-through">Retail: $13.99</div>
                         <div className="font-bold text-tropic-green">$2.50 each</div>
                       </div>
                     </div>
@@ -121,7 +119,6 @@ const WholesaleSection = () => {
                         <p className="text-sm text-muted-foreground">Cheese bread with cassava starch</p>
                       </div>
                       <div className="text-right">
-                        <div className="text-xs text-muted-foreground line-through">Retail: $8.99</div>
                         <div className="font-bold text-bread-brown">$2.25 each</div>
                       </div>
                     </div>
@@ -146,7 +143,6 @@ const WholesaleSection = () => {
                         <p className="text-sm text-muted-foreground">Chewy cheese bread with yuca flour</p>
                       </div>
                       <div className="text-right">
-                        <div className="text-xs text-muted-foreground line-through">Retail: $9.99</div>
                         <div className="font-bold text-dulce-caramel">$2.75 each</div>
                       </div>
                     </div>
@@ -171,7 +167,6 @@ const WholesaleSection = () => {
                         <p className="text-sm text-muted-foreground">Soft, fluffy cheese bread</p>
                       </div>
                       <div className="text-right">
-                        <div className="text-xs text-muted-foreground line-through">Retail: $9.49</div>
                         <div className="font-bold text-guava-pink">$2.60 each</div>
                       </div>
                     </div>
