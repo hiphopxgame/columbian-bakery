@@ -2,8 +2,11 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 const Navigation = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
@@ -16,18 +19,27 @@ const Navigation = () => {
   }, []);
 
   const navItems = [
-    { label: 'Home', href: '#home', emoji: '🏠' },
-    { label: 'About', href: '#about', emoji: '📖' },
-    { label: 'Wholesale', href: '#wholesale', emoji: '🏢' },
-    { label: 'Catering', href: '#catering', emoji: '🎉' },
-    { label: 'Catalog', href: '#catalog', emoji: '📋' },
-    { label: 'Contact', href: '#contact', emoji: '💬' }
+    { label: 'Home', href: '/', emoji: '🏠', type: 'route' },
+    { label: 'About', href: '#about', emoji: '📖', type: 'scroll' },
+    { label: 'Wholesale', href: '#wholesale', emoji: '🏢', type: 'scroll' },
+    { label: 'Catering', href: '#catering', emoji: '🎉', type: 'scroll' },
+    { label: 'Catalog', href: '/catalog', emoji: '📋', type: 'route' },
+    { label: 'Contact', href: '#contact', emoji: '💬', type: 'scroll' }
   ];
 
-  const scrollToSection = (href: string) => {
-    const element = document.querySelector(href);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+  const handleNavClick = (item: typeof navItems[0]) => {
+    if (item.type === 'route') {
+      navigate(item.href);
+    } else {
+      // Handle scroll navigation
+      if (location.pathname !== '/') {
+        navigate('/', { state: { scrollTo: item.href } });
+      } else {
+        const element = document.querySelector(item.href);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }
+      }
     }
     setIsMenuOpen(false);
   };
@@ -53,7 +65,7 @@ const Navigation = () => {
             {navItems.map((item) => (
               <button
                 key={item.label}
-                onClick={() => scrollToSection(item.href)}
+                onClick={() => handleNavClick(item)}
                 className="group flex items-center space-x-1 text-cacao-brown hover:text-guava-pink transition-all duration-300 font-medium hover:scale-105"
               >
                 <span className="group-hover:animate-joyful-bounce">{item.emoji}</span>
@@ -82,7 +94,7 @@ const Navigation = () => {
               {navItems.map((item) => (
                 <button
                   key={item.label}
-                  onClick={() => scrollToSection(item.href)}
+                  onClick={() => handleNavClick(item)}
                   className="flex items-center space-x-3 w-full text-left px-4 py-3 text-cacao-brown hover:text-guava-pink hover:bg-yuca-beige/50 transition-all duration-300 rounded-lg quick-tap font-medium"
                 >
                   <span className="text-lg">{item.emoji}</span>
