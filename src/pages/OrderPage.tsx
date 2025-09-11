@@ -27,7 +27,8 @@ const OrderPage = () => {
     doughType: '',
     filling: '',
     delivery: '',
-    specialInstructions: ''
+    specialInstructions: '',
+    seasonalDescription: ''
   });
 
   // Wholesale pricing mapping - SCALED UP
@@ -36,7 +37,8 @@ const OrderPage = () => {
     'de1d2c3b-d2dc-4d09-bba6-82051180cade': 250, // Vegan Bombshell - $2.50 each  
     'a7323d9f-d71c-4017-89cf-64beda401a44': 400, // Pandebono - $4.00 each
     'db78b11a-9547-441b-9d1b-ed74f74f7012': 300, // Pan de Yuca - $3.00 each
-    '1e3472fd-7dcd-42c1-ae41-6cf420f5a0d7': 350  // Pandequeso - $3.50 each
+    '1e3472fd-7dcd-42c1-ae41-6cf420f5a0d7': 350, // Pandequeso - $3.50 each
+    'seasonal-special': 350  // Seasonal Special - $3.50 each (adjustable)
   };
 
   useEffect(() => {
@@ -93,12 +95,14 @@ const OrderPage = () => {
           phone: formData.phone,
           order_type: orderType,
           product_id: selectedProduct?.id || wholesaleProduct || null,
-          product_name: selectedProduct?.name || products.find(p => p.id === wholesaleProduct)?.name || null,
+          product_name: selectedProduct?.name || (wholesaleProduct === 'seasonal-special' ? 'Seasonal Special' : products.find(p => p.id === wholesaleProduct)?.name) || null,
           quantity: formData.quantity,
           dough_type: formData.doughType,
           filling: formData.filling,
           delivery: formData.delivery,
-          special_instructions: formData.specialInstructions,
+          special_instructions: wholesaleProduct === 'seasonal-special' 
+            ? `SEASONAL SPECIAL: ${formData.seasonalDescription}${formData.specialInstructions ? '\n\nAdditional Instructions: ' + formData.specialInstructions : ''}`
+            : formData.specialInstructions,
           estimated_total: calculateTotal()
         }]);
 
@@ -122,7 +126,8 @@ const OrderPage = () => {
         doughType: '',
         filling: '',
         delivery: '',
-        specialInstructions: ''
+        specialInstructions: '',
+        seasonalDescription: ''
       });
       setOrderType('wholesale-frozen');
     } catch (error) {
@@ -198,7 +203,41 @@ const OrderPage = () => {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {/* Seasonal Special Card */}
+                  <Card 
+                    className={`cursor-pointer transition-all border-2 relative ${
+                      wholesaleProduct === 'seasonal-special' 
+                        ? 'border-bread-brown bg-yuca-cream/50' 
+                        : 'border-border hover:border-bread-brown/50'
+                    }`}
+                    onClick={() => setWholesaleProduct('seasonal-special')}
+                  >
+                    <CardContent className="p-4">
+                      <div className="text-center">
+                        <div className="absolute top-2 right-2">
+                          <Badge variant="secondary" className="text-xs bg-guava-pink/20 text-guava-pink border-guava-pink/30">
+                            🌟 SEASONAL
+                          </Badge>
+                        </div>
+                        <h4 className="font-semibold text-bread-brown mb-2">Seasonal Special</h4>
+                        <p className="text-xs text-muted-foreground mb-3">
+                          Our limited-time specialty items like spinach, jalapeño stuffed breads & seasonal pastries
+                        </p>
+                        <div className="space-y-1">
+                          <div className="text-lg font-bold text-bread-brown">$3.50 each</div>
+                          <div className="text-sm text-muted-foreground">$350/unit (100)</div>
+                        </div>
+                        <div className="flex flex-wrap gap-1 mt-2 justify-center">
+                          <Badge variant="outline" className="text-xs">Limited Time</Badge>
+                          <Badge variant="outline" className="text-xs">Specialty</Badge>
+                          <Badge variant="outline" className="text-xs">Custom</Badge>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                  
+                  {/* Regular Products */}
                   {products.map((product) => {
                     const wholesalePrice = wholesalePricing[product.id];
                     const pricePerUnit = wholesalePrice / 100;
@@ -351,6 +390,25 @@ const OrderPage = () => {
                    </div>
                  </div>
 
+                {/* Seasonal Special Description */}
+                {wholesaleProduct === 'seasonal-special' && (
+                  <div>
+                    <label className="block text-sm font-medium text-foreground mb-2">
+                      Seasonal Special Description *
+                    </label>
+                    <Textarea
+                      value={formData.seasonalDescription}
+                      onChange={(e) => handleInputChange('seasonalDescription', e.target.value)}
+                      placeholder="Please describe what seasonal special you'd like (e.g., spinach stuffed bread, jalapeño pastries, etc.)..."
+                      rows={3}
+                      required={wholesaleProduct === 'seasonal-special'}
+                    />
+                    <p className="text-sm text-muted-foreground mt-2">
+                      Describe the specific seasonal item you'd like to order. Our team will confirm availability and adjust pricing if needed.
+                    </p>
+                  </div>
+                )}
+
                 <div>
                   <label className="block text-sm font-medium text-foreground mb-2">
                     Special Instructions
@@ -369,14 +427,20 @@ const OrderPage = () => {
                      Order Summary
                    </h4>
                    <div className="space-y-2 text-foreground">
-                     <div className="flex justify-between">
-                       <span>Product:</span>
-                       <span>{
-                         selectedProduct?.name || 
-                         products.find(p => p.id === wholesaleProduct)?.name || 
-                         'Select a product'
-                       }</span>
-                     </div>
+                      <div className="flex justify-between">
+                        <span>Product:</span>
+                        <span>{
+                          selectedProduct?.name || 
+                          (wholesaleProduct === 'seasonal-special' ? 'Seasonal Special' : products.find(p => p.id === wholesaleProduct)?.name) || 
+                          'Select a product'
+                        }</span>
+                      </div>
+                      {wholesaleProduct === 'seasonal-special' && formData.seasonalDescription && (
+                        <div className="flex justify-between">
+                          <span>Description:</span>
+                          <span className="text-right max-w-48 text-sm">{formData.seasonalDescription}</span>
+                        </div>
+                      )}
                      <div className="flex justify-between">
                        <span>Format:</span>
                        <span>Frozen Dough (Wholesale)</span>
@@ -406,7 +470,7 @@ const OrderPage = () => {
                    type="submit"
                    size="lg" 
                    className="w-full bg-bread-brown hover:bg-bread-brown/90 text-coconut-white text-lg font-semibold py-4"
-                   disabled={!formData.name || !formData.email || !formData.delivery || (!selectedProduct && !wholesaleProduct)}
+                   disabled={!formData.name || !formData.email || !formData.delivery || (!selectedProduct && !wholesaleProduct) || (wholesaleProduct === 'seasonal-special' && !formData.seasonalDescription)}
                  >
                    Submit Wholesale Order Request
                  </Button>
