@@ -33,10 +33,10 @@ const OrderPage = () => {
   // Wholesale pricing mapping - SCALED UP
   const wholesalePricing = {
     'e27d0fd9-94db-4b5d-9c81-a876b831ca3f': 200, // Classic Bombshell - $2.00 each
-    'de1d2c3b-d2dc-4d09-bba6-82051180cade': 250, // Vegan Bombshell - $2.50 each  
-    'a7323d9f-d71c-4017-89cf-64beda401a44': 225, // Pandebono - $2.25 each
+    'de1d2c3b-d2dc-4d09-bba6-82051180cade': 300, // Vegan Bombshell - $3.00 each  
+    'a7323d9f-d71c-4017-89cf-64beda401a44': 400, // Pandebono - $4.00 each
     'db78b11a-9547-441b-9d1b-ed74f74f7012': 275, // Pan de Yuca - $2.75 each
-    '1e3472fd-7dcd-42c1-ae41-6cf420f5a0d7': 260  // Pandequeso - $2.60 each
+    '1e3472fd-7dcd-42c1-ae41-6cf420f5a0d7': 350  // Pandequeso - $3.50 each
   };
 
   useEffect(() => {
