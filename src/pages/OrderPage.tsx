@@ -16,7 +16,7 @@ const productImages = {
   'pan de yuca': '/lovable-uploads/pan-de-yuca-selection.jpg',
   'pandequeso': '/lovable-uploads/pandequeso-selection.jpg',
   'rosquilla': '/lovable-uploads/rosquillas-selection.jpg',
-  'seasonal': '/lovable-uploads/pastel-three-seasons.jpg',
+  'seasonal': '/lovable-uploads/seasonal-herbs-pastel.jpg',
   'default': '/lovable-uploads/pandebono-variety.jpg'
 };
 
