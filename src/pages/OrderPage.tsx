@@ -10,6 +10,15 @@ import { ArrowLeft } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 
+// Product images
+const productImages = {
+  'pandebono': '/lovable-uploads/pandebono-selection.jpg',
+  'pan de yuca': '/lovable-uploads/pan-de-yuca-selection.jpg',
+  'rosquilla': '/lovable-uploads/rosquillas-selection.jpg',
+  'seasonal': '/lovable-uploads/pandebono-variety.jpg',
+  'default': '/lovable-uploads/pandebono-variety.jpg'
+};
+
 const OrderPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -71,6 +80,14 @@ const OrderPage = () => {
 
   const handleInputChange = (field: string, value: string | number) => {
     setFormData(prev => ({ ...prev, [field]: value }));
+  };
+
+  const getProductImage = (productName: string) => {
+    const name = productName.toLowerCase();
+    if (name.includes('pandebono')) return productImages.pandebono;
+    if (name.includes('pan de yuca')) return productImages['pan de yuca'];
+    if (name.includes('rosquilla')) return productImages.rosquilla;
+    return productImages.default;
   };
 
   const calculateTotal = () => {
@@ -205,22 +222,29 @@ const OrderPage = () => {
               <CardContent>
                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
                   {/* Seasonal Special Card */}
-                  <Card 
-                    className={`cursor-pointer transition-all border-2 relative ${
-                      wholesaleProduct === 'seasonal-special' 
-                        ? 'border-bread-brown bg-yuca-cream/50' 
-                        : 'border-border hover:border-bread-brown/50'
-                    }`}
-                    onClick={() => setWholesaleProduct('seasonal-special')}
-                  >
-                    <CardContent className="p-4">
-                      <div className="text-center">
-                        <div className="absolute top-2 right-2">
-                          <Badge variant="secondary" className="text-xs bg-guava-pink/20 text-guava-pink border-guava-pink/30">
-                            🌟 SEASONAL
-                          </Badge>
-                        </div>
-                        <h4 className="font-semibold text-bread-brown mb-2">Seasonal Special</h4>
+                   <Card 
+                     className={`cursor-pointer transition-all border-2 relative overflow-hidden ${
+                       wholesaleProduct === 'seasonal-special' 
+                         ? 'border-bread-brown bg-yuca-cream/50' 
+                         : 'border-border hover:border-bread-brown/50'
+                     }`}
+                     onClick={() => setWholesaleProduct('seasonal-special')}
+                   >
+                     <div className="h-32 bg-gradient-to-br from-guava-pink/20 to-dulce-caramel/20 flex items-center justify-center overflow-hidden">
+                       <img 
+                         src={productImages.seasonal}
+                         alt="Seasonal Special"
+                         className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+                       />
+                     </div>
+                     <CardContent className="p-4">
+                       <div className="text-center">
+                         <div className="absolute top-2 right-2">
+                           <Badge variant="secondary" className="text-xs bg-guava-pink/20 text-guava-pink border-guava-pink/30">
+                             🌟 SEASONAL
+                           </Badge>
+                         </div>
+                         <h4 className="font-semibold text-bread-brown mb-2">Seasonal Special</h4>
                         <p className="text-xs text-muted-foreground mb-3">
                           Our limited-time specialty items like spinach, jalapeño stuffed breads & seasonal pastries
                         </p>
@@ -243,18 +267,25 @@ const OrderPage = () => {
                     const pricePerUnit = wholesalePrice / 100;
                     
                     return (
-                      <Card 
-                        key={product.id}
-                        className={`cursor-pointer transition-all border-2 ${
-                          wholesaleProduct === product.id 
-                            ? 'border-bread-brown bg-yuca-cream/50' 
-                            : 'border-border hover:border-bread-brown/50'
-                        }`}
-                        onClick={() => setWholesaleProduct(product.id)}
-                      >
-                        <CardContent className="p-4">
-                          <div className="text-center">
-                            <h4 className="font-semibold text-bread-brown mb-2">{product.name}</h4>
+                       <Card 
+                         key={product.id}
+                         className={`cursor-pointer transition-all border-2 overflow-hidden ${
+                           wholesaleProduct === product.id 
+                             ? 'border-bread-brown bg-yuca-cream/50' 
+                             : 'border-border hover:border-bread-brown/50'
+                         }`}
+                         onClick={() => setWholesaleProduct(product.id)}
+                       >
+                         <div className="h-32 bg-gradient-to-br from-yuca-cream to-guava-pink/20 flex items-center justify-center overflow-hidden">
+                           <img 
+                             src={getProductImage(product.name)}
+                             alt={product.name}
+                             className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+                           />
+                         </div>
+                         <CardContent className="p-4">
+                           <div className="text-center">
+                             <h4 className="font-semibold text-bread-brown mb-2">{product.name}</h4>
                             <p className="text-xs text-muted-foreground mb-3">{product.description}</p>
                             <div className="space-y-1">
                               <div className="text-lg font-bold text-bread-brown">${pricePerUnit.toFixed(2)} each</div>
