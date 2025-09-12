@@ -14,6 +14,7 @@ import { supabase } from '@/integrations/supabase/client';
 const productImages = {
   'pandebono': '/lovable-uploads/pandebono-selection.jpg',
   'pan de yuca': '/lovable-uploads/pan-de-yuca-selection.jpg',
+  'pandequeso': '/lovable-uploads/pandequeso-selection.jpg',
   'rosquilla': '/lovable-uploads/rosquillas-selection.jpg',
   'seasonal': '/lovable-uploads/pandebono-variety.jpg',
   'default': '/lovable-uploads/pandebono-variety.jpg'
@@ -86,6 +87,7 @@ const OrderPage = () => {
     const name = productName.toLowerCase();
     if (name.includes('pandebono')) return productImages.pandebono;
     if (name.includes('pan de yuca')) return productImages['pan de yuca'];
+    if (name.includes('pandequeso')) return productImages.pandequeso;
     if (name.includes('rosquilla')) return productImages.rosquilla;
     return productImages.default;
   };
