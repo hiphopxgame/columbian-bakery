@@ -271,7 +271,8 @@ const OrderPage = () => {
                    {/* Regular Products */}
                    {products.map((product) => {
                      const wholesalePrice = wholesalePricing[product.id];
-                     const pricePerUnit = wholesalePrice;
+                     const pricePerUnit = typeof wholesalePrice === 'number' ? wholesalePrice : (product.base_price ?? 0);
+                     const unitPrice = (pricePerUnit ?? 0) * 100;
                     
                     return (
                        <Card 
@@ -295,8 +296,8 @@ const OrderPage = () => {
                              <h4 className="font-semibold text-bread-brown mb-2">{product.name}</h4>
                             <p className="text-xs text-muted-foreground mb-3">{product.description}</p>
                              <div className="space-y-1">
-                               <div className="text-lg font-bold text-bread-brown">${pricePerUnit.toFixed(2)} each</div>
-                               <div className="text-sm text-muted-foreground">${(wholesalePrice * 100).toFixed(0)}/unit (100)</div>
+                               <div className="text-lg font-bold text-bread-brown">${(pricePerUnit ?? 0).toFixed(2)} each</div>
+                               <div className="text-sm text-muted-foreground">${((pricePerUnit ?? 0) * 100).toFixed(0)}/unit (100)</div>
                              </div>
                             <div className="flex flex-wrap gap-1 mt-2">
                               {product.tags.map((tag, idx) => (
