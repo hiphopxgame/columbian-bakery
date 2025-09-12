@@ -64,7 +64,7 @@ const HeroSection = () => {
               size="lg" 
               variant="ghost" 
               className="text-guava-pink hover:bg-guava-pink/20 hover:text-cacao-brown px-8 py-4 text-lg font-semibold btn-joyful"
-              onClick={() => navigate('/order')}
+              onClick={() => navigate('/catalog')}
             >
               ✨ Explore the Bakery
             </Button>
