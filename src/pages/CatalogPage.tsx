@@ -37,8 +37,9 @@ const CatalogPage = () => {
     if (wholesalePricing[product.id]) {
       return wholesalePricing[product.id];
     }
-    // Default pricing for seasonal and other products
-    return { each: product.base_price, perUnit: product.base_price * 100 };
+    // Default pricing for seasonal and other products - with null safety
+    const basePrice = product.base_price || 0;
+    return { each: basePrice, perUnit: basePrice * 100 };
   };
 
   useEffect(() => {
@@ -182,10 +183,10 @@ const CatalogPage = () => {
                             return (
                               <div className="mb-4 p-3 bg-yuca-cream/50 rounded-lg">
                                 <div className="text-lg font-bold text-bread-brown mb-1">
-                                  ${pricing.each.toFixed(2)} each
+                                  ${(pricing.each || 0).toFixed(2)} each
                                 </div>
                                 <div className="text-sm text-muted-foreground mb-1">
-                                  <strong>Per Unit (100):</strong> ${pricing.perUnit}
+                                  <strong>Per Unit (100):</strong> ${pricing.perUnit || 0}
                                 </div>
                                 {isSeasonalProduct ? (
                                   <div className="text-sm text-muted-foreground">
