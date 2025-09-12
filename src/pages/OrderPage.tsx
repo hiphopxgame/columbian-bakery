@@ -16,6 +16,7 @@ const productImages = {
   'pan de yuca': '/lovable-uploads/pan-de-yuca-selection.jpg',
   'pandequeso': '/lovable-uploads/pandequeso-selection.jpg',
   'rosquilla': '/lovable-uploads/rosquillas-selection.jpg',
+  'vegan bombshell': '/lovable-uploads/vegan-bombshell-new.jpg',
   'seasonal': '/lovable-uploads/four-seasons-cross-dimmed.jpg',
   'default': '/lovable-uploads/pandebono-variety.jpg'
 };
@@ -89,6 +90,7 @@ const OrderPage = () => {
     if (name.includes('pan de yuca')) return productImages['pan de yuca'];
     if (name.includes('pandequeso')) return productImages.pandequeso;
     if (name.includes('rosquilla')) return productImages.rosquilla;
+    if (name.includes('vegan bombshell')) return productImages['vegan bombshell'];
     return productImages.default;
   };
 
