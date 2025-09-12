@@ -32,6 +32,15 @@ const CatalogSection = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
 
+  // Wholesale pricing mapping
+  const wholesalePricing = {
+    'e27d0fd9-94db-4b5d-9c81-a876b831ca3f': { each: 2.00, perUnit: 200 }, // Classic Bombshell
+    'de1d2c3b-d2dc-4d09-bba6-82051180cade': { each: 2.50, perUnit: 250 }, // Vegan Bombshell  
+    'a7323d9f-d71c-4017-89cf-64beda401a44': { each: 4.00, perUnit: 400 }, // Pandebono
+    'db78b11a-9547-441b-9d1b-ed74f74f7012': { each: 3.00, perUnit: 300 }, // Pan de Yuca
+    '1e3472fd-7dcd-42c1-ae41-6cf420f5a0d7': { each: 3.50, perUnit: 350 }, // Pandequeso
+  } as Record<string, { each: number; perUnit: number }>;
+
   useEffect(() => {
     const fetchProducts = async () => {
       try {
@@ -180,19 +189,29 @@ const CatalogSection = () => {
                   </div>
                 </div>
                 <CardContent className="p-6">
-                  <div className="flex justify-between items-start mb-2">
-                    <h3 className="text-lg font-serif font-semibold text-bread-brown group-hover:text-dulce-caramel transition-colors">
+                  <div className="mb-2">
+                    <h3 className="text-lg font-serif font-semibold text-bread-brown group-hover:text-dulce-caramel transition-colors mb-2">
                       {product.name}
                     </h3>
-                    {product.base_price && (
-                      <span className="text-sm font-semibold text-guava-pink">
-                        ${product.base_price}
-                      </span>
+                    <p className="text-muted-foreground mb-4 text-sm leading-relaxed">
+                      {product.description}
+                    </p>
+                    
+                    {/* Pricing Information */}
+                    {wholesalePricing[product.id] && (
+                      <div className="mb-4 p-3 bg-yuca-cream/50 rounded-lg">
+                        <div className="text-lg font-bold text-bread-brown mb-1">
+                          ${wholesalePricing[product.id].each.toFixed(2)} each
+                        </div>
+                        <div className="text-sm text-muted-foreground mb-1">
+                          <strong>Per Unit (100):</strong> ${wholesalePricing[product.id].perUnit}
+                        </div>
+                        <div className="text-sm text-muted-foreground">
+                          <strong>Minimum:</strong> 2 Units (200 pcs)
+                        </div>
+                      </div>
                     )}
                   </div>
-                  <p className="text-muted-foreground mb-4 text-sm leading-relaxed">
-                    {product.description}
-                  </p>
                   <div className="flex flex-wrap gap-2 mb-4">
                     {product.tags.map((tag, tagIndex) => (
                       <Badge 
