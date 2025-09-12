@@ -32,6 +32,15 @@ const CatalogPage = () => {
     '1e3472fd-7dcd-42c1-ae41-6cf420f5a0d7': { each: 3.50, perUnit: 350 }, // Pandequeso
   } as Record<string, { each: number; perUnit: number }>;
 
+  // Default pricing for seasonal and other products
+  const getProductPricing = (product: Product) => {
+    if (wholesalePricing[product.id]) {
+      return wholesalePricing[product.id];
+    }
+    // Default pricing for seasonal and other products
+    return { each: product.base_price, perUnit: product.base_price * 100 };
+  };
+
   useEffect(() => {
     const fetchProducts = async () => {
       try {
@@ -166,19 +175,30 @@ const CatalogPage = () => {
                           </p>
                           
                           {/* Pricing Information */}
-                          {wholesalePricing[product.id] && (
-                            <div className="mb-4 p-3 bg-yuca-cream/50 rounded-lg">
-                              <div className="text-lg font-bold text-bread-brown mb-1">
-                                ${wholesalePricing[product.id].each.toFixed(2)} each
+                          {(() => {
+                            const pricing = getProductPricing(product);
+                            const isSeasonalProduct = product.tags.some(tag => tag.includes('SEASONAL'));
+                            
+                            return (
+                              <div className="mb-4 p-3 bg-yuca-cream/50 rounded-lg">
+                                <div className="text-lg font-bold text-bread-brown mb-1">
+                                  ${pricing.each.toFixed(2)} each
+                                </div>
+                                <div className="text-sm text-muted-foreground mb-1">
+                                  <strong>Per Unit (100):</strong> ${pricing.perUnit}
+                                </div>
+                                {isSeasonalProduct ? (
+                                  <div className="text-sm text-muted-foreground">
+                                    <strong>Limited Time</strong>
+                                  </div>
+                                ) : (
+                                  <div className="text-sm text-muted-foreground">
+                                    <strong>Minimum:</strong> 2 Units (200 pcs)
+                                  </div>
+                                )}
                               </div>
-                              <div className="text-sm text-muted-foreground mb-1">
-                                <strong>Per Unit (100):</strong> ${wholesalePricing[product.id].perUnit}
-                              </div>
-                              <div className="text-sm text-muted-foreground">
-                                <strong>Minimum:</strong> 2 Units (200 pcs)
-                              </div>
-                            </div>
-                          )}
+                            );
+                          })()}
                         </div>
                         <div className="flex flex-wrap gap-2 mb-4">
                           {product.tags.map((tag, tagIndex) => (
