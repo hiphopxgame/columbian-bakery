@@ -43,14 +43,14 @@ const OrderPage = () => {
     seasonalDescription: ''
   });
 
-  // Wholesale pricing mapping - SCALED UP
+  // Wholesale pricing mapping - Price per unit in dollars
   const wholesalePricing = {
-    'e27d0fd9-94db-4b5d-9c81-a876b831ca3f': 200, // Classic Bombshell - $2.00 each
-    'de1d2c3b-d2dc-4d09-bba6-82051180cade': 250, // Vegan Bombshell - $2.50 each  
-    'a7323d9f-d71c-4017-89cf-64beda401a44': 400, // Pandebono - $4.00 each
-    'db78b11a-9547-441b-9d1b-ed74f74f7012': 300, // Pan de Yuca - $3.00 each
-    '1e3472fd-7dcd-42c1-ae41-6cf420f5a0d7': 350, // Pandequeso - $3.50 each
-    'seasonal-special': 350  // Seasonal Special - $3.50 each (adjustable)
+    'e27d0fd9-94db-4b5d-9c81-a876b831ca3f': 2.00, // Classic Bombshell - $2.00 each
+    'de1d2c3b-d2dc-4d09-bba6-82051180cade': 2.50, // Vegan Bombshell - $2.50 each  
+    'a7323d9f-d71c-4017-89cf-64beda401a44': 4.00, // Pandebono - $4.00 each
+    'db78b11a-9547-441b-9d1b-ed74f74f7012': 3.00, // Pan de Yuca - $3.00 each
+    '1e3472fd-7dcd-42c1-ae41-6cf420f5a0d7': 3.50, // Pandequeso - $3.50 each
+    'seasonal-special': 3.50  // Seasonal Special - $3.50 each (adjustable)
   };
 
   useEffect(() => {
@@ -101,7 +101,8 @@ const OrderPage = () => {
       return formData.quantity * (selectedProduct.price || 0);
     }
     if (wholesaleProduct && wholesalePricing[wholesaleProduct]) {
-      return formData.quantity * (wholesalePricing[wholesaleProduct] / 100);
+      // Calculate total: quantity * (price per unit * 100 pieces per unit)
+      return formData.quantity * (wholesalePricing[wholesaleProduct] * 100);
     }
     return 0;
   };
@@ -267,10 +268,10 @@ const OrderPage = () => {
                     </CardContent>
                   </Card>
                   
-                  {/* Regular Products */}
-                  {products.map((product) => {
-                    const wholesalePrice = wholesalePricing[product.id];
-                    const pricePerUnit = wholesalePrice / 100;
+                   {/* Regular Products */}
+                   {products.map((product) => {
+                     const wholesalePrice = wholesalePricing[product.id];
+                     const pricePerUnit = wholesalePrice;
                     
                     return (
                        <Card 
@@ -293,10 +294,10 @@ const OrderPage = () => {
                            <div className="text-center">
                              <h4 className="font-semibold text-bread-brown mb-2">{product.name}</h4>
                             <p className="text-xs text-muted-foreground mb-3">{product.description}</p>
-                            <div className="space-y-1">
-                              <div className="text-lg font-bold text-bread-brown">${pricePerUnit.toFixed(2)} each</div>
-                              <div className="text-sm text-muted-foreground">${wholesalePrice}/unit (100)</div>
-                            </div>
+                             <div className="space-y-1">
+                               <div className="text-lg font-bold text-bread-brown">${pricePerUnit.toFixed(2)} each</div>
+                               <div className="text-sm text-muted-foreground">${(wholesalePrice * 100).toFixed(0)}/unit (100)</div>
+                             </div>
                             <div className="flex flex-wrap gap-1 mt-2">
                               {product.tags.map((tag, idx) => (
                                 <Badge key={idx} variant="outline" className="text-xs">
@@ -490,16 +491,16 @@ const OrderPage = () => {
                        <span>Total Pieces:</span>
                        <span>{formData.quantity * 100}</span>
                      </div>
-                     {wholesaleProduct && (
-                       <div className="flex justify-between">
-                         <span>Price per Unit:</span>
-                         <span>${(wholesalePricing[wholesaleProduct] || 0).toFixed(0)}</span>
-                       </div>
-                     )}
-                     <div className="flex justify-between font-semibold text-lg border-t border-border pt-2">
-                       <span>Estimated Total:</span>
-                       <span>${calculateTotal().toFixed(0)}</span>
-                     </div>
+                      {wholesaleProduct && (
+                        <div className="flex justify-between">
+                          <span>Price per Unit:</span>
+                          <span>${((wholesalePricing[wholesaleProduct] || 0) * 100).toFixed(0)}</span>
+                        </div>
+                      )}
+                      <div className="flex justify-between font-semibold text-lg border-t border-border pt-2">
+                        <span>Estimated Total:</span>
+                        <span>${calculateTotal().toFixed(2)}</span>
+                      </div>
                    </div>
                  </div>
 
