@@ -16,7 +16,7 @@ const productImages = {
   'pan de yuca': '/lovable-uploads/pan-de-yuca-selection.jpg',
   'pandequeso': '/lovable-uploads/pandequeso-selection.jpg',
   'rosquilla': '/lovable-uploads/rosquillas-selection.jpg',
-  'seasonal': '/lovable-uploads/pandebono-variety.jpg',
+  'seasonal': '/lovable-uploads/seasonal-special-mystery.jpg',
   'default': '/lovable-uploads/pandebono-variety.jpg'
 };
 
