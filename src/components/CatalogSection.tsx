@@ -5,6 +5,11 @@ import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 
+// Import local assets as fallback images
+import pandebonoImg from '@/assets/pandebono-new.jpg';
+import panDeYucaImg from '@/assets/pan-de-yuca-new.jpg';
+import almojabanaImg from '@/assets/almojabana.jpg';
+
 interface Product {
   id: string;
   name: string;
@@ -60,6 +65,15 @@ const CatalogSection = () => {
       case 'Raw': return 'bg-gray-100 text-gray-700 border-gray-200';
       default: return 'bg-secondary text-secondary-foreground';
     }
+  };
+
+  // Get fallback image based on product name
+  const getFallbackImage = (productName: string) => {
+    const name = productName.toLowerCase();
+    if (name.includes('pandebono')) return pandebonoImg;
+    if (name.includes('pan de yuca')) return panDeYucaImg;
+    if (name.includes('almojabana')) return almojabanaImg;
+    return null;
   };
 
   const getGradientColor = (productType: string, index: number) => {
@@ -127,16 +141,32 @@ const CatalogSection = () => {
                 className="group hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border-border/50 overflow-hidden cursor-pointer"
                 onClick={() => handleOrderClick(product)}
               >
-                <div className={`h-48 bg-gradient-to-br ${getGradientColor(product.product_type, index)} flex items-center justify-center overflow-hidden`}>
-                  {product.image_url ? (
+                <div className={`h-48 bg-gradient-to-br ${getGradientColor(product.product_type, index)} flex items-center justify-center overflow-hidden relative`}>
+                  {product.image_url || getFallbackImage(product.name) ? (
                     <img 
-                      src={product.image_url} 
+                      src={product.image_url || getFallbackImage(product.name)!} 
                       alt={product.name}
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                      onError={(e) => {
+                        // If main image fails, try fallback
+                        const fallback = getFallbackImage(product.name);
+                        if (fallback && e.currentTarget.src !== fallback) {
+                          e.currentTarget.src = fallback;
+                        } else {
+                          // If both fail, hide image and show placeholder
+                          e.currentTarget.style.display = 'none';
+                          const placeholder = e.currentTarget.nextElementSibling as HTMLElement;
+                          if (placeholder) placeholder.style.display = 'flex';
+                        }
+                      }}
                     />
-                  ) : (
-                    <div className="text-4xl opacity-60">🥮</div>
-                  )}
+                  ) : null}
+                  <div 
+                    className="absolute inset-0 flex items-center justify-center text-4xl opacity-60"
+                    style={{ display: product.image_url || getFallbackImage(product.name) ? 'none' : 'flex' }}
+                  >
+                    🥮
+                  </div>
                 </div>
                 <CardContent className="p-6">
                   <div className="flex justify-between items-start mb-2">
