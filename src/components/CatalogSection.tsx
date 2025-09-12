@@ -10,6 +10,12 @@ import pandebonoImg from '@/assets/pandebono-new.jpg';
 import panDeYucaImg from '@/assets/pan-de-yuca-new.jpg';
 import almojabanaImg from '@/assets/almojabana.jpg';
 
+// Traditional Colombian bread images
+const rosquillasImg = '/lovable-uploads/92220056-2f30-4e7e-8b75-13c68fcf1255.png';
+const rosquillasTrayImg = '/lovable-uploads/73edac2d-30e6-48c0-b81a-b5593f2cae8e.png'; 
+const buñuelosImg = '/lovable-uploads/d9a9dd79-df02-4d45-9f7f-8e81c92a3525.png';
+const traditionalBreadsImg = '/lovable-uploads/ae3df215-a2f4-46c1-ac95-c0bc111fae1b.png';
+
 interface Product {
   id: string;
   name: string;
@@ -73,6 +79,11 @@ const CatalogSection = () => {
     if (name.includes('pandebono')) return pandebonoImg;
     if (name.includes('pan de yuca')) return panDeYucaImg;
     if (name.includes('almojabana')) return almojabanaImg;
+    if (name.includes('rosquilla')) return rosquillasImg;
+    if (name.includes('buñuelo')) return buñuelosImg;
+    if (name.includes('traditional') || name.includes('colombian')) return traditionalBreadsImg;
+    // For any other traditional bread, use one of the new images
+    if (name.includes('bread') || name.includes('pan')) return rosquillasTrayImg;
     return null;
   };
 
