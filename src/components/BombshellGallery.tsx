@@ -11,8 +11,7 @@ const BombshellGallery = () => {
   const images = [
     '/lovable-uploads/bombshell-cross-section-new.jpg',
     '/lovable-uploads/bombshell-classic-new.jpg',
-    '/lovable-uploads/vegan-bombshell-new.jpg',
-    '/lovable-uploads/4809ef95-b0a8-4409-a91e-65ea30799e62.png'
+    '/lovable-uploads/vegan-bombshell-new.jpg'
   ];
 
   return (
