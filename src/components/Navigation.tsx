@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { CartIcon } from './CartIcon';
 
 const Navigation = () => {
   const navigate = useNavigate();
@@ -72,6 +73,7 @@ const Navigation = () => {
                 <span>{item.label}</span>
               </button>
             ))}
+            <CartIcon />
           </div>
 
           {/* Mobile Menu Button with enhanced styling */}

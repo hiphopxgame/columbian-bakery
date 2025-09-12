@@ -172,15 +172,17 @@ const CatalogPage = () => {
                             </Badge>
                           ))}
                         </div>
-                        <Button 
-                          className="w-full bg-guava-pink hover:bg-guava-pink/90 text-coconut-white"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            handleOrderClick(product);
-                          }}
-                        >
-                          Order Now
-                        </Button>
+                        <div className="flex gap-2">
+                          <Button 
+                            className="flex-1 bg-guava-pink hover:bg-guava-pink/90 text-coconut-white"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleOrderClick(product);
+                            }}
+                          >
+                            Order Now
+                          </Button>
+                        </div>
                       </CardContent>
                     </Card>
                   ))}
