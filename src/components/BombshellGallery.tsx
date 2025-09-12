@@ -9,7 +9,7 @@ import {
 
 const BombshellGallery = () => {
   const images = [
-    '/lovable-uploads/3050b739-d234-44fa-a6cc-4f394cd962a4.png',
+    '/lovable-uploads/bombshell-classic-new.jpg',
     '/lovable-uploads/43147ce4-8157-4c4a-9198-abf9f5baae8a.png',
     '/lovable-uploads/4809ef95-b0a8-4409-a91e-65ea30799e62.png'
   ];
