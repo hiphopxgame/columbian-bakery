@@ -17,6 +17,7 @@ const productImages = {
   'pandequeso': '/lovable-uploads/pandequeso-selection.jpg',
   'rosquilla': '/lovable-uploads/rosquillas-selection.jpg',
   'vegan bombshell': '/lovable-uploads/vegan-bombshell-new.jpg',
+  'classic bombshell': '/lovable-uploads/bombshell-classic-new.jpg',
   'seasonal': '/lovable-uploads/four-seasons-cross-dimmed.jpg',
   'default': '/lovable-uploads/pandebono-variety.jpg'
 };
@@ -91,6 +92,7 @@ const OrderPage = () => {
     if (name.includes('pandequeso')) return productImages.pandequeso;
     if (name.includes('rosquilla')) return productImages.rosquilla;
     if (name.includes('vegan bombshell')) return productImages['vegan bombshell'];
+    if (name.includes('classic bombshell')) return productImages['classic bombshell'];
     return productImages.default;
   };
 
