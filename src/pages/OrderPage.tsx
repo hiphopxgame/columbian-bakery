@@ -9,6 +9,7 @@ import { Badge } from '@/components/ui/badge';
 import { ArrowLeft } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
+import seasonalSpecialImg from '@/assets/seasonal-special-text.jpg';
 
 // Product images
 const productImages = {
@@ -18,7 +19,7 @@ const productImages = {
   'rosquilla': '/lovable-uploads/rosquillas-selection.jpg',
   'vegan bombshell': '/lovable-uploads/vegan-bombshell-new.jpg',
   'classic bombshell': '/lovable-uploads/bombshell-classic-new.jpg',
-  'seasonal': '/lovable-uploads/four-seasons-cross-dimmed.jpg',
+  'seasonal': seasonalSpecialImg,
   'default': '/lovable-uploads/pandebono-variety.jpg'
 };
 
