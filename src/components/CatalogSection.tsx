@@ -154,16 +154,10 @@ const CatalogSection = () => {
             <h2 className="text-4xl md:text-5xl font-serif font-bold text-bread-brown mb-6">
               Bakery Catalog
             </h2>
-           <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-8">
+           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
               From our signature Bombshells to authentic Colombian traditional breads, 
               discover the rich flavors that connect us to our heritage and bring Colombia to your table.
             </p>
-            <Button
-              onClick={() => navigate('/bread-gallery')}
-              className="bg-guava-pink hover:bg-guava-pink/90 text-coconut-white"
-            >
-              View Complete Gallery
-            </Button>
           </div>
 
           {/* Products Grid */}

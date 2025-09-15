@@ -150,21 +150,13 @@ const CatalogPage = () => {
                 From our signature Bombshells to authentic Colombian traditional breads, 
                 discover the rich flavors that connect us to our heritage and bring Colombia to your table.
               </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Button
-                  onClick={() => navigate('/bread-gallery')}
-                  className="bg-guava-pink hover:bg-guava-pink/90 text-coconut-white"
-                >
-                  View Complete Gallery
-                </Button>
-                <Button
-                  onClick={() => navigate('/')}
-                  variant="outline"
-                  className="border-guava-pink text-guava-pink hover:bg-guava-pink hover:text-coconut-white"
-                >
-                  Back to Home
-                </Button>
-              </div>
+              <Button
+                onClick={() => navigate('/')}
+                variant="outline"
+                className="border-guava-pink text-guava-pink hover:bg-guava-pink hover:text-coconut-white"
+              >
+                Back to Home
+              </Button>
             </div>
 
             {/* Loading State */}
