@@ -29,7 +29,7 @@ const SocialMedia = () => {
           className="w-full border-accent text-accent hover:bg-accent hover:text-accent-foreground transition-all duration-300 hover:scale-105"
           asChild
         >
-          <a href="https://www.instagram.com/bombshellspdx?igsh=Nm4wanpzend5amE3" target="_blank" rel="noopener noreferrer">
+          <a href="https://www.instagram.com/bombshellspdx/" target="_blank" rel="noopener noreferrer">
             <Instagram className="w-5 h-5 mr-2" />
             @bombshellspdx
           </a>
@@ -40,7 +40,7 @@ const SocialMedia = () => {
           <div className="flex items-center justify-between">
             <h4 className="font-semibold text-foreground">Recent Posts</h4>
             <a 
-              href="https://www.instagram.com/bombshellspdx?igsh=Nm4wanpzend5amE3" 
+              href="https://www.instagram.com/bombshellspdx/" 
               target="_blank" 
               rel="noopener noreferrer"
               className="text-sm text-muted-foreground hover:text-accent transition-colors flex items-center gap-1"
@@ -55,7 +55,7 @@ const SocialMedia = () => {
                   src={photo} 
                   alt={`Instagram post ${index + 1}`}
                   className="w-full h-full object-cover hover:scale-105 transition-transform duration-300 cursor-pointer"
-                  onClick={() => window.open('https://www.instagram.com/bombshellspdx?igsh=Nm4wanpzend5amE3', '_blank')}
+                  onClick={() => window.open('https://www.instagram.com/bombshellspdx/', '_blank')}
                 />
               </div>
             ))}
