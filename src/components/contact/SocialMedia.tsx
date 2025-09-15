@@ -27,26 +27,28 @@ const SocialMedia = () => {
           variant="outline" 
           size="lg" 
           className="w-full border-accent text-accent hover:bg-accent hover:text-accent-foreground transition-all duration-300 hover:scale-105"
-          asChild
+          onClick={() => {
+            const url = 'https://www.instagram.com/bombshellspdx/';
+            window.open(url, '_blank', 'noopener,noreferrer');
+          }}
         >
-          <a href="https://www.instagram.com/bombshellspdx/" target="_blank" rel="noopener noreferrer">
-            <Instagram className="w-5 h-5 mr-2" />
-            @bombshellspdx
-          </a>
+          <Instagram className="w-5 h-5 mr-2" />
+          @bombshellspdx
         </Button>
 
         {/* Instagram Photo Grid */}
         <div className="space-y-3">
           <div className="flex items-center justify-between">
             <h4 className="font-semibold text-foreground">Recent Posts</h4>
-            <a 
-              href="https://www.instagram.com/bombshellspdx/" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="text-sm text-muted-foreground hover:text-accent transition-colors flex items-center gap-1"
+            <button 
+              onClick={() => {
+                const url = 'https://www.instagram.com/bombshellspdx/';
+                window.open(url, '_blank', 'noopener,noreferrer');
+              }}
+              className="text-sm text-muted-foreground hover:text-accent transition-colors flex items-center gap-1 cursor-pointer bg-transparent border-none"
             >
               View all <ExternalLink className="w-3 h-3" />
-            </a>
+            </button>
           </div>
           <div className="grid grid-cols-2 gap-3">
             {instagramPhotos.map((photo, index) => (
@@ -55,7 +57,10 @@ const SocialMedia = () => {
                   src={photo} 
                   alt={`Instagram post ${index + 1}`}
                   className="w-full h-full object-cover hover:scale-105 transition-transform duration-300 cursor-pointer"
-                  onClick={() => window.open('https://www.instagram.com/bombshellspdx/', '_blank')}
+                  onClick={() => {
+                    const url = 'https://www.instagram.com/bombshellspdx/';
+                    window.open(url, '_blank', 'noopener,noreferrer');
+                  }}
                 />
               </div>
             ))}
