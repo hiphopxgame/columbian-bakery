@@ -32,7 +32,9 @@ const OrderPage = () => {
   const [wholesaleProduct, setWholesaleProduct] = useState('');
   const [products, setProducts] = useState<any[]>([]);
   const [formData, setFormData] = useState({
-    name: '',
+    firstName: '',
+    lastName: '',
+    companyName: '',
     email: '',
     phone: '',
     orderType: 'wholesale-frozen',
@@ -116,10 +118,13 @@ const OrderPage = () => {
     e.preventDefault();
     
     try {
-      const { error } = await supabase
+      const { data: orderData, error } = await supabase
         .from('cbake_orders')
         .insert([{
-          name: formData.name,
+          name: `${formData.firstName} ${formData.lastName}`.trim(),
+          first_name: formData.firstName,
+          last_name: formData.lastName,
+          company_name: formData.companyName || null,
           email: formData.email,
           phone: formData.phone,
           order_type: orderType,
@@ -133,13 +138,44 @@ const OrderPage = () => {
             ? `SEASONAL SPECIAL: ${formData.seasonalDescription}${formData.specialInstructions ? '\n\nAdditional Instructions: ' + formData.specialInstructions : ''}`
             : formData.specialInstructions,
           estimated_total: calculateTotal()
-        }]);
+        }])
+        .select()
+        .single();
 
       if (error) throw error;
 
+      // Send receipt email
+      try {
+        const emailResponse = await supabase.functions.invoke('send-order-receipt', {
+          body: {
+            orderId: orderData.id,
+            firstName: formData.firstName,
+            lastName: formData.lastName,
+            email: formData.email,
+            companyName: formData.companyName,
+            productName: selectedProduct?.name || (wholesaleProduct === 'seasonal-special' ? 'Seasonal Special' : products.find(p => p.id === wholesaleProduct)?.name) || 'Selected Product',
+            quantity: formData.quantity,
+            estimatedTotal: calculateTotal(),
+            orderType: orderType,
+            deliveryFormat: formData.delivery,
+            specialInstructions: wholesaleProduct === 'seasonal-special' 
+              ? `SEASONAL SPECIAL: ${formData.seasonalDescription}${formData.specialInstructions ? '\n\nAdditional Instructions: ' + formData.specialInstructions : ''}`
+              : formData.specialInstructions
+          }
+        });
+        
+        if (emailResponse.error) {
+          console.error('Error sending receipt email:', emailResponse.error);
+        } else {
+          console.log('Receipt email sent successfully');
+        }
+      } catch (emailError) {
+        console.error('Error sending receipt email:', emailError);
+      }
+
       toast({
         title: "Order Submitted Successfully!",
-        description: "We've received your order and will contact you within 24 hours to confirm.",
+        description: "We've received your order and sent you a confirmation email. We'll contact you within 24 hours to confirm.",
       });
       
       // Navigate to thank you page
@@ -147,7 +183,9 @@ const OrderPage = () => {
       
       // Reset form
       setFormData({
-        name: '',
+        firstName: '',
+        lastName: '',
+        companyName: '',
         email: '',
         phone: '',
         orderType: 'wholesale-frozen',
@@ -340,27 +378,50 @@ const OrderPage = () => {
                 <div className="grid md:grid-cols-2 gap-6">
                   <div>
                     <label className="block text-sm font-medium text-foreground mb-2">
-                      Full Name *
+                      First Name *
                     </label>
                     <Input
-                      value={formData.name}
-                      onChange={(e) => handleInputChange('name', e.target.value)}
-                      placeholder="Your full name"
+                      value={formData.firstName}
+                      onChange={(e) => handleInputChange('firstName', e.target.value)}
+                      placeholder="Your first name"
                       required
                     />
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-foreground mb-2">
-                      Email *
+                      Last Name *
                     </label>
                     <Input
-                      type="email"
-                      value={formData.email}
-                      onChange={(e) => handleInputChange('email', e.target.value)}
-                      placeholder="your.email@example.com"
+                      value={formData.lastName}
+                      onChange={(e) => handleInputChange('lastName', e.target.value)}
+                      placeholder="Your last name"
                       required
                     />
                   </div>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-foreground mb-2">
+                    Company Name
+                  </label>
+                  <Input
+                    value={formData.companyName}
+                    onChange={(e) => handleInputChange('companyName', e.target.value)}
+                    placeholder="Your company or business name (optional)"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-foreground mb-2">
+                    Email *
+                  </label>
+                  <Input
+                    type="email"
+                    value={formData.email}
+                    onChange={(e) => handleInputChange('email', e.target.value)}
+                    placeholder="your.email@example.com"
+                    required
+                  />
                 </div>
 
                 <div>
@@ -497,12 +558,12 @@ const OrderPage = () => {
                    </div>
                  </div>
 
-                 <Button 
-                   type="submit"
-                   size="lg" 
-                   className="w-full bg-bread-brown hover:bg-bread-brown/90 text-coconut-white text-lg font-semibold py-4"
-                   disabled={!formData.name || !formData.email || !formData.delivery || (!selectedProduct && !wholesaleProduct) || (wholesaleProduct === 'seasonal-special' && !formData.seasonalDescription)}
-                 >
+                  <Button 
+                    type="submit"
+                    size="lg" 
+                    className="w-full bg-bread-brown hover:bg-bread-brown/90 text-coconut-white text-lg font-semibold py-4"
+                    disabled={!formData.firstName || !formData.lastName || !formData.email || !formData.delivery || (!selectedProduct && !wholesaleProduct) || (wholesaleProduct === 'seasonal-special' && !formData.seasonalDescription)}
+                  >
                    Submit Wholesale Order Request
                  </Button>
 
