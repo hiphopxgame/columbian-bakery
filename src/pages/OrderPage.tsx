@@ -135,6 +135,7 @@ const OrderPage = () => {
           dough_type: formData.doughType,
           filling: formData.filling,
           delivery: formData.delivery,
+          business_location: formData.businessLocation,
           special_instructions: wholesaleProduct === 'seasonal-special' 
             ? `SEASONAL SPECIAL: ${formData.seasonalDescription}${formData.specialInstructions ? '\n\nAdditional Instructions: ' + formData.specialInstructions : ''}`
             : formData.specialInstructions,

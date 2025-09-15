@@ -82,7 +82,46 @@ const AdminPage = () => {
 
   useEffect(() => {
     fetchData();
-  }, []);
+    
+    // Set up real-time subscription for new orders
+    const channel = supabase
+      .channel('schema-db-changes')
+      .on(
+        'postgres_changes',
+        {
+          event: 'INSERT',
+          schema: 'public',
+          table: 'cbake_orders'
+        },
+        (payload) => {
+          console.log('New order received:', payload);
+          setOrders(prev => [payload.new as Order, ...prev]);
+          toast({
+            title: "New Order Received!",
+            description: `Order from ${payload.new.name} - $${payload.new.estimated_total}`,
+          });
+        }
+      )
+      .on(
+        'postgres_changes',
+        {
+          event: 'UPDATE',
+          schema: 'public',
+          table: 'cbake_orders'
+        },
+        (payload) => {
+          console.log('Order updated:', payload);
+          setOrders(prev => prev.map(order => 
+            order.id === payload.new.id ? payload.new as Order : order
+          ));
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, [toast]);
 
   const fetchData = async () => {
     try {
