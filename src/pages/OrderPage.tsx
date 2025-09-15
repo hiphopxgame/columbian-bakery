@@ -508,7 +508,6 @@ const OrderPage = () => {
                         <SelectContent>
                           <SelectItem value="standard">Standard Recipe</SelectItem>
                           <SelectItem value="extra-cream">Extra Cream (+$10/unit)</SelectItem>
-                          <SelectItem value="no-cream">No Cream Filling</SelectItem>
                           <SelectItem value="custom">Custom (specify in instructions)</SelectItem>
                         </SelectContent>
                       </Select>
