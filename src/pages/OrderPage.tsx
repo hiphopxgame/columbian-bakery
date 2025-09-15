@@ -252,13 +252,13 @@ const OrderPage = () => {
                              🌟 SEASONAL
                            </Badge>
                          </div>
-                          <div className="mb-2">
-                            <img 
-                              src="/src/assets/seasonal-special-text.jpg" 
-                              alt="Seasonal Special"
-                              className="h-8 object-contain mx-auto"
-                            />
-                          </div>
+                           <div className="mb-2">
+                             <img 
+                               src="/src/assets/seasonal-special-text-2.jpg" 
+                               alt="Seasonal Special"
+                               className="h-8 object-contain mx-auto"
+                             />
+                           </div>
                         <p className="text-xs text-muted-foreground mb-3">
                           Our limited-time specialty items like spinach, jalapeño stuffed breads & seasonal pastries
                         </p>
