@@ -393,29 +393,45 @@ const AdminPage = () => {
                     </div>
                   ) : (
                     <Table>
-                      <TableHeader>
-                        <TableRow>
-                          <TableHead>Customer</TableHead>
-                          <TableHead>Type</TableHead>
-                          <TableHead>Quantity</TableHead>
-                          <TableHead>Total</TableHead>
-                          <TableHead>Status</TableHead>
-                          <TableHead>Date</TableHead>
-                          <TableHead>Actions</TableHead>
-                        </TableRow>
-                      </TableHeader>
+                       <TableHeader>
+                         <TableRow>
+                           <TableHead>Customer</TableHead>
+                           <TableHead>Product</TableHead>
+                           <TableHead>Type</TableHead>
+                           <TableHead>Quantity</TableHead>
+                           <TableHead>Delivery</TableHead>
+                           <TableHead>Total</TableHead>
+                           <TableHead>Status</TableHead>
+                           <TableHead>Date</TableHead>
+                           <TableHead>Actions</TableHead>
+                         </TableRow>
+                       </TableHeader>
                       <TableBody>
-                        {orders.map((order) => (
-                          <TableRow key={order.id}>
-                            <TableCell>
-                              <div>
-                                <p className="font-medium">{order.name}</p>
-                                <p className="text-sm text-muted-foreground">{order.email}</p>
-                              </div>
-                            </TableCell>
-                            <TableCell className="capitalize">{order.order_type.replace('-', ' ')}</TableCell>
-                            <TableCell>{order.quantity}</TableCell>
-                            <TableCell>${order.estimated_total || 0}</TableCell>
+                         {orders.map((order) => (
+                           <TableRow key={order.id}>
+                             <TableCell>
+                               <div>
+                                 <p className="font-medium">{order.name}</p>
+                                 <p className="text-sm text-muted-foreground">{order.email}</p>
+                                 {(order as any).business_location && (
+                                   <p className="text-xs text-muted-foreground">📍 {(order as any).business_location}</p>
+                                 )}
+                               </div>
+                             </TableCell>
+                             <TableCell>
+                               <div>
+                                 <p className="font-medium">{(order as any).product_name || 'N/A'}</p>
+                                 {order.special_instructions && (
+                                   <p className="text-xs text-muted-foreground truncate max-w-32">
+                                     {order.special_instructions}
+                                   </p>
+                                 )}
+                               </div>
+                             </TableCell>
+                             <TableCell className="capitalize">{order.order_type.replace('-', ' ')}</TableCell>
+                             <TableCell>{order.quantity} unit{order.quantity > 1 ? 's' : ''}</TableCell>
+                             <TableCell className="capitalize">{order.delivery}</TableCell>
+                             <TableCell>${order.estimated_total || 0}</TableCell>
                             <TableCell>
                               <Badge className={getStatusColor(order.status)}>
                                 {order.status}
