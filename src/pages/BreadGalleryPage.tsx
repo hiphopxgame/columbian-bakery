@@ -10,7 +10,7 @@ import { supabase } from '@/integrations/supabase/client';
 import pandebonoImg from '@/assets/pandebono-new.jpg';
 import panDeYucaImg from '@/assets/pan-de-yuca-new.jpg';
 import almojabanaImg from '@/assets/almojabana.jpg';
-import seasonalSpecialImg from '@/assets/seasonal-special-text.jpg';
+import seasonalSpecialImg from '@/assets/seasonal-special-text-2.jpg';
 
 // Traditional Colombian bread images
 const rosquillasImg = '/lovable-uploads/92220056-2f30-4e7e-8b75-13c68fcf1255.png';

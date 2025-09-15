@@ -9,7 +9,7 @@ import { Badge } from '@/components/ui/badge';
 import { ArrowLeft } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
-import seasonalSpecialImg from '@/assets/seasonal-special-text.jpg';
+import seasonalSpecialImg from '@/assets/seasonal-special-text-2.jpg';
 
 // Product images
 const productImages = {
@@ -254,7 +254,7 @@ const OrderPage = () => {
                          </div>
                            <div className="mb-2">
                              <img 
-                               src="/src/assets/seasonal-special-text-2.jpg" 
+                               src={seasonalSpecialImg}
                                alt="Seasonal Special"
                                className="h-8 object-contain mx-auto"
                              />
