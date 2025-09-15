@@ -23,7 +23,7 @@ const SocialMedia = () => {
             className="flex-1 border-accent text-accent hover:bg-accent hover:text-accent-foreground transition-all duration-300 hover:scale-105"
             asChild
           >
-            <a href="#" target="_blank" rel="noopener noreferrer">
+            <a href="https://www.instagram.com/bombshellspdx?igsh=Nm4wanpzend5amE3" target="_blank" rel="noopener noreferrer">
               <Instagram className="w-5 h-5 mr-2" />
               Instagram
             </a>
