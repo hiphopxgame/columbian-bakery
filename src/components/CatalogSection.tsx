@@ -9,7 +9,6 @@ import { supabase } from '@/integrations/supabase/client';
 import pandebonoImg from '@/assets/pandebono-new.jpg';
 import panDeYucaImg from '@/assets/pan-de-yuca-new.jpg';
 import almojabanaImg from '@/assets/almojabana.jpg';
-import seasonalSpecialImg from '@/assets/seasonal-special-text-3.jpg';
 
 // Traditional Colombian bread images
 const rosquillasImg = '/lovable-uploads/92220056-2f30-4e7e-8b75-13c68fcf1255.png';
@@ -99,7 +98,6 @@ const CatalogSection = () => {
   // Get fallback image based on product name
   const getFallbackImage = (productName: string) => {
     const name = productName.toLowerCase();
-    if (name.includes('seasonal')) return seasonalSpecialImg;
     if (name.includes('pandebono')) return pandebonoImg;
     if (name.includes('pan de yuca')) return panDeYucaImg;
     if (name.includes('almojabana')) return almojabanaImg;
@@ -215,7 +213,6 @@ const CatalogSection = () => {
                     {/* Pricing Information */}
                     {(() => {
                       const pricing = getProductPricing(product);
-                      const isSeasonalProduct = product.tags.some(tag => tag.includes('SEASONAL'));
                       
                       return (
                         <div className="mb-4 p-3 bg-yuca-cream/50 rounded-lg">
@@ -225,15 +222,9 @@ const CatalogSection = () => {
                           <div className="text-sm text-muted-foreground mb-1">
                             <strong>Per Unit (100):</strong> ${pricing.perUnit}
                           </div>
-                          {isSeasonalProduct ? (
-                            <div className="text-sm text-muted-foreground">
-                              <strong>Limited Time</strong>
-                            </div>
-                          ) : (
-                            <div className="text-sm text-muted-foreground">
-                              <strong>Minimum:</strong> 2 Units (200 pcs)
-                            </div>
-                          )}
+                          <div className="text-sm text-muted-foreground">
+                            <strong>Minimum:</strong> 2 Units (200 pcs)
+                          </div>
                         </div>
                       );
                     })()}
