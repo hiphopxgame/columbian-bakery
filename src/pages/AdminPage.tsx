@@ -21,13 +21,18 @@ import { supabase } from '@/integrations/supabase/client';
 interface Order {
   id: string;
   name: string;
+  first_name: string;
+  last_name: string;
+  company_name?: string;
   email: string;
   phone?: string;
   order_type: string;
+  product_name?: string;
   quantity: number;
   dough_type: string;
   filling: string;
   delivery: string;
+  business_location?: string;
   special_instructions?: string;
   estimated_total?: number;
   status: string;
@@ -392,73 +397,139 @@ const AdminPage = () => {
                       <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-bread-brown"></div>
                     </div>
                   ) : (
-                    <Table>
-                       <TableHeader>
-                         <TableRow>
-                           <TableHead>Customer</TableHead>
-                           <TableHead>Product</TableHead>
-                           <TableHead>Type</TableHead>
-                           <TableHead>Quantity</TableHead>
-                           <TableHead>Delivery</TableHead>
-                           <TableHead>Total</TableHead>
-                           <TableHead>Status</TableHead>
-                           <TableHead>Date</TableHead>
-                           <TableHead>Actions</TableHead>
-                         </TableRow>
-                       </TableHeader>
-                      <TableBody>
-                         {orders.map((order) => (
-                           <TableRow key={order.id}>
-                             <TableCell>
-                               <div>
-                                 <p className="font-medium">{order.name}</p>
-                                 <p className="text-sm text-muted-foreground">{order.email}</p>
-                                 {(order as any).business_location && (
-                                   <p className="text-xs text-muted-foreground">📍 {(order as any).business_location}</p>
-                                 )}
-                               </div>
-                             </TableCell>
-                             <TableCell>
-                               <div>
-                                 <p className="font-medium">{(order as any).product_name || 'N/A'}</p>
-                                 {order.special_instructions && (
-                                   <p className="text-xs text-muted-foreground truncate max-w-32">
-                                     {order.special_instructions}
-                                   </p>
-                                 )}
-                               </div>
-                             </TableCell>
-                             <TableCell className="capitalize">{order.order_type.replace('-', ' ')}</TableCell>
-                             <TableCell>{order.quantity} unit{order.quantity > 1 ? 's' : ''}</TableCell>
-                             <TableCell className="capitalize">{order.delivery}</TableCell>
-                             <TableCell>${order.estimated_total || 0}</TableCell>
-                            <TableCell>
-                              <Badge className={getStatusColor(order.status)}>
-                                {order.status}
-                              </Badge>
-                            </TableCell>
-                            <TableCell>{formatDate(order.created_at)}</TableCell>
-                            <TableCell>
-                              <Select
-                                value={order.status}
-                                onValueChange={(value) => updateOrderStatus(order.id, value)}
-                              >
-                                <SelectTrigger className="w-32">
-                                  <SelectValue />
-                                </SelectTrigger>
-                                <SelectContent>
-                                  <SelectItem value="pending">Pending</SelectItem>
-                                  <SelectItem value="confirmed">Confirmed</SelectItem>
-                                  <SelectItem value="in_progress">In Progress</SelectItem>
-                                  <SelectItem value="completed">Completed</SelectItem>
-                                  <SelectItem value="cancelled">Cancelled</SelectItem>
-                                </SelectContent>
-                              </Select>
-                            </TableCell>
-                          </TableRow>
-                        ))}
-                      </TableBody>
-                    </Table>
+                    <div className="space-y-6">
+                      {orders.map((order) => (
+                        <Card key={order.id} className="border-l-4 border-l-bread-brown">
+                          <CardContent className="p-6">
+                            <div className="grid md:grid-cols-3 gap-6">
+                              {/* Customer Information */}
+                              <div>
+                                <h4 className="font-semibold text-bread-brown mb-3 flex items-center">
+                                  <span className="mr-2">👤</span>Customer Information
+                                </h4>
+                                <div className="space-y-2 text-sm">
+                                  <div>
+                                    <span className="font-medium">Name:</span> {order.first_name} {order.last_name}
+                                  </div>
+                                  <div>
+                                    <span className="font-medium">Email:</span> {order.email}
+                                  </div>
+                                  {order.phone && (
+                                    <div>
+                                      <span className="font-medium">Phone:</span> {order.phone}
+                                    </div>
+                                  )}
+                                  {order.company_name && (
+                                    <div>
+                                      <span className="font-medium">Company:</span> {order.company_name}
+                                    </div>
+                                  )}
+                                  {order.business_location && (
+                                    <div>
+                                      <span className="font-medium">Business Address:</span> {order.business_location}
+                                    </div>
+                                  )}
+                                </div>
+                              </div>
+
+                              {/* Order Details */}
+                              <div>
+                                <h4 className="font-semibold text-bread-brown mb-3 flex items-center">
+                                  <span className="mr-2">📦</span>Order Details
+                                </h4>
+                                <div className="space-y-2 text-sm">
+                                  <div>
+                                    <span className="font-medium">Product:</span> {order.product_name || 'N/A'}
+                                  </div>
+                                  <div>
+                                    <span className="font-medium">Type:</span> 
+                                    <Badge variant="outline" className="ml-2 text-xs">
+                                      {order.order_type.replace('-', ' ').toUpperCase()}
+                                    </Badge>
+                                  </div>
+                                  <div>
+                                    <span className="font-medium">Quantity:</span> {order.quantity} unit{order.quantity > 1 ? 's' : ''} ({order.quantity * 100} pieces)
+                                  </div>
+                                  <div>
+                                    <span className="font-medium">Delivery:</span> 
+                                    <Badge variant="secondary" className="ml-2 text-xs">
+                                      {order.delivery.charAt(0).toUpperCase() + order.delivery.slice(1)}
+                                    </Badge>
+                                  </div>
+                                  {order.filling && (
+                                    <div>
+                                      <span className="font-medium">Special Requirements:</span> {order.filling}
+                                    </div>
+                                  )}
+                                  <div>
+                                    <span className="font-medium">Estimated Total:</span> 
+                                    <span className="text-lg font-bold text-bread-brown ml-2">
+                                      ${order.estimated_total || 0}
+                                    </span>
+                                  </div>
+                                </div>
+                              </div>
+
+                              {/* Status & Actions */}
+                              <div>
+                                <h4 className="font-semibold text-bread-brown mb-3 flex items-center">
+                                  <span className="mr-2">⚙️</span>Status & Actions
+                                </h4>
+                                <div className="space-y-3">
+                                  <div>
+                                    <span className="font-medium text-sm">Current Status:</span>
+                                    <Badge className={`ml-2 ${getStatusColor(order.status)}`}>
+                                      {order.status.toUpperCase()}
+                                    </Badge>
+                                  </div>
+                                  <div className="text-sm">
+                                    <span className="font-medium">Order Date:</span><br />
+                                    {formatDate(order.created_at)}
+                                  </div>
+                                  <div>
+                                    <span className="font-medium text-sm block mb-2">Update Status:</span>
+                                    <Select
+                                      value={order.status}
+                                      onValueChange={(value) => updateOrderStatus(order.id, value)}
+                                    >
+                                      <SelectTrigger className="w-full">
+                                        <SelectValue />
+                                      </SelectTrigger>
+                                      <SelectContent>
+                                        <SelectItem value="pending">Pending</SelectItem>
+                                        <SelectItem value="confirmed">Confirmed</SelectItem>
+                                        <SelectItem value="in_progress">In Progress</SelectItem>
+                                        <SelectItem value="completed">Completed</SelectItem>
+                                        <SelectItem value="cancelled">Cancelled</SelectItem>
+                                      </SelectContent>
+                                    </Select>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            
+                            {/* Special Instructions */}
+                            {order.special_instructions && (
+                              <div className="mt-4 pt-4 border-t">
+                                <h4 className="font-semibold text-bread-brown mb-2 flex items-center">
+                                  <span className="mr-2">📝</span>Special Instructions
+                                </h4>
+                                <div className="bg-yuca-cream/30 p-3 rounded text-sm">
+                                  {order.special_instructions}
+                                </div>
+                              </div>
+                            )}
+                          </CardContent>
+                        </Card>
+                      ))}
+                      
+                      {orders.length === 0 && (
+                        <div className="text-center py-8 text-muted-foreground">
+                          <Package className="h-12 w-12 mx-auto mb-4 opacity-50" />
+                          <p>No orders yet</p>
+                        </div>
+                      )}
+                    </div>
                   )}
                 </CardContent>
               </Card>
