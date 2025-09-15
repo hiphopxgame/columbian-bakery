@@ -9,7 +9,7 @@ import { Badge } from '@/components/ui/badge';
 import { ArrowLeft } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
-import seasonalSpecialImg from '@/assets/seasonal-special-text-6.jpg';
+import seasonalSpecialImg from '@/assets/seasonal-special-text-7.jpg';
 
 // Product images
 const productImages = {
