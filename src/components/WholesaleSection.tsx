@@ -1,10 +1,12 @@
 
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 
 const WholesaleSection = () => {
+  const navigate = useNavigate();
   return (
     <section id="wholesale" className="py-20 bg-gradient-to-b from-yuca-cream to-coconut-white">
       <div className="container mx-auto px-4">
@@ -191,7 +193,7 @@ const WholesaleSection = () => {
             <Button 
               size="lg"
               className="bg-bread-brown hover:bg-bread-brown/90 text-coconut-white px-12 py-6 text-xl"
-              onClick={() => window.location.href = '/order'}
+              onClick={() => navigate('/order')}
             >
               Place Wholesale Order
             </Button>
