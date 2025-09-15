@@ -6,6 +6,18 @@ import { ArrowLeft } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 
+// Import local assets as fallback images
+import pandebonoImg from '@/assets/pandebono-new.jpg';
+import panDeYucaImg from '@/assets/pan-de-yuca-new.jpg';
+import almojabanaImg from '@/assets/almojabana.jpg';
+import seasonalSpecialImg from '@/assets/seasonal-special-text.jpg';
+
+// Traditional Colombian bread images
+const rosquillasImg = '/lovable-uploads/92220056-2f30-4e7e-8b75-13c68fcf1255.png';
+const rosquillasTrayImg = '/lovable-uploads/73edac2d-30e6-48c0-b81a-b5593f2cae8e.png'; 
+const buñuelosImg = '/lovable-uploads/d9a9dd79-df02-4d45-9f7f-8e81c92a3525.png';
+const traditionalBreadsImg = '/lovable-uploads/ae3df215-a2f4-46c1-ac95-c0bc111fae1b.png';
+
 interface Product {
   id: string;
   name: string;
@@ -56,6 +68,7 @@ const BreadGalleryPage = () => {
     switch (tag) {
       case 'Traditional': return 'bg-bread-brown/20 text-bread-brown border-bread-brown/30';
       case 'Signature': return 'bg-guava-pink/20 text-guava-pink border-guava-pink/30';
+      case 'Seasonal': return 'bg-dulce-caramel/20 text-dulce-caramel border-dulce-caramel/30';
       case 'Gluten-Free': return 'bg-green-100 text-green-700 border-green-200';
       case 'Vegan': return 'bg-emerald-100 text-emerald-700 border-emerald-200';
       case 'Cheese': return 'bg-yellow-100 text-yellow-700 border-yellow-200';
@@ -64,6 +77,21 @@ const BreadGalleryPage = () => {
       case 'Guava': return 'bg-pink-100 text-pink-700 border-pink-200';
       default: return 'bg-secondary text-secondary-foreground';
     }
+  };
+
+  // Get fallback image based on product name
+  const getFallbackImage = (productName: string) => {
+    const name = productName.toLowerCase();
+    if (name.includes('seasonal')) return seasonalSpecialImg;
+    if (name.includes('pandebono')) return pandebonoImg;
+    if (name.includes('pan de yuca')) return panDeYucaImg;
+    if (name.includes('almojabana')) return almojabanaImg;
+    if (name.includes('rosquilla')) return rosquillasImg;
+    if (name.includes('buñuelo')) return buñuelosImg;
+    if (name.includes('traditional') || name.includes('colombian')) return traditionalBreadsImg;
+    // For any other traditional bread, use one of the new images
+    if (name.includes('bread') || name.includes('pan')) return rosquillasTrayImg;
+    return null;
   };
 
   const handleOrderClick = (product: Product) => {
@@ -132,12 +160,32 @@ const BreadGalleryPage = () => {
                   className="group hover:shadow-xl transition-all duration-300 hover:-translate-y-1 cursor-pointer"
                   onClick={() => handleOrderClick(product)}
                 >
-                  <div className="h-64 bg-gradient-to-br from-guava-pink/20 to-dulce-caramel/20 overflow-hidden">
-                    <img 
-                      src={product.image_url} 
-                      alt={product.name}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                    />
+                  <div className="h-64 bg-gradient-to-br from-guava-pink/20 to-dulce-caramel/20 overflow-hidden relative">
+                    {product.image_url || getFallbackImage(product.name) ? (
+                      <img 
+                        src={product.image_url || getFallbackImage(product.name)!} 
+                        alt={product.name}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                        onError={(e) => {
+                          // If main image fails, try fallback
+                          const fallback = getFallbackImage(product.name);
+                          if (fallback && e.currentTarget.src !== fallback) {
+                            e.currentTarget.src = fallback;
+                          } else {
+                            // If both fail, hide image and show placeholder
+                            e.currentTarget.style.display = 'none';
+                            const placeholder = e.currentTarget.nextElementSibling as HTMLElement;
+                            if (placeholder) placeholder.style.display = 'flex';
+                          }
+                        }}
+                      />
+                    ) : null}
+                    <div 
+                      className="absolute inset-0 flex items-center justify-center text-4xl opacity-60"
+                      style={{ display: product.image_url || getFallbackImage(product.name) ? 'none' : 'flex' }}
+                    >
+                      🥮
+                    </div>
                   </div>
                   <CardContent className="p-6">
                     <div className="flex justify-between items-start mb-3">
@@ -202,12 +250,32 @@ const BreadGalleryPage = () => {
                   className="group hover:shadow-xl transition-all duration-300 hover:-translate-y-1 cursor-pointer"
                   onClick={() => handleOrderClick(product)}
                 >
-                  <div className="h-48 bg-gradient-to-br from-bread-brown/20 to-dulce-caramel/20 overflow-hidden">
-                    <img 
-                      src={product.image_url} 
-                      alt={product.name}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                    />
+                  <div className="h-48 bg-gradient-to-br from-bread-brown/20 to-dulce-caramel/20 overflow-hidden relative">
+                    {product.image_url || getFallbackImage(product.name) ? (
+                      <img 
+                        src={product.image_url || getFallbackImage(product.name)!} 
+                        alt={product.name}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                        onError={(e) => {
+                          // If main image fails, try fallback
+                          const fallback = getFallbackImage(product.name);
+                          if (fallback && e.currentTarget.src !== fallback) {
+                            e.currentTarget.src = fallback;
+                          } else {
+                            // If both fail, hide image and show placeholder
+                            e.currentTarget.style.display = 'none';
+                            const placeholder = e.currentTarget.nextElementSibling as HTMLElement;
+                            if (placeholder) placeholder.style.display = 'flex';
+                          }
+                        }}
+                      />
+                    ) : null}
+                    <div 
+                      className="absolute inset-0 flex items-center justify-center text-4xl opacity-60"
+                      style={{ display: product.image_url || getFallbackImage(product.name) ? 'none' : 'flex' }}
+                    >
+                      🥮
+                    </div>
                   </div>
                   <CardContent className="p-6">
                     <div className="flex justify-between items-start mb-2">
