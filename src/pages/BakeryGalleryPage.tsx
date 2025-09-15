@@ -12,6 +12,7 @@ import Footer from '@/components/Footer';
 import pandebonoImg from '@/assets/pandebono-new.jpg';
 import panDeYucaImg from '@/assets/pan-de-yuca-new.jpg';
 import almojabanaImg from '@/assets/almojabana.jpg';
+import seasonalSpecialImg from '@/assets/seasonal-special-text-5.jpg';
 
 // Traditional Colombian bread images
 const rosquillasImg = '/lovable-uploads/92220056-2f30-4e7e-8b75-13c68fcf1255.png';
@@ -42,10 +43,17 @@ const BakeryGalleryPage = () => {
     'a7323d9f-d71c-4017-89cf-64beda401a44': { each: 4.00, perUnit: 400 }, // Pandebono
     'db78b11a-9547-441b-9d1b-ed74f74f7012': { each: 3.00, perUnit: 300 }, // Pan de Yuca
     '1e3472fd-7dcd-42c1-ae41-6cf420f5a0d7': { each: 3.50, perUnit: 350 }, // Pandequeso
+    // Seasonal special pricing
+    'seasonal-special': { each: 4.00, perUnit: 400 }, // Seasonal Special
   } as Record<string, { each: number; perUnit: number }>;
 
   // Default pricing for other products
   const getProductPricing = (product: Product) => {
+    // Check for seasonal special first
+    if (product.tags.some(tag => tag.toLowerCase().includes('seasonal'))) {
+      return wholesalePricing['seasonal-special'];
+    }
+    
     if (wholesalePricing[product.id]) {
       return wholesalePricing[product.id];
     }
@@ -66,11 +74,8 @@ const BakeryGalleryPage = () => {
         if (error) {
           console.error('Error fetching products:', error);
         } else {
-          // Filter out seasonal products for wholesale focus
-          const filteredProducts = (data || []).filter(product => 
-            !product.tags?.some((tag: string) => tag.toLowerCase().includes('seasonal'))
-          );
-          setProducts(filteredProducts.map(product => ({
+          // Include all products - don't filter out seasonal for wholesale gallery
+          setProducts((data || []).map(product => ({
             ...product,
             product_type: product.product_type as 'signature' | 'traditional'
           })));
@@ -92,6 +97,7 @@ const BakeryGalleryPage = () => {
     switch (tag) {
       case 'Signature': return 'bg-guava-pink/20 text-guava-pink border-guava-pink/30';
       case 'Traditional': return 'bg-bread-brown/20 text-bread-brown border-bread-brown/30';
+      case 'Seasonal': return 'bg-dulce-caramel/20 text-dulce-caramel border-dulce-caramel/30';
       case 'Gluten-Free': return 'bg-green-100 text-green-700 border-green-200';
       case 'Vegan': return 'bg-emerald-100 text-emerald-700 border-emerald-200';
       default: return 'bg-secondary text-secondary-foreground';
@@ -101,6 +107,7 @@ const BakeryGalleryPage = () => {
   // Get fallback image based on product name
   const getFallbackImage = (productName: string) => {
     const name = productName.toLowerCase();
+    if (name.includes('seasonal')) return seasonalSpecialImg;
     if (name.includes('pandebono')) return pandebonoImg;
     if (name.includes('pan de yuca')) return panDeYucaImg;
     if (name.includes('almojabana')) return almojabanaImg;
