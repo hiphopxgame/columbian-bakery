@@ -13,6 +13,7 @@ import CulturalHeritagePage from "./pages/CulturalHeritagePage";
 import NutritionalValuePage from "./pages/NutritionalValuePage";
 import InnovationTraditionPage from "./pages/InnovationTraditionPage";
 import AdminPage from "./pages/AdminPage";
+import BakeryGalleryPage from "./pages/BakeryGalleryPage";
 import CatalogPage from "./pages/CatalogPage";
 import NotFound from "./pages/NotFound";
 
@@ -34,6 +35,7 @@ const App = () => (
           <Route path="/nutritional-value" element={<NutritionalValuePage />} />
           <Route path="/innovation-tradition" element={<InnovationTraditionPage />} />
           <Route path="/admin" element={<AdminPage />} />
+          <Route path="/bakery-gallery" element={<BakeryGalleryPage />} />
           <Route path="/catalog" element={<CatalogPage />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />

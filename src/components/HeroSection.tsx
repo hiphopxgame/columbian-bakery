@@ -50,8 +50,8 @@ const HeroSection = () => {
             </p>
           </div>
 
-          {/* Enhanced CTA Button with joyful styling */}
-          <div className="flex justify-center animate-fade-in-up" style={{animationDelay: '0.6s'}}>
+          {/* Enhanced CTA Buttons with joyful styling */}
+          <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in-up" style={{animationDelay: '0.6s'}}>
             <Button 
               size="lg" 
               variant="outline" 
@@ -59,6 +59,14 @@ const HeroSection = () => {
               onClick={() => scrollToSection('#wholesale')}
             >
               🏢 Order for Business
+            </Button>
+            <Button 
+              size="lg" 
+              variant="ghost" 
+              className="text-guava-pink hover:bg-guava-pink/20 hover:text-cacao-brown px-8 py-4 text-lg font-semibold btn-joyful"
+              onClick={() => navigate('/bakery-gallery')}
+            >
+              ✨ Explore the Bakery
             </Button>
           </div>
         </div>
