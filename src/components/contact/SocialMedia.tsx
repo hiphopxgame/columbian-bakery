@@ -5,12 +5,10 @@ import { Button } from '@/components/ui/button';
 import { Instagram, ExternalLink } from 'lucide-react';
 
 const SocialMedia = () => {
-  // Sample Instagram photos - in a real implementation, these would come from Instagram API
+  // Sample Instagram photos - showing latest posts
   const instagramPhotos = [
     '/lovable-uploads/bombshell-classic-new.jpg',
-    '/lovable-uploads/vegan-bombshell-new.jpg', 
-    '/lovable-uploads/pandebono-selection.jpg',
-    '/lovable-uploads/rosquillas-selection.jpg'
+    '/lovable-uploads/vegan-bombshell-new.jpg'
   ];
 
   return (
