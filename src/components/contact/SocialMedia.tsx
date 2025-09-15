@@ -28,7 +28,7 @@ const SocialMedia = () => {
           size="lg" 
           className="w-full border-accent text-accent hover:bg-accent hover:text-accent-foreground transition-all duration-300 hover:scale-105"
           onClick={() => {
-            const url = 'https://www.instagram.com/bombshellspdx/';
+            const url = 'https://www.instagram.com/bombshellspdx/?igsh=cmZqYnVvYjZ5eWVz&utm_source=qr#';
             window.open(url, '_blank', 'noopener,noreferrer');
           }}
         >
@@ -42,7 +42,7 @@ const SocialMedia = () => {
             <h4 className="font-semibold text-foreground">Recent Posts</h4>
             <button 
               onClick={() => {
-                const url = 'https://www.instagram.com/bombshellspdx/';
+                const url = 'https://www.instagram.com/bombshellspdx/?igsh=cmZqYnVvYjZ5eWVz&utm_source=qr#';
                 window.open(url, '_blank', 'noopener,noreferrer');
               }}
               className="text-sm text-muted-foreground hover:text-accent transition-colors flex items-center gap-1 cursor-pointer bg-transparent border-none"
@@ -58,7 +58,7 @@ const SocialMedia = () => {
                   alt={`Instagram post ${index + 1}`}
                   className="w-full h-full object-cover hover:scale-105 transition-transform duration-300 cursor-pointer"
                   onClick={() => {
-                    const url = 'https://www.instagram.com/bombshellspdx/';
+                    const url = 'https://www.instagram.com/bombshellspdx/?igsh=cmZqYnVvYjZ5eWVz&utm_source=qr#';
                     window.open(url, '_blank', 'noopener,noreferrer');
                   }}
                 />
