@@ -63,7 +63,11 @@ const CatalogSection = () => {
         if (error) {
           console.error('Error fetching products:', error);
         } else {
-          setProducts((data || []).map(product => ({
+          // Filter out seasonal products
+          const filteredProducts = (data || []).filter(product => 
+            !product.tags?.some((tag: string) => tag.toLowerCase().includes('seasonal'))
+          );
+          setProducts(filteredProducts.map(product => ({
             ...product,
             product_type: product.product_type as 'signature' | 'traditional'
           })));
