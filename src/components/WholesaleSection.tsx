@@ -193,7 +193,10 @@ const WholesaleSection = () => {
             <Button 
               size="lg"
               className="bg-bread-brown hover:bg-bread-brown/90 text-coconut-white px-12 py-6 text-xl"
-              onClick={() => navigate('/order')}
+              onClick={() => {
+                navigate('/order');
+                window.scrollTo(0, 0);
+              }}
             >
               Place Wholesale Order
             </Button>
