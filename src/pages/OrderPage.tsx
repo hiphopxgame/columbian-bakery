@@ -42,6 +42,7 @@ const OrderPage = () => {
     doughType: '',
     filling: '',
     delivery: '',
+    businessLocation: '',
     specialInstructions: '',
     seasonalDescription: ''
   });
@@ -193,6 +194,7 @@ const OrderPage = () => {
         doughType: '',
         filling: '',
         delivery: '',
+        businessLocation: '',
         specialInstructions: '',
         seasonalDescription: ''
       });
@@ -465,43 +467,55 @@ const OrderPage = () => {
                    </div>
                  </div>
 
-                 {/* Product Options */}
-                 <div className="grid md:grid-cols-2 gap-6">
-                   <div>
-                     <label className="block text-sm font-medium text-foreground mb-2">
-                       Delivery Format *
-                     </label>
-                     <Select value={formData.delivery} onValueChange={(value) => handleInputChange('delivery', value)}>
-                       <SelectTrigger>
-                         <SelectValue placeholder="How would you like them delivered?" />
-                       </SelectTrigger>
-                       <SelectContent>
-                         <SelectItem value="frozen">Frozen Dough (recommended)</SelectItem>
-                         <SelectItem value="pickup">Pickup at Bakery</SelectItem>
-                         <SelectItem value="delivery">Local Delivery</SelectItem>
-                       </SelectContent>
-                     </Select>
+                  {/* Delivery Options */}
+                  <div>
+                    <label className="block text-sm font-medium text-foreground mb-2">
+                      Delivery Format *
+                    </label>
+                    <Select value={formData.delivery} onValueChange={(value) => handleInputChange('delivery', value)}>
+                      <SelectTrigger>
+                        <SelectValue placeholder="How would you like them delivered?" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="delivery">Location Delivery</SelectItem>
+                        <SelectItem value="pickup">Pick-up at Bakery</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  {/* Business Location */}
+                  <div>
+                    <label className="block text-sm font-medium text-foreground mb-2">
+                      Business Location
+                    </label>
+                    <Input
+                      value={formData.businessLocation}
+                      onChange={(e) => handleInputChange('businessLocation', e.target.value)}
+                      placeholder="Enter your business address or location"
+                    />
+                  </div>
+
+                  {/* Product Options */}
+                  <div className="grid md:grid-cols-2 gap-6">
+                    <div>
+                      <label className="block text-sm font-medium text-foreground mb-2">
+                        Special Requirements
+                      </label>
+                      <Select value={formData.filling} onValueChange={(value) => handleInputChange('filling', value)}>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Any special requirements?" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="standard">Standard Recipe</SelectItem>
+                          <SelectItem value="extra-cream">Extra Cream (+$10/unit)</SelectItem>
+                          <SelectItem value="no-cream">No Cream Filling</SelectItem>
+                          <SelectItem value="custom">Custom (specify in instructions)</SelectItem>
+                        </SelectContent>
+                      </Select>
+                     </div>
                    </div>
 
-                   <div>
-                     <label className="block text-sm font-medium text-foreground mb-2">
-                       Special Requirements
-                     </label>
-                     <Select value={formData.filling} onValueChange={(value) => handleInputChange('filling', value)}>
-                       <SelectTrigger>
-                         <SelectValue placeholder="Any special requirements?" />
-                       </SelectTrigger>
-                       <SelectContent>
-                         <SelectItem value="standard">Standard Recipe</SelectItem>
-                         <SelectItem value="extra-cream">Extra Cream (+$10/unit)</SelectItem>
-                         <SelectItem value="no-cream">No Cream Filling</SelectItem>
-                         <SelectItem value="custom">Custom (specify in instructions)</SelectItem>
-                       </SelectContent>
-                     </Select>
-                   </div>
-                 </div>
-
-                 <div>
+                  <div>
                   <label className="block text-sm font-medium text-foreground mb-2">
                     Special Instructions
                   </label>
