@@ -41,6 +41,18 @@ const HeroSection = () => {
             <p className="text-xl md:text-2xl text-cacao-brown/80 mb-8 animate-fade-in-up font-medium" style={{animationDelay: '0.2s'}}>
               A Taste of Colombia in the Heart of Portland
             </p>
+
+            {/* Order Button */}
+            <div className="flex justify-center mb-12 animate-fade-in-up" style={{animationDelay: '0.3s'}}>
+              <Button 
+                size="lg" 
+                variant="outline" 
+                className="border-2 border-tropic-green text-tropic-green hover:bg-tropic-green hover:text-coconut-white px-8 py-4 text-lg font-semibold btn-joyful"
+                onClick={() => scrollToSection('#wholesale')}
+              >
+                order now
+              </Button>
+            </div>
             
             {/* Description with enhanced styling */}
             <p className="text-lg text-foreground mb-12 max-w-2xl mx-auto animate-fade-in-up leading-relaxed" style={{animationDelay: '0.4s'}}>
@@ -129,17 +141,6 @@ const HeroSection = () => {
             </Card>
           </div>
 
-          {/* Enhanced CTA Button at bottom */}
-          <div className="flex justify-center animate-fade-in-up">
-            <Button 
-              size="lg" 
-              variant="outline" 
-              className="border-2 border-tropic-green text-tropic-green hover:bg-tropic-green hover:text-coconut-white px-8 py-4 text-lg font-semibold btn-joyful"
-              onClick={() => scrollToSection('#wholesale')}
-            >
-              order now
-            </Button>
-          </div>
         </div>
       </div>
 
