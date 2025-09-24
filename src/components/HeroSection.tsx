@@ -31,15 +31,15 @@ const HeroSection = () => {
           {/* Main heading with enhanced typography */}
           <div className="text-center mb-16">
             <h1 className="text-5xl md:text-7xl font-serif font-bold text-cacao-brown mb-6 animate-fade-in-up">
-              The Colombian Bakery
+              The Bombshell Has Landed
               <span className="block text-2xl md:text-3xl mt-4 text-guava-pink font-medium animate-joyful-bounce">
-                Authentic Colombian Pastries in Portland
+                ¡Explosión de Sabor!
               </span>
             </h1>
             
-            {/* WHO & WHAT */}
+            {/* Subtitle */}
             <p className="text-xl md:text-2xl text-cacao-brown/80 mb-8 animate-fade-in-up font-medium" style={{animationDelay: '0.2s'}}>
-              Family-owned bakery bringing traditional Colombian flavors to Portland
+              A Taste of Colombia in the Heart of Portland
             </p>
 
             {/* Order Button */}
@@ -54,61 +54,41 @@ const HeroSection = () => {
               </Button>
             </div>
             
-            {/* WHY - Value Proposition */}
-            <div className="max-w-4xl mx-auto mb-12">
-              <h2 className="text-2xl font-serif font-semibold text-bread-brown mb-6">Why Choose Our Bombshells?</h2>
-              <div className="grid md:grid-cols-2 gap-8 text-left">
-                <div className="space-y-4">
-                  <h3 className="text-lg font-semibold text-tropic-green">🌱 Naturally Gluten-Free</h3>
-                  <p className="text-foreground">Made with premium yuca flour - no artificial substitutes needed. Perfect for celiac and gluten-sensitive customers.</p>
-                  
-                  <h3 className="text-lg font-semibold text-tropic-green">🇨🇴 100% Authentic</h3>
-                  <p className="text-foreground">Family recipes passed down through generations. Taste the real Colombia in every bite.</p>
-                </div>
-                <div className="space-y-4">
-                  <h3 className="text-lg font-semibold text-tropic-green">👩‍🍳 Handcrafted Fresh Daily</h3>
-                  <p className="text-foreground">Each pastry is carefully made by hand using traditional techniques. No mass production, just artisan quality.</p>
-                  
-                  <h3 className="text-lg font-semibold text-tropic-green">📅 Available Now</h3>
-                  <p className="text-foreground">Order online for pickup or delivery. Perfect for events, offices, or treating yourself.</p>
-                </div>
-              </div>
-            </div>
+            {/* Description with enhanced styling */}
+            <p className="text-lg text-foreground mb-12 max-w-2xl mx-auto animate-fade-in-up leading-relaxed" style={{animationDelay: '0.4s'}}>
+              Handcrafted gluten-free yuca pastries filled with authentic Colombian flavors. 
+              Made with love, tradition, and the finest ingredients.
+              <span className="block mt-2 text-tropic-green font-semibold">
+                Each bite tells a story of Colombian heritage 🇨🇴
+              </span>
+            </p>
           </div>
 
-          {/* WHAT - Product Details */}
+          {/* Main Content Grid */}
           <div className="grid md:grid-cols-2 gap-12 items-center mb-16">
-            {/* Left Column - What We Offer */}
+            {/* Left Column - Description */}
             <div className="space-y-6">
-              <h2 className="text-3xl font-serif font-semibold text-bread-brown mb-6">
-                What Are Bombshells?
-              </h2>
+              <h3 className="text-2xl font-serif font-semibold text-bread-brown mb-4">
+                What Makes Our Bombshells Special
+              </h3>
               
               <div className="space-y-4 text-foreground">
-                <p className="text-lg leading-relaxed">
-                  <strong>Bombshells</strong> are traditional Colombian pastries made from yuca (cassava) flour. 
-                  Think of them as the perfect fusion of a croissant and a empanada - flaky, golden, and bursting with flavor.
+                <p className="flex items-start">
+                  <span className="w-2 h-2 bg-guava-pink rounded-full mt-2 mr-3 flex-shrink-0"></span>
+                  <span><strong>Gluten-free pastry</strong> made from premium Colombian yuca dough</span>
                 </p>
-                
-                <h3 className="text-xl font-semibold text-tropic-green mt-6 mb-4">Our Signature Fillings:</h3>
-                <ul className="space-y-3">
-                  <li className="flex items-start">
-                    <span className="w-2 h-2 bg-guava-pink rounded-full mt-2 mr-3 flex-shrink-0"></span>
-                    <span><strong>Guava & Cream Cheese:</strong> Sweet tropical guava paired with rich cream cheese</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="w-2 h-2 bg-guava-pink rounded-full mt-2 mr-3 flex-shrink-0"></span>
-                    <span><strong>Dulce de Leche:</strong> Creamy caramel made the traditional way</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="w-2 h-2 bg-guava-pink rounded-full mt-2 mr-3 flex-shrink-0"></span>
-                    <span><strong>Fresh Coconut:</strong> Sweet grated coconut with a hint of vanilla</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="w-2 h-2 bg-guava-pink rounded-full mt-2 mr-3 flex-shrink-0"></span>
-                    <span><strong>Savory Options:</strong> Cheese and herb varieties coming soon</span>
-                  </li>
-                </ul>
+                <p className="flex items-start">
+                  <span className="w-2 h-2 bg-guava-pink rounded-full mt-2 mr-3 flex-shrink-0"></span>
+                  <span><strong>Authentic fillings</strong> including guava cream, dulce de leche, and coconut</span>
+                </p>
+                <p className="flex items-start">
+                  <span className="w-2 h-2 bg-guava-pink rounded-full mt-2 mr-3 flex-shrink-0"></span>
+                  <span><strong>Vegan and savory versions</strong> currently in development</span>
+                </p>
+                <p className="flex items-start">
+                  <span className="w-2 h-2 bg-guava-pink rounded-full mt-2 mr-3 flex-shrink-0"></span>
+                  <span><strong>Naturally gluten-free</strong> made with care and intention</span>
+                </p>
               </div>
             </div>
 
