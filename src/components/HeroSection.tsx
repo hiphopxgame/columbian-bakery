@@ -58,7 +58,7 @@ const HeroSection = () => {
               className="border-2 border-tropic-green text-tropic-green hover:bg-tropic-green hover:text-coconut-white px-8 py-4 text-lg font-semibold btn-joyful"
               onClick={() => scrollToSection('#wholesale')}
             >
-              🏢 Order for Business
+              order now
             </Button>
           </div>
         </div>
