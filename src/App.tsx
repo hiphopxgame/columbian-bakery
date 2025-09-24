@@ -8,6 +8,7 @@ import { CartProvider } from "@/hooks/useCart";
 import Index from "./pages/Index";
 import OrderPage from "./pages/OrderPage";
 import ThankYouPage from "./pages/ThankYouPage";
+import PaymentSuccessPage from "./pages/PaymentSuccessPage";
 import CustomQuotePage from "./pages/CustomQuotePage";
 import CulturalHeritagePage from "./pages/CulturalHeritagePage";
 import NutritionalValuePage from "./pages/NutritionalValuePage";
@@ -29,7 +30,8 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/order" element={<OrderPage />} />
-          <Route path="/thank-you" element={<ThankYouPage />} />
+            <Route path="/thank-you" element={<ThankYouPage />} />
+            <Route path="/payment-success" element={<PaymentSuccessPage />} />
           <Route path="/custom-quote" element={<CustomQuotePage />} />
           <Route path="/cultural-heritage" element={<CulturalHeritagePage />} />
           <Route path="/nutritional-value" element={<NutritionalValuePage />} />

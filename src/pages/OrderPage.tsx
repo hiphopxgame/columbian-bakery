@@ -115,10 +115,11 @@ const OrderPage = () => {
     return 0;
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handlePayPalPayment = async (e: React.FormEvent) => {
     e.preventDefault();
     
     try {
+      // First create the order in database
       const { data: orderData, error } = await supabase
         .from('cbake_orders')
         .insert([{
@@ -139,76 +140,58 @@ const OrderPage = () => {
           special_instructions: wholesaleProduct === 'seasonal-special' 
             ? `SEASONAL SPECIAL: ${formData.seasonalDescription}${formData.specialInstructions ? '\n\nAdditional Instructions: ' + formData.specialInstructions : ''}`
             : formData.specialInstructions,
-          estimated_total: calculateTotal()
+          estimated_total: calculateTotal(),
+          status: 'pending_payment'
         }])
         .select()
         .single();
 
       if (error) throw error;
 
-      // Send receipt email
-      try {
-        const emailResponse = await supabase.functions.invoke('send-order-receipt', {
-          body: {
+      // Create PayPal payment
+      const paypalResponse = await supabase.functions.invoke('create-paypal-payment', {
+        body: {
+          orderData: {
             orderId: orderData.id,
-            firstName: formData.firstName,
-            lastName: formData.lastName,
-            email: formData.email,
-            companyName: formData.companyName,
+            amount: calculateTotal(),
             productName: selectedProduct?.name || (wholesaleProduct === 'seasonal-special' ? 'Seasonal Special' : products.find(p => p.id === wholesaleProduct)?.name) || 'Selected Product',
             quantity: formData.quantity,
-            estimatedTotal: calculateTotal(),
-            orderType: orderType,
-            deliveryFormat: formData.delivery,
-            specialInstructions: wholesaleProduct === 'seasonal-special' 
-              ? `SEASONAL SPECIAL: ${formData.seasonalDescription}${formData.specialInstructions ? '\n\nAdditional Instructions: ' + formData.specialInstructions : ''}`
-              : formData.specialInstructions
+            returnUrl: `${window.location.origin}/payment-success`
           }
-        });
-        
-        if (emailResponse.error) {
-          console.error('Error sending receipt email:', emailResponse.error);
-        } else {
-          console.log('Receipt email sent successfully');
         }
-      } catch (emailError) {
-        console.error('Error sending receipt email:', emailError);
+      });
+
+      if (paypalResponse.error) {
+        throw new Error(paypalResponse.error.message);
       }
 
-      toast({
-        title: "Order Submitted Successfully!",
-        description: "We've received your order and sent you a confirmation email. We'll contact you within 24 hours to confirm.",
-      });
-      
-      // Navigate to thank you page
-      navigate('/thank-you');
-      
-      // Reset form
-      setFormData({
-        firstName: '',
-        lastName: '',
-        companyName: '',
-        email: '',
-        phone: '',
-        orderType: 'wholesale-frozen',
-        quantity: 2,
-        doughType: '',
-        filling: '',
-        delivery: '',
-        businessLocation: '',
-        specialInstructions: '',
-        seasonalDescription: ''
-      });
-      setOrderType('wholesale-frozen');
+      // Redirect to PayPal
+      const approvalUrl = paypalResponse.data.paypalOrder.links.find(
+        (link: any) => link.rel === 'approve'
+      )?.href;
+
+      if (!approvalUrl) {
+        throw new Error('PayPal approval URL not found');
+      }
+
+      // Store order ID in session storage for completion
+      sessionStorage.setItem('pendingOrderId', orderData.id);
+      sessionStorage.setItem('paypalOrderId', paypalResponse.data.paypalOrder.id);
+
+      // Redirect to PayPal
+      window.location.href = approvalUrl;
+
     } catch (error) {
-      console.error('Error submitting order:', error);
+      console.error('Error processing PayPal payment:', error);
       toast({
-        title: "Error Submitting Order",
-        description: "There was an issue submitting your order. Please try again or contact us directly.",
+        title: "Payment Error",
+        description: "There was an issue setting up your payment. Please try again or contact us directly.",
         variant: "destructive",
       });
     }
   };
+
+  const handleSubmit = handlePayPalPayment;
 
   return (
     <div className="min-h-screen bg-background py-8">
@@ -572,19 +555,18 @@ const OrderPage = () => {
                    </div>
                  </div>
 
-                  <Button 
-                    type="submit"
-                    size="lg" 
-                    className="w-full bg-bread-brown hover:bg-bread-brown/90 text-coconut-white text-lg font-semibold py-4"
-                    disabled={!formData.firstName || !formData.lastName || !formData.email || !formData.delivery || (!selectedProduct && !wholesaleProduct) || (wholesaleProduct === 'seasonal-special' && !formData.seasonalDescription)}
-                  >
-                   Submit Wholesale Order Request
-                 </Button>
+                   <Button 
+                     type="submit"
+                     size="lg" 
+                     className="w-full bg-bread-brown hover:bg-bread-brown/90 text-coconut-white text-lg font-semibold py-4"
+                     disabled={!formData.firstName || !formData.lastName || !formData.email || !formData.delivery || (!selectedProduct && !wholesaleProduct) || (wholesaleProduct === 'seasonal-special' && !formData.seasonalDescription)}
+                   >
+                    Pay with PayPal - ${calculateTotal().toFixed(2)}
+                  </Button>
 
-                <p className="text-sm text-muted-foreground text-center">
-                  This is a request for quote. We'll contact you within 24 hours to confirm availability, 
-                  final pricing, and arrange payment.
-                </p>
+                 <p className="text-sm text-muted-foreground text-center">
+                   Secure payment processing through PayPal. You'll be redirected to complete your payment.
+                 </p>
               </form>
             </CardContent>
           </Card>
