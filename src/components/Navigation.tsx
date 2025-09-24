@@ -21,27 +21,15 @@ const Navigation = () => {
 
   const navItems = [
     { label: 'Home', href: '/', emoji: '🏠', type: 'route' },
-    { label: 'About', href: '#about', emoji: '📖', type: 'scroll' },
-    { label: 'Wholesale', href: '#wholesale', emoji: '🏢', type: 'scroll' },
-    { label: 'Catering', href: '#catering', emoji: '🎉', type: 'scroll' },
+    { label: 'About', href: '/about', emoji: '📖', type: 'route' },
+    { label: 'Wholesale', href: '/wholesale', emoji: '🏢', type: 'route' },
+    { label: 'Catering', href: '/catering', emoji: '🎉', type: 'route' },
     { label: 'Catalog', href: '/catalog', emoji: '📋', type: 'route' },
-    { label: 'Contact', href: '#contact', emoji: '💬', type: 'scroll' }
+    { label: 'Contact', href: '/contact', emoji: '💬', type: 'route' }
   ];
 
   const handleNavClick = (item: typeof navItems[0]) => {
-    if (item.type === 'route') {
-      navigate(item.href);
-    } else {
-      // Handle scroll navigation
-      if (location.pathname !== '/') {
-        navigate('/', { state: { scrollTo: item.href } });
-      } else {
-        const element = document.querySelector(item.href);
-        if (element) {
-          element.scrollIntoView({ behavior: 'smooth' });
-        }
-      }
-    }
+    navigate(item.href);
     setIsMenuOpen(false);
   };
 

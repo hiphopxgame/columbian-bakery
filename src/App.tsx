@@ -6,6 +6,10 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { CartProvider } from "@/hooks/useCart";
 
 import Index from "./pages/Index";
+import AboutPage from "./pages/AboutPage";
+import WholesalePage from "./pages/WholesalePage";
+import CateringPage from "./pages/CateringPage";
+import ContactPage from "./pages/ContactPage";
 import OrderPage from "./pages/OrderPage";
 import ThankYouPage from "./pages/ThankYouPage";
 import PaymentSuccessPage from "./pages/PaymentSuccessPage";
@@ -29,6 +33,10 @@ const App = () => (
         <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index />} />
+          <Route path="/about" element={<AboutPage />} />
+          <Route path="/wholesale" element={<WholesalePage />} />
+          <Route path="/catering" element={<CateringPage />} />
+          <Route path="/contact" element={<ContactPage />} />
           <Route path="/order" element={<OrderPage />} />
             <Route path="/thank-you" element={<ThankYouPage />} />
             <Route path="/payment-success" element={<PaymentSuccessPage />} />
