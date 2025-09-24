@@ -10,7 +10,7 @@ const Footer = () => {
             {/* Company Info */}
             <div className="col-span-2">
               <h3 className="text-2xl font-serif font-bold mb-4">
-                Colombian Bakery PDX
+                The Colombian Bakery
               </h3>
               <p className="text-coconut-white/80 mb-4 leading-relaxed">
                 Bringing authentic Colombian flavors to Portland through handcrafted, 
@@ -64,7 +64,7 @@ const Footer = () => {
           {/* Bottom Bar */}
           <div className="border-t border-coconut-white/20 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
             <p className="text-coconut-white/60 text-sm">
-              © 2024 Colombian Bakery PDX. All rights reserved.
+              © 2024 The Colombian Bakery. All rights reserved.
             </p>
             <div className="flex space-x-6 mt-4 md:mt-0">
               <a href="#" className="text-coconut-white/60 hover:text-coconut-white text-sm transition-colors">

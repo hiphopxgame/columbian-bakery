@@ -10,7 +10,7 @@ const AboutBakerySection = () => {
           {/* Section Header */}
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-serif font-bold text-bread-brown mb-6">
-              About Colombian Bakery PDX
+              About The Colombian Bakery
             </h2>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
               A story of heritage, innovation, and the pursuit of authentic flavors
@@ -25,7 +25,7 @@ const AboutBakerySection = () => {
               </h3>
               <div className="space-y-4 text-foreground leading-relaxed">
                 <p>
-                  Colombian Bakery PDX was born from a deep love for the rich baking traditions 
+                  The Colombian Bakery was born from a deep love for the rich baking traditions 
                   of Colombia and a desire to share these authentic flavors with Portland's 
                   vibrant food community.
                 </p>

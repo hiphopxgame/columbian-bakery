@@ -57,7 +57,7 @@ const Navigation = () => {
           <div className="flex items-center">
             <h1 className="text-xl md:text-2xl font-serif font-bold text-cacao-brown hover:text-guava-pink transition-colors cursor-pointer">
               <span className="animate-joyful-bounce inline-block">🥮</span>
-              {' '}Colombian Bakery PDX
+              {' '}The Colombian Bakery
             </h1>
           </div>
 
